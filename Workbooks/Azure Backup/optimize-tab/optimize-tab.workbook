@@ -1,0 +1,1243 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 11,
+            "content": {
+              "version": "LinkItem/1.0",
+              "style": "tabs",
+              "links": [
+                {
+                  "id": "40ea16d3-b2f0-4322-8ee7-adf160fdad90",
+                  "cellValue": "OptimizeDimension",
+                  "linkTarget": "parameter",
+                  "linkLabel": "Inactive Resources",
+                  "subTarget": "Inactive Resources",
+                  "style": "link"
+                },
+                {
+                  "id": "7cee679a-1b25-4826-9785-c39212eaf48b",
+                  "cellValue": "OptimizeDimension",
+                  "linkTarget": "parameter",
+                  "linkLabel": "Policy Optimizations",
+                  "subTarget": "Policy Optimizations",
+                  "style": "link"
+                }
+              ]
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-SubTabs1"
+          },
+          {
+            "type": 11,
+            "content": {
+              "version": "LinkItem/1.0",
+              "style": "tabs",
+              "links": [
+                {
+                  "id": "21c027f6-8f32-4dd5-bf90-9d54d6ed0393",
+                  "cellValue": "OptimizeSubDimension",
+                  "linkTarget": "parameter",
+                  "linkLabel": "Retention Optimizations",
+                  "subTarget": "Retention Optimizations",
+                  "preText": "",
+                  "style": "link"
+                },
+                {
+                  "id": "3d1c10e2-70a8-487b-b983-6570ce733f31",
+                  "cellValue": "OptimizeSubDimension",
+                  "linkTarget": "parameter",
+                  "linkLabel": "Backup Schedule Optimizations",
+                  "subTarget": "Backup Schedule Optimizations",
+                  "style": "link"
+                }
+              ]
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              }
+            ],
+            "name": "links - 109"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<div style=\"text-align:left\"><span style=\"font-size:14px;font-weight:600;\">Backup Instances without a recovery point in selected time range </span> </div>"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Inactive Resources"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-InactiveResourcesGrid1Title"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<p> <span style=\"font-size:12px; font-style:italic\"> Below are the backup instances which do not have a successful recovery point in the selected time range. You can save on costs by unprotecting decommissioned machines. <a href=\"https://aka.ms/AzureBackupReportDeletedResourcesView\" target=\"_blank\">Learn More</a> </span> </p>"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Inactive Resources"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-InactiveResourcesGrid1InstructionText"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<p> <span style=\"font-size:12px; font-style:italic\"> Showing results for Time Range: {TimeRange} </span> </p>"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Inactive Resources"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              }
+            ],
+            "name": "Optimize-InactiveResourcesTimeRangeText"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "77aa6aec-8198-4e29-8196-e56c3fe81292",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_SearchBackupInstanceOrDatasourceSet",
+                  "label": "Search Instance or Container",
+                  "type": 1,
+                  "description": "Use to search for a backup instance by name. <br/> To search for a specific instance in a container, use the syntax [container name];[instance name] <br/> To search for all instances in a container, use the syntax [container name];",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "46f7de5c-dc7f-48ed-bfd0-d5a868aef402",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_RowsPerPage",
+                  "label": "Rows Per Page",
+                  "type": 2,
+                  "description": "Number of rows to display in grid view",
+                  "isRequired": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "jsonData": "[\r\n    { \"value\":10, \"label\":\"10\", \"selected\":true  },\r\n    { \"value\":25, \"label\":\"25\" },\r\n    { \"value\":50, \"label\":\"50\" },\r\n    { \"value\":100, \"label\":\"100\" },\r\n    { \"value\":250, \"label\":\"250\" },\r\n    { \"value\":500, \"label\":\"500\" },\r\n    { \"value\":1000, \"label\":\"1000\" }\r\n]",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "792ec3e5-00b6-4669-9db2-de3e6617b7b7",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_Page",
+                  "label": "Page",
+                  "type": 2,
+                  "description": "Select Page Number",
+                  "isRequired": true,
+                  "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList =  \"*\";\r\nlet Item_search =   \"*;*\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields_1 = false;\r\nlet DisplayAllFields_2 = true;\r\nlet JobOperationList = \"*\";\r\nlet JobStatusList =  \"*\";\r\nlet JobFailureCodeList =  \"*\";\r\nlet ExcludeLog = False;\r\nlet BackupItemWithoutSuccessfulBackup = (){\r\n// calling LA System Function\r\n_AzureBackup_GetJobs(RangeStart, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, JobOperationList, JobStatusList, JobFailureCodeList, DatasourceSetName, BackupInstanceName, ExcludeLog)\r\n| where OperationCategory has \"Backup\"\r\n| where Status in (\"Completed\",\"CompletedWithWarnings\")\r\n| join kind= rightanti (\r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields_1)\r\n) on $left.BackupInstanceUniqueId == $right.UniqueId\r\n| project UniqueId,  BackupInstanceFriendlyName = FriendlyName,  DatasourceType, ProtectionInfo, VaultResourceId\r\n};\r\nlet BackupItemWithoutSuccessfulBackupAndItsRecoveryPointTable = ()\r\n{\r\nBackupItemWithoutSuccessfulBackup | join \r\n(\r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields_2)\r\n) on UniqueId\r\n| where not(LatestRecoveryPoint >= RangeStart and LatestRecoveryPoint <= RangeEnd)\r\n};\r\nBackupItemWithoutSuccessfulBackupAndItsRecoveryPointTable\r\n| summarize c=count()\r\n| project num = (c-1)/{OptimizeTab_RowsPerPage} + 1\r\n| project nums = range(1,num,1), num\r\n| mvexpand nums\r\n| project nums = tostring(nums), num = strcat(tostring(nums),\" of \",tostring(num))",
+                  "crossComponentResources": [
+                    "{Workspaces}"
+                  ],
+                  "value": "1",
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "queryType": 0,
+                  "resourceType": "microsoft.operationalinsights/workspaces"
+                }
+              ],
+              "style": "above",
+              "doNotRunWhenHidden": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Inactive Resources"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-InactiveResourcesGrid1Parameters"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList =  \"*\";\r\nlet Item_search =   @\"{OptimizeTab_SearchBackupInstanceOrDatasourceSet}\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields_1 = false;\r\nlet DisplayAllFields_2 = true;\r\nlet JobOperationList = \"*\";\r\nlet JobStatusList =  \"*\";\r\nlet JobFailureCodeList =  \"*\";\r\nlet ExcludeLog = False;\r\nlet BackupItemWithoutSuccessfulBackup = (){\r\n// calling LA System Function\r\n_AzureBackup_GetJobs(RangeStart, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, JobOperationList, JobStatusList, JobFailureCodeList, DatasourceSetName, BackupInstanceName, ExcludeLog)\r\n| where OperationCategory has \"Backup\"\r\n| where Status in (\"Completed\",\"CompletedWithWarnings\")\r\n| join kind= rightanti (\r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields_1)\r\n) on $left.BackupInstanceUniqueId == $right.UniqueId\r\n| project UniqueId,  BackupInstanceFriendlyName = FriendlyName,  DatasourceType, ProtectionInfo, VaultResourceId\r\n};\r\nlet BackupItemWithoutSuccessfulBackupAndItsRecoveryPointTable = ()\r\n{\r\nBackupItemWithoutSuccessfulBackup | join \r\n(\r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields_2)\r\n) on UniqueId\r\n| where not(LatestRecoveryPoint >= RangeStart and LatestRecoveryPoint <= RangeEnd)\r\n};\r\nBackupItemWithoutSuccessfulBackupAndItsRecoveryPointTable\r\n| sort by UniqueId asc \r\n| extend row_num = row_number()\r\n| extend page_num = tostring(((row_num-1)/{OptimizeTab_RowsPerPage} + 1))\r\n| where page_num has ('{OptimizeTab_Page}') or '*' in ('{OptimizeTab_Page}')\r\n| project BackupInstance=BackupInstanceFriendlyName, Id, Container=DatasourceSetFriendlyName, ResourceGroup=iff(DatasourceType==\"Azure Backup Agent\" or DatasourceType==\"Azure Backup Server\" or DatasourceType==\"DPM\",\"(none)\",split(split(tostring(tolower(DatasourceSetResourceId)), '/resourcegroups/')[1],'/')[0]\r\n), Policy=PolicyName, LatestRecoveryPoint, Vault=VaultResourceId, AzureResource=DatasourceSetResourceId, DatasourceType",
+              "size": 3,
+              "noDataMessage": "No records found for the selected time range and scope",
+              "showExportToExcel": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspaces}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "BackupInstance",
+                    "formatter": 16,
+                    "formatOptions": {
+                      "linkColumn": "Id",
+                      "linkTarget": "Resource",
+                      "showIcon": true
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Name of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Id",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Container",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Protected container associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "ResourceGroup",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Resource group of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Policy",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Policy associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "LatestRecoveryPoint",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Latest recovery point associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Vault",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Vault associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "AzureResource",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Azure Resource associated with the backup instance. For Azure VM Backup, SQL in Azure VM backup and SAP database in Azure VM backup, the Azure Resource is the Azure VM. For Azure Files Share backup, the Azure Resource is the Azure Storage account. For on-premises backup instances, this field is blank."
+                    }
+                  },
+                  {
+                    "columnMatch": "DatasourceType",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Datasource Type"
+                    }
+                  }
+                ],
+                "labelSettings": [
+                  {
+                    "columnId": "BackupInstance",
+                    "label": "Backup Instance"
+                  },
+                  {
+                    "columnId": "Id"
+                  },
+                  {
+                    "columnId": "ResourceGroup",
+                    "label": "Resource Group"
+                  },
+                  {
+                    "columnId": "LatestRecoveryPoint",
+                    "label": "Latest Recovery Point"
+                  },
+                  {
+                    "columnId": "AzureResource",
+                    "label": "Azure Resource"
+                  },
+                  {
+                    "columnId": "DatasourceType",
+                    "label": "Datasource Type"
+                  }
+                ]
+              }
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Inactive Resources"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "showPin": true,
+            "name": "Optimize-InactiveResourcesGrid1",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<div style=\"text-align:left\"><span style=\"font-size:14px;font-weight:600;\">Backup Instances with a large retention duration"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Retention Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-PolicyOptimizationsGrid1Title"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<p> <span style=\"font-size:12px; font-style:italic\"> Explore cost-saving opportunities by identifying items with backup retained for longer duration by your organization. <a href=\"https://aka.ms/AzureBackupReportLargeRetentionView\" target=\"_blank\">Learn More</a> </span> </p>"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Retention Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-PolicyOptimizationsGrid1InstructionText1"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<p> <span style=\"font-size:12px; font-style:italic\"> Use the below filters to identify backup items with retentions larger than the specified values. For the database workloads, retention duration of the full backups is considered. <a href=\"https://aka.ms/AzureBackupReportLargeRetentionView2\" target=\"_blank\">Learn More</a> </span> </p>"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Retention Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-PolicyOptimizationsGrid1InstructionText2"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "bac04291-b7fd-4da5-8580-1815d0d2af4d",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_DailyRPRetention",
+                  "label": "Daily RP Retention (days)",
+                  "type": 1,
+                  "description": "Use to specify minimum retention duration of daily retention points",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  },
+                  "value": ""
+                },
+                {
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_WeeklyRPRetention",
+                  "label": "Weekly RP Retention (days)",
+                  "type": 1,
+                  "description": "Use to specify minimum retention duration of weekly retention points",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  },
+                  "id": "9310f11f-c461-4212-807b-582ad181079b",
+                  "value": ""
+                },
+                {
+                  "id": "4b5098ff-555d-4398-b611-48c9eea83994",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_MonthlyRPRetention",
+                  "label": "Monthly RP Retention (days)",
+                  "type": 1,
+                  "description": "Use to specify monthly retention duration of daily retention points",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "056d71c8-9333-473a-b1c6-d9be75665fff",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_YearlyRPRetention",
+                  "label": "Yearly RP Retention (days)",
+                  "type": 1,
+                  "description": "Use to specify minimum retention duration of yearly retention points",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                }
+              ],
+              "style": "above",
+              "doNotRunWhenHidden": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Retention Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-PolicyOptimizationGrid1Parameters1"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "77aa6aec-8198-4e29-8196-e56c3fe81292",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_SearchBackupInstanceOrDatasourceSet_2",
+                  "label": "Search Instance or Container",
+                  "type": 1,
+                  "description": "Use to search for a backup instance by name. <br/> To search for a specific instance in a container, use the syntax [container name];[instance name] <br/> To search for all instances in a container, use the syntax [container name];",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "b8a26e03-124c-41bb-bd2c-3376aa80547b",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_SortBy_2",
+                  "label": "Sort By",
+                  "type": 2,
+                  "description": "Use to sort by a certain column",
+                  "isRequired": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "jsonData": "[{ \"value\": \"YearlyRPRetentionDuration\", \"label\": \"Yearly Retention Duration\" },\r\n{ \"value\": \"MonthlyRPRetentionDuration\", \"label\": \"Monthly Retention Duration\" }, \r\n{ \"value\": \"WeeklyRPRetentionDuration\", \"label\": \"Weekly Retention Duration\" },\r\n{ \"value\": \"DailyRPRetentionDuration\", \"label\": \"Daily Retention Duration\", \"selected\": \"true\" }]"
+                },
+                {
+                  "id": "b4864988-e9db-434a-b79e-61d3f9d901c1",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_Order_2",
+                  "label": "Order",
+                  "type": 2,
+                  "description": "Use to specify sort order: Ascending/Descending",
+                  "isRequired": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "jsonData": "[\r\n    { \"value\":\"Ascending\", \"selected\":true},\r\n    { \"value\":\"Descending\"}\r\n]",
+                  "value": "Descending"
+                },
+                {
+                  "id": "46f7de5c-dc7f-48ed-bfd0-d5a868aef402",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_RowsPerPage_2",
+                  "label": "Rows Per Page",
+                  "type": 2,
+                  "description": "Number of rows to display in grid view",
+                  "isRequired": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "jsonData": "[\r\n    { \"value\":10, \"label\":\"10\", \"selected\":true  },\r\n    { \"value\":25, \"label\":\"25\" },\r\n    { \"value\":50, \"label\":\"50\" },\r\n    { \"value\":100, \"label\":\"100\" },\r\n    { \"value\":250, \"label\":\"250\" },\r\n    { \"value\":500, \"label\":\"500\" },\r\n    { \"value\":1000, \"label\":\"1000\" }\r\n]",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "792ec3e5-00b6-4669-9db2-de3e6617b7b7",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_Page_2",
+                  "label": "Page",
+                  "type": 2,
+                  "description": "Select Page Number",
+                  "isRequired": true,
+                  "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList =  \"*\";\r\nlet Item_search =  @\"{OptimizeTab_SearchBackupInstanceOrDatasourceSet_2}\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields = false;\r\n// local Params\r\nlet DailyRetentionParam =  iff( isempty(@\"{OptimizeTab_DailyRPRetention}\"), todouble(-1), todouble(@\"{OptimizeTab_DailyRPRetention}\"));\r\nlet WeeklyRetentionParam =  iff( isempty(@\"{OptimizeTab_WeeklyRPRetention}\"), todouble(-1), todouble(@\"{OptimizeTab_WeeklyRPRetention}\"));  \r\nlet MonthlyRetentionParam =   iff( isempty(@\"{OptimizeTab_MonthlyRPRetention}\"), todouble(-1), todouble(@\"{OptimizeTab_MonthlyRPRetention}\")); \r\nlet YearlyRetentionParam =   iff( isempty(@\"{OptimizeTab_YearlyRPRetention}\"), todouble(-1), todouble(@\"{OptimizeTab_YearlyRPRetention}\")); \r\nlet OutputTable = () {union isfuzzy = true \r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields)\r\n| join kind = leftouter (\r\n// calling LA System Function\r\n_AzureBackup_GetPolicies(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList)\r\n| extend ExtendedPropertiesJson = parse_json(ExtendedProperties)\r\n) on $left.PolicyUniqueId == $right.UniqueId, $left.VaultResourceId == $right.VaultResourceId\r\n};\r\nOutputTable\r\n// query to transform function output\r\n| where  (ExtendedPropertiesJson.DailyRetentionDuration > DailyRetentionParam) and (ExtendedPropertiesJson.WeeklyRetentionDuration > WeeklyRetentionParam) and (ExtendedPropertiesJson.MonthlyRetentionDuration > MonthlyRetentionParam) and (ExtendedPropertiesJson.YearlyRetentionDuration > YearlyRetentionParam)\r\n| summarize c=count()\r\n| project num = (c-1)/{OptimizeTab_RowsPerPage_2} + 1\r\n| project nums = range(1,num,1), num\r\n| mvexpand nums\r\n| project nums = tostring(nums), num = strcat(tostring(nums),\" of \",tostring(num))",
+                  "crossComponentResources": [
+                    "{Workspaces}"
+                  ],
+                  "value": "1",
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "queryType": 0,
+                  "resourceType": "microsoft.operationalinsights/workspaces"
+                }
+              ],
+              "style": "above",
+              "doNotRunWhenHidden": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Retention Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-PolicyOptimizationsGrid1Parameters2"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList =  \"*\";\r\nlet Item_search =  @\"{OptimizeTab_SearchBackupInstanceOrDatasourceSet_2}\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields = false;\r\n// local Params\r\nlet DailyRetentionParam =  iff( isempty(@\"{OptimizeTab_DailyRPRetention}\"), todouble(-1), todouble(@\"{OptimizeTab_DailyRPRetention}\"));\r\nlet WeeklyRetentionParam =  iff( isempty(@\"{OptimizeTab_WeeklyRPRetention}\"), todouble(-1), todouble(@\"{OptimizeTab_WeeklyRPRetention}\"));  \r\nlet MonthlyRetentionParam =   iff( isempty(@\"{OptimizeTab_MonthlyRPRetention}\"), todouble(-1), todouble(@\"{OptimizeTab_MonthlyRPRetention}\")); \r\nlet YearlyRetentionParam =   iff( isempty(@\"{OptimizeTab_YearlyRPRetention}\"), todouble(-1), todouble(@\"{OptimizeTab_YearlyRPRetention}\")); \r\nlet OutputTable = () {union isfuzzy = true \r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields)\r\n| join kind = leftouter (\r\n// calling LA System Function\r\n_AzureBackup_GetPolicies(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList)\r\n| extend ExtendedPropertiesJson = parse_json(ExtendedProperties)\r\n) on $left.PolicyUniqueId == $right.UniqueId, $left.VaultResourceId == $right.VaultResourceId\r\n};\r\nOutputTable\r\n// query to transform function output\r\n| extend DailyRPRetentionDuration = ExtendedPropertiesJson.DailyRetentionDuration, WeeklyRPRetentionDuration = ExtendedPropertiesJson.WeeklyRetentionDuration, MonthlyRPRetentionDuration = ExtendedPropertiesJson.MonthlyRetentionDuration, YearlyRPRetentionDuration = ExtendedPropertiesJson.YearlyRetentionDuration\r\n| where  (DailyRPRetentionDuration > DailyRetentionParam) and (WeeklyRPRetentionDuration > WeeklyRetentionParam) and (MonthlyRPRetentionDuration > MonthlyRetentionParam) and (YearlyRPRetentionDuration > YearlyRetentionParam)\r\n| extend TempColumn = column_ifexists(tostring('{OptimizeTab_SortBy_2}'), \"DailyRPRetentionDuration\")\r\n| extend ColumnToBeSorted = iff(tostring('{OptimizeTab_Order_2}') == \"Ascending\", todouble(TempColumn) - 90000000, 90000000 - todouble(TempColumn))\r\n| sort by ColumnToBeSorted asc nulls last, UniqueId asc  \r\n| extend row_num = row_number()\r\n| extend page_num = tostring(((row_num-1)/{OptimizeTab_RowsPerPage_2} + 1))\r\n| where page_num has ('{OptimizeTab_Page_2}') or '*' in ('{OptimizeTab_Page_2}')\r\n| project Id, BackupInstance=FriendlyName, Container=DatasourceSetFriendlyName, ResourceGroup=iff(DatasourceType==\"Azure Backup Agent\" or DatasourceType==\"Azure Backup Server\" or DatasourceType==\"DPM\",\"(none)\",split(split(tostring(tolower(DatasourceSetResourceId)), '/resourcegroups/')[1],'/')[0]\r\n), Policy=Name, DailyRPRetentionDuration, WeeklyRPRetentionDuration, MonthlyRPRetentionDuration, YearlyRPRetentionDuration, Vault=VaultResourceId, AzureResource=DatasourceSetResourceId, DatasourceType",
+              "size": 3,
+              "noDataMessage": "No records found for the selected time range and scope",
+              "showExportToExcel": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspaces}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Id",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "BackupInstance",
+                    "formatter": 16,
+                    "formatOptions": {
+                      "linkColumn": "Id",
+                      "linkTarget": "Resource",
+                      "showIcon": true
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Name of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Container",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Protected container associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "ResourceGroup",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Resource group of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Policy",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Policy associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "DailyRPRetentionDuration",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "min": 0,
+                      "palette": "blue"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Retention duration of the daily retention points of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "WeeklyRPRetentionDuration",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "min": 0,
+                      "palette": "blue"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Retention duration of the weekly retention points of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "MonthlyRPRetentionDuration",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "min": 0,
+                      "palette": "blue"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Retention duration of the monthly retention points of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "YearlyRPRetentionDuration",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "min": 0,
+                      "palette": "blue"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Retention duration of the yearly retention points of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Vault",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Vault associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "AzureResource",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Azure Resource associated with the backup instance. For Azure VM Backup, SQL in Azure VM backup and SAP database in Azure VM backup, the Azure Resource is the Azure VM. For Azure Files Share backup, the Azure Resource is the Azure Storage account. For on-premises backup instances, this field is blank."
+                    }
+                  },
+                  {
+                    "columnMatch": "DatasourceType",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Datasource Type"
+                    }
+                  }
+                ],
+                "labelSettings": [
+                  {
+                    "columnId": "Id"
+                  },
+                  {
+                    "columnId": "BackupInstance",
+                    "label": "Backup Instance"
+                  },
+                  {
+                    "columnId": "ResourceGroup",
+                    "label": "Resource Group"
+                  },
+                  {
+                    "columnId": "Policy"
+                  },
+                  {
+                    "columnId": "DailyRPRetentionDuration",
+                    "label": "Daily RP Retention Duration (days)"
+                  },
+                  {
+                    "columnId": "WeeklyRPRetentionDuration",
+                    "label": "Weekly RP Retention Duration (weeks)"
+                  },
+                  {
+                    "columnId": "MonthlyRPRetentionDuration",
+                    "label": "Monthly RP Retention Duration (months)"
+                  },
+                  {
+                    "columnId": "YearlyRPRetentionDuration",
+                    "label": "Yearly RP Retention Duration (years)"
+                  },
+                  {
+                    "columnId": "Vault"
+                  },
+                  {
+                    "columnId": "AzureResource",
+                    "label": "Azure Resource"
+                  },
+                  {
+                    "columnId": "DatasourceType",
+                    "label": "Datasource Type"
+                  }
+                ]
+              }
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Retention Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "showPin": true,
+            "name": "Optimize-PolicyOptimizationsGrid1",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<div style=\"text-align:left\"><span style=\"font-size:14px;font-weight:600;\">Databases configured for daily full backup </span> </div>"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Backup Schedule Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-PolicyOptimizationsGrid2Title"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<p> <span style=\"font-size:12px; font-style:italic\"> Using daily differential backups with weekly full backups is often more cost-effective than using daily full backups. <a href=\"https://aka.ms/AzureBackupReportDailyFullBackupView\" target=\"_blank\">Learn More</a> </span> </p>"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Backup Schedule Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-PolicyOptimizationsGrid2InstructionText"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "77aa6aec-8198-4e29-8196-e56c3fe81292",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_SearchBackupInstanceOrDatasourceSet_3",
+                  "label": "Search Instance or Container",
+                  "type": 1,
+                  "description": "Use to search for a backup instance by name. <br/> To search for a specific instance in a container, use the syntax [container name];[instance name] <br/> To search for all instances in a container, use the syntax [container name];",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "46f7de5c-dc7f-48ed-bfd0-d5a868aef402",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_RowsPerPage_3",
+                  "label": "Rows Per Page",
+                  "type": 2,
+                  "description": "Number of rows to display in grid view",
+                  "isRequired": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "jsonData": "[\r\n    { \"value\":10, \"label\":\"10\", \"selected\":true  },\r\n    { \"value\":25, \"label\":\"25\" },\r\n    { \"value\":50, \"label\":\"50\" },\r\n    { \"value\":100, \"label\":\"100\" },\r\n    { \"value\":250, \"label\":\"250\" },\r\n    { \"value\":500, \"label\":\"500\" },\r\n    { \"value\":1000, \"label\":\"1000\" }\r\n]",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "792ec3e5-00b6-4669-9db2-de3e6617b7b7",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_Page_3",
+                  "label": "Page",
+                  "type": 2,
+                  "description": "Select Page Number",
+                  "isRequired": true,
+                  "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList =  \"*\";\r\nlet Item_search =  @\"{OptimizeTab_SearchBackupInstanceOrDatasourceSet_3}\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields = false;\r\nlet LatestAzureWorkloadBackupItemDimensionTable = () {union isfuzzy = true \r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields)\r\n| where DatasourceType in~ (\"SQL in Azure VM\",\"SAP HANA in Azure VM\") \r\n| join kind = leftouter (\r\n// calling LA System Function\r\n_AzureBackup_GetPolicies(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList)\r\n) on $left.PolicyUniqueId == $right.UniqueId, $left.VaultResourceId == $right.VaultResourceId\r\n| where parse_json(ExtendedProperties).BackupFrequency == \"Daily\"\r\n};\r\nLatestAzureWorkloadBackupItemDimensionTable\r\n| summarize c=count()\r\n| project num = (c-1)/{OptimizeTab_RowsPerPage_3} + 1\r\n| project nums = range(1,num,1), num\r\n| mvexpand nums\r\n| project nums = tostring(nums), num = strcat(tostring(nums),\" of \",tostring(num))",
+                  "crossComponentResources": [
+                    "{Workspaces}"
+                  ],
+                  "value": "1",
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "queryType": 0,
+                  "resourceType": "microsoft.operationalinsights/workspaces"
+                }
+              ],
+              "style": "above",
+              "doNotRunWhenHidden": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Backup Schedule Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-PolicyOptimizationsGrid2Parameters"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList =  \"*\";\r\nlet Item_search =  @\"{OptimizeTab_SearchBackupInstanceOrDatasourceSet_3}\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields = false;\r\nlet LatestAzureWorkloadBackupItemDimensionTable = () {union isfuzzy = true \r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields)\r\n| where BackupSolution in~ (\"SQL in Azure VM Backup\",\"SAP HANA in Azure VM Backup\") \r\n| join kind = leftouter (\r\n// calling LA System Function\r\n_AzureBackup_GetPolicies(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList)\r\n) on $left.PolicyUniqueId == $right.UniqueId, $left.VaultResourceId == $right.VaultResourceId\r\n| where parse_json(ExtendedProperties).BackupFrequency == \"Daily\"\r\n};\r\nLatestAzureWorkloadBackupItemDimensionTable\r\n| sort by UniqueId asc \r\n| extend row_num = row_number()\r\n| extend page_num = tostring(((row_num-1)/{OptimizeTab_RowsPerPage_3} + 1))\r\n| where page_num has ('{OptimizeTab_Page_3}') or '*' in ('{OptimizeTab_Page_3}')\r\n| project Id, BackupInstance=FriendlyName, Container=DatasourceSetFriendlyName, ResourceGroup=iff(BackupSolution==\"Azure Backup Agent\" or BackupSolution==\"Azure Backup Server\" or BackupSolution==\"DPM\",\"(none)\",split(split(tostring(tolower(DatasourceSetResourceId)), '/resourcegroups/')[1],'/')[0]\r\n), Policy=Name, Vault=VaultResourceId, AzureResource=DatasourceSetResourceId, DatasourceType",
+              "size": 3,
+              "noDataMessage": "No records found for the selected time range and scope",
+              "showExportToExcel": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspaces}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Id",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "BackupInstance",
+                    "formatter": 16,
+                    "formatOptions": {
+                      "linkColumn": "Id",
+                      "linkTarget": "Resource",
+                      "showIcon": true,
+                      "customColumnWidthSetting": "14%"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Name of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Container",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "14%"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Protected container associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "ResourceGroup",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "14%"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Resource group of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Policy",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "14%"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Policy associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Vault",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Vault associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "AzureResource",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "14%"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Azure Resource associated with the backup instance. For Azure VM Backup, SQL in Azure VM backup and SAP database in Azure VM backup, the Azure Resource is the Azure VM. For Azure Files Share backup, the Azure Resource is the Azure Storage account. For on-premises backup instances, this field is blank."
+                    }
+                  },
+                  {
+                    "columnMatch": "DatasourceType",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "14%"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Azure Resource associated with the backup instance. For Azure VM Backup, SQL in Azure VM backup and SAP database in Azure VM backup, the Azure Resource is the Azure VM. For Azure Files Share backup, the Azure Resource is the Azure Storage account. For on-premises backup instances, this field is blank."
+                    }
+                  }
+                ],
+                "labelSettings": [
+                  {
+                    "columnId": "Id"
+                  },
+                  {
+                    "columnId": "BackupInstance",
+                    "label": "Backup Instance"
+                  },
+                  {
+                    "columnId": "ResourceGroup",
+                    "label": "Resource Group"
+                  },
+                  {
+                    "columnId": "AzureResource",
+                    "label": "Azure Resource"
+                  },
+                  {
+                    "columnId": "DatasourceType",
+                    "label": "Datasource Type"
+                  }
+                ]
+              },
+              "sortBy": []
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Backup Schedule Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "showPin": true,
+            "name": "Optimize-PolicyOptimizationGrid2",
+            "styleSettings": {
+              "showBorder": true
+            }
+          }
+        ]
+      },
+      "name": "group - 0"
+    }
+  ],
+  "fallbackResourceIds": [
+    "Azure Monitor"
+  ],
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
