@@ -1,0 +1,244 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "{MonitoringProfile}"
+        ],
+        "parameters": [
+          {
+            "id": "5a0bb93e-4a4f-4b69-a5a6-49fb85e0c7f4",
+            "version": "KqlParameterItem/1.0",
+            "name": "MonitoringProfile",
+            "type": 5,
+            "isRequired": true,
+            "value": null,
+            "isHiddenWhenLocked": true,
+            "typeSettings": {
+              "additionalResourceOptions": [],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 86400000
+            }
+          }
+        ],
+        "style": "above",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "name": "parameters - 6"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "### Select virtual machine\r\nSelect a virtual machine you would like for monitoring. The virtual machine needs to be in the same location as the SQL monitoring profile."
+      },
+      "name": "text - 1"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "{Subscription}"
+        ],
+        "parameters": [
+          {
+            "id": "0a001304-7d24-4e0c-9efc-2084cfbb6f79",
+            "version": "KqlParameterItem/1.0",
+            "name": "Subscription",
+            "type": 6,
+            "isRequired": true,
+            "query": "Resources\r\n| summarize Count = countif(type =~ 'microsoft.compute/virtualmachines') by subscriptionId\r\n| order by Count desc\r\n| extend Row = row_number()\r\n| project value = subscriptionId, label = subscriptionId, selected = Row == 1",
+            "crossComponentResources": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "0a001304-7d24-4e0c-9efc-2084cfbb6f79",
+            "version": "KqlParameterItem/1.0",
+            "name": "VmId",
+            "label": "Virtual machine",
+            "type": 5,
+            "isRequired": true,
+            "query": "Resources\r\n| where type =~ 'microsoft.compute/virtualmachines'\r\n| order by resourceGroup asc, name asc\r\n| project value = id, label = name, selected = false, group = resourceGroup",
+            "crossComponentResources": [
+              "{Subscription}"
+            ],
+            "value": null,
+            "typeSettings": {
+              "additionalResourceOptions": [],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "19eaf053-5e01-4631-b24d-ec7ee04597c5",
+            "version": "KqlParameterItem/1.0",
+            "name": "VmName",
+            "type": 1,
+            "isRequired": true,
+            "query": "Resources\r\n| where id =~ '{VmId}'\r\n| project value = name, label = name, selected = true",
+            "crossComponentResources": [
+              "{Subscription}"
+            ],
+            "isHiddenWhenLocked": true,
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "19eaf053-5e01-4631-b24d-ec7ee04597c5",
+            "version": "KqlParameterItem/1.0",
+            "name": "VmLocation",
+            "type": 1,
+            "isRequired": true,
+            "query": "Resources\r\n| where id =~ '{VmId}'\r\n| project value = location, label = location, selected = true",
+            "crossComponentResources": [
+              "{Subscription}"
+            ],
+            "isHiddenWhenLocked": true,
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "e625a983-193e-46b5-b7b0-d7fb3536f1eb",
+            "version": "KqlParameterItem/1.0",
+            "name": "ResourceGroup",
+            "label": "Resource group",
+            "type": 5,
+            "isRequired": true,
+            "query": "Resources\r\n| where id =~ '{VmId}'\r\n| project id = strcat('/subscriptions/', subscriptionId, '/resourceGroups/', resourceGroup)\r\n| project value = id, label = id, selected = true",
+            "crossComponentResources": [
+              "{Subscription}"
+            ],
+            "isHiddenWhenLocked": true,
+            "typeSettings": {
+              "additionalResourceOptions": [],
+              "showDefault": false
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          }
+        ],
+        "style": "formVertical",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "customWidth": "60",
+      "name": "parameters - 2"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "#### Add SQL Server connection strings\r\nAdd the monitoring config for this virtual machine. It involves providing providing a set of connection strings for the SQL databases you would like to monitor. \r\n\r\nNote that you have the option to define parameters to reference secrets from an Azure Key Vault or for just reuse of tokens across connection strings. "
+      },
+      "name": "text - 3"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "ef5f9e5a-8298-4993-aa2d-bd20d69c8f3f",
+            "version": "KqlParameterItem/1.0",
+            "name": "PerVmConfig",
+            "label": "Connection strings",
+            "type": 1,
+            "isRequired": true,
+            "value": "{\n    \"version\": 1,\n    \"secrets\": {\n        \"telegrafPassword\": {\n            \"keyvault\": \"https://mykeyvault.vault.azure.net/\",\n            \"name\": \"sqlPassword\"\n        }\n    },\n    \"parameters\": {\n        \"telegrafUsername\": \"telegraf\",\n        \"connections\": [\n            \"Server=mysqlserver.database.windows.net;Port=1433;Database=mydatabase;User Id=$telegrafUsername;Password=$telegrafPassword;\"\n        ]\n    }\n}",
+            "typeSettings": {
+              "multiLineText": true,
+              "editorLanguage": "json",
+              "multiLineHeight": 15
+            },
+            "timeContext": {
+              "durationMs": 86400000
+            }
+          }
+        ],
+        "style": "formVertical",
+        "queryType": 0,
+        "resourceType": "microsoft.insights/datacollectionrules"
+      },
+      "customWidth": "90",
+      "name": "parameters - 4"
+    },
+    {
+      "type": 11,
+      "content": {
+        "version": "LinkItem/1.0",
+        "style": "paragraph",
+        "links": [
+          {
+            "id": "e95dc155-3fda-479a-9beb-ba9a851ee930",
+            "linkTarget": "ArmTemplate",
+            "linkLabel": "Add monitoring virtual machine",
+            "style": "primary",
+            "linkIsContextBlade": true,
+            "templateRunContext": {
+              "componentIdSource": "parameter",
+              "componentId": "ResourceGroup",
+              "templateUriSource": "static",
+              "templateUri": "https://raw.githubusercontent.com/acearun/managedsolutions/master/Templates-Dcr/Add-monitoring-vm/azuredeploy.json",
+              "templateParameters": [
+                {
+                  "name": "vmName",
+                  "source": "parameter",
+                  "value": "VmName",
+                  "kind": "stringValue"
+                },
+                {
+                  "name": "dataCollectionRuleId",
+                  "source": "parameter",
+                  "value": "MonitoringProfile",
+                  "kind": "stringValue"
+                },
+                {
+                  "name": "workloadconfig",
+                  "source": "parameter",
+                  "value": "PerVmConfig",
+                  "kind": "objectValue"
+                },
+                {
+                  "name": "vmLocation",
+                  "source": "parameter",
+                  "value": "VmLocation",
+                  "kind": "stringValue"
+                }
+              ],
+              "titleSource": "static",
+              "descriptionSource": "static",
+              "runLabelSource": "static"
+            }
+          }
+        ]
+      },
+      "name": "links - 5"
+    }
+  ],
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
