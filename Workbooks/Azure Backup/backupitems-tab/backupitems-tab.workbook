@@ -1,0 +1,663 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "2520d604-c6eb-48f8-aac4-665294faae82",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "BackupInstanceTab_SearchBackupInstanceOrDatasourceSet",
+                  "label": "Search Instance or Container",
+                  "type": 1,
+                  "description": "Use to search for a backup instance by name. <br/> To search for a specific instance in a container, use the syntax [container name];[instance name] <br/> To search for all instances in a container, use the syntax [container name];",
+                  "value": "",
+                  "timeContext": {
+                    "durationMs": 604800000
+                  },
+                  "timeContextFromParameter": "TimeRange"
+                }
+              ],
+              "style": "above",
+              "doNotRunWhenHidden": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "customWidth": "90",
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "BackupItems"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "BackupItems-SearchParameterBlock",
+            "styleSettings": {
+              "margin": "0% 0% 0% 0%"
+            }
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "______________"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "BackupItems"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "BackupInstanceTab-DividingLine"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList = \"*\";\r\nlet Item_search =  @\"{BackupInstanceTab_SearchBackupInstanceOrDatasourceSet}\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields = false;\r\n// local Params\r\nlet ProtectionStatusEnum = datatable (ProtectionInfo:string, statusOrder:int)\r\n    [ \"Protected\", 1,\r\n      \"ProtectionStopped\", 2,\r\n      \"InitialBackupPending\", 3];\r\n// query to transform function output\r\nlet ProtectionStatusTable = ProtectionStatusEnum\r\n| join kind= leftouter (\r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields)\r\n| summarize count(UniqueId) by ProtectionInfo) \r\non ProtectionInfo == ProtectionInfo\r\n| project ProtectionInfo, count_BackupInstanceUniqueId = (iff(isempty(count_UniqueId), 0, count_UniqueId)), statusOrder\r\n| order by statusOrder asc;\r\nProtectionStatusTable",
+              "size": 3,
+              "noDataMessage": "No records found for the selected time range and scope",
+              "exportFieldName": "ProtectionInfo",
+              "exportParameterName": "BackupInstanceTab_ProtectionStatus",
+              "exportDefaultValue": "*",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspaces}"
+              ],
+              "visualization": "tiles",
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "ProtectionInfo",
+                  "formatter": 1
+                },
+                "subtitleContent": {
+                  "columnMatch": "SubTitle",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "count_BackupInstanceUniqueId",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "auto"
+                  }
+                },
+                "showBorder": true
+              }
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "BackupItems"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "BackupItems-Tiles",
+            "styleSettings": {
+              "margin": "-30px 0% 0% -15px"
+            }
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": " The below charts are displayed in **{AggregationType}** view due to your time range selection. [Learn more](https://docs.microsoft.com/azure/backup/configure-reports) ",
+              "style": "info"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "BackupItems"
+              }
+            ],
+            "name": "AggregationTypeInfoText"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList = @\"{BackupInstanceTab_ProtectionStatus}\";\r\nlet Item_search =  @\"{BackupInstanceTab_SearchBackupInstanceOrDatasourceSet}\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields = False; \r\nlet AggregationType = @\"{AggregationType}\";\r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstancesTrends(RangeStart, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields, AggregationType)\r\n// query to transform function output\r\n| summarize BackupItemCount = count(UniqueId) by startofday(TimeGenerated)",
+              "size": 0,
+              "aggregation": 5,
+              "title": "Backup Instances Trend",
+              "noDataMessage": "No records found for the selected time range and scope",
+              "showExportToExcel": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspaces}"
+              ],
+              "visualization": "linechart",
+              "gridSettings": {
+                "sortBy": [
+                  {
+                    "itemKey": "TimeRangeEndDay",
+                    "sortOrder": 2
+                  }
+                ]
+              },
+              "sortBy": [
+                {
+                  "itemKey": "TimeRangeEndDay",
+                  "sortOrder": 2
+                }
+              ],
+              "chartSettings": {
+                "seriesLabelSettings": [
+                  {
+                    "seriesName": "BackupItemCount",
+                    "label": "# Backup Instances"
+                  }
+                ]
+              }
+            },
+            "customWidth": "50",
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "BackupItems"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "showPin": true,
+            "name": "BackupItems-BackupItemsTrendGraph"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList = @\"{BackupInstanceTab_ProtectionStatus}\";\r\nlet Item_search =  @\"{BackupInstanceTab_SearchBackupInstanceOrDatasourceSet}\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields = True;\r\nlet AggregationType = @\"{AggregationType}\";\r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstancesTrends(RangeStart, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields, AggregationType)\r\n// query to transform function output\r\n| summarize StorageConsumedInGBs = sum(VaultStore_StorageConsumptionInMBs)/(1024) by  TimeRangeEndDay = startofday(TimeGenerated)",
+              "size": 0,
+              "aggregation": 5,
+              "title": "Cloud Storage Trend",
+              "noDataMessage": "No records found for the selected time range and scope",
+              "showExportToExcel": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspaces}"
+              ],
+              "visualization": "linechart",
+              "gridSettings": {
+                "sortBy": [
+                  {
+                    "itemKey": "TimeRangeEndDay",
+                    "sortOrder": 1
+                  }
+                ]
+              },
+              "sortBy": [
+                {
+                  "itemKey": "TimeRangeEndDay",
+                  "sortOrder": 1
+                }
+              ],
+              "chartSettings": {
+                "xAxis": "TimeRangeEndDay",
+                "seriesLabelSettings": [
+                  {
+                    "seriesName": "StorageConsumedInMBs",
+                    "label": "Cloud Storage (MB)"
+                  },
+                  {
+                    "seriesName": "StorageConsumedInGBs",
+                    "label": "Cloud Storage (GB)"
+                  }
+                ],
+                "ySettings": {
+                  "unit": 17,
+                  "min": null,
+                  "max": null
+                }
+              }
+            },
+            "customWidth": "50",
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "BackupItems"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo",
+                "value": ""
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "showPin": true,
+            "name": "BackupItems-CloudStorageTrendGraph"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "____________________"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "BackupItems"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "BackupItems-DividingLine"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<div style=\"text-align:left\"><span style=\"font-size:14px;font-weight:600;\">Storage by Backup Instance</span> </div>"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "BackupItems"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "BackupItems-Grid1Title",
+            "styleSettings": {
+              "margin": "0% 0% 10px 0%"
+            }
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "f40045ea-499d-46af-bc77-3df8c3b691a6",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "BackupInstanceTab_SearchPolicyName",
+                  "label": "Search Policy Name",
+                  "type": 1,
+                  "description": "Use to search by Policy Name",
+                  "timeContext": {
+                    "durationMs": 0
+                  },
+                  "timeContextFromParameter": "TimeRange",
+                  "value": ""
+                },
+                {
+                  "id": "7bb4a71d-d932-4737-8715-d378be7ffba5",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "BackupInstanceTab_SortBy",
+                  "label": "Sort By",
+                  "type": 2,
+                  "description": "Use to sort by a certain column",
+                  "isRequired": true,
+                  "query": "{\"version\":\"1.0.0\",\"content\":\"[\\r\\n{ \\\"value\\\": \\\"VaultStore_StorageConsumptionInMBs\\\", \\\"label\\\": \\\"Cloud Storage (MB)\\\", \\\"selected\\\": \\\"true\\\" }]\",\"transformers\":null}",
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "timeContext": {
+                    "durationMs": 0
+                  },
+                  "timeContextFromParameter": "TimeRange",
+                  "queryType": 8
+                },
+                {
+                  "id": "595e5629-4f64-4038-bff5-5f3371259caa",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "BackupInstanceTab_Order",
+                  "label": "Order",
+                  "type": 2,
+                  "description": "Use to specify sort order: Ascending/Descending",
+                  "isRequired": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "jsonData": "[\r\n    { \"value\":\"Ascending\"},\r\n    { \"value\":\"Descending\", \"selected\":true}\r\n]",
+                  "timeContext": {
+                    "durationMs": 0
+                  },
+                  "timeContextFromParameter": "TimeRange"
+                },
+                {
+                  "id": "0e4b3406-91aa-452e-90b2-6b22e71f0b82",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "BackupInstanceTab_RowsPerPage",
+                  "label": "Rows Per Page",
+                  "type": 2,
+                  "description": "Number of rows to display in grid view",
+                  "isRequired": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "jsonData": "[\r\n    { \"value\":10, \"label\":\"10\", \"selected\":true  },\r\n    { \"value\":25, \"label\":\"25\" },\r\n    { \"value\":50, \"label\":\"50\" },\r\n    { \"value\":100, \"label\":\"100\" },\r\n    { \"value\":250, \"label\":\"250\" },\r\n    { \"value\":500, \"label\":\"500\" },\r\n    { \"value\":1000, \"label\":\"1000\" }\r\n]",
+                  "timeContext": {
+                    "durationMs": 0
+                  },
+                  "timeContextFromParameter": "TimeRange"
+                },
+                {
+                  "id": "d1b7fe67-8c02-431c-904c-f82238dd112e",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "BackupInstanceTab_Page",
+                  "label": "Page",
+                  "type": 2,
+                  "description": "Select Page Number",
+                  "isRequired": true,
+                  "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList = @\"{BackupInstanceTab_ProtectionStatus}\";\r\nlet Item_search =  @\"{BackupInstanceTab_SearchBackupInstanceOrDatasourceSet}\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields = true;\r\n// local Params\r\nlet PolicyNameParam = @\"{BackupInstanceTab_SearchPolicyName}\";\r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields)\r\n// query to transform function output\r\n| where PolicyName contains (PolicyNameParam) or '*' in (PolicyNameParam)\r\n| summarize c=count()\r\n| project num = (c-1)/{BackupInstanceTab_RowsPerPage} + 1\r\n| project nums = range(1,num,1), num\r\n| mvexpand nums\r\n| project nums = tostring(nums), num = strcat(tostring(nums),\" of \",tostring(num))",
+                  "crossComponentResources": [
+                    "{Workspaces}"
+                  ],
+                  "value": "1",
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "queryType": 0,
+                  "resourceType": "microsoft.operationalinsights/workspaces"
+                }
+              ],
+              "style": "above",
+              "doNotRunWhenHidden": true,
+              "queryType": 8
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "BackupItems"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "BackupItems-Grid1ParameterBlock",
+            "styleSettings": {
+              "margin": "-23px 0% 0% 0%"
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList = @\"{BackupInstanceTab_ProtectionStatus}\";\r\nlet Item_search =  @\"{BackupInstanceTab_SearchBackupInstanceOrDatasourceSet}\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields = true;\r\n// local Params\r\nlet PolicyNameParam = @\"{BackupInstanceTab_SearchPolicyName}\";\r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields)\r\n// query to transform function output\r\n| where PolicyName contains (PolicyNameParam) or '*' in (PolicyNameParam)\r\n| extend TempColumn = column_ifexists(tostring('{BackupInstanceTab_SortBy}'), \"VaultStore_StorageConsumptionInMBs\")\r\n| extend ColumnToBeSorted = iff(tostring('{BackupInstanceTab_Order}') == \"Ascending\", todouble(TempColumn) - 90000000, 90000000 - todouble(TempColumn))\r\n| sort by ColumnToBeSorted asc nulls last,  UniqueId asc \r\n| extend row_num = row_number()\r\n| extend page_num = tostring(((row_num-1)/{BackupInstanceTab_RowsPerPage} + 1))\r\n| where page_num has ('{BackupInstanceTab_Page}') or '*' in ('{BackupInstanceTab_Page}') \r\n| project Id, BackupInstance=FriendlyName, Container=DatasourceSetFriendlyName, ResourceGroup=iff(DatasourceType==\"Azure Backup Agent\" or DatasourceType==\"Azure Backup Server\" or DatasourceType==\"DPM\",\"(none)\",split(split(tostring(tolower(DatasourceSetResourceId)), '/resourcegroups/')[1],'/')[0]\r\n), Policy=PolicyName, CloudStorage=VaultStore_StorageConsumptionInMBs/1024, Vault=VaultResourceId, StorageReplicationType=VaultStore_StorageReplicationType, AzureResource=DatasourceSetResourceId, DatasourceType",
+              "size": 3,
+              "noDataMessage": "No records found for the selected time range and scope",
+              "exportFieldName": "BackupItemUniqueId",
+              "exportParameterName": "SelectedBackupItemUniqueId",
+              "exportDefaultValue": "*",
+              "showExportToExcel": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspaces}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Id",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "BackupInstance",
+                    "formatter": 16,
+                    "formatOptions": {
+                      "linkColumn": "Id",
+                      "linkTarget": "Resource",
+                      "showIcon": true
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Name of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Container",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Name of the protected container associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "ResourceGroup",
+                    "formatter": 1,
+                    "tooltipFormat": {
+                      "tooltip": "Resource group of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Policy",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Policy associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "CloudStorage",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "min": 0,
+                      "palette": "blue"
+                    },
+                    "numberFormat": {
+                      "unit": 0,
+                      "options": {
+                        "style": "decimal",
+                        "useGrouping": false,
+                        "minimumFractionDigits": 2,
+                        "maximumFractionDigits": 2
+                      }
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Total cloud storage consumed by the backup instance, as of the end of the selected time range"
+                    }
+                  },
+                  {
+                    "columnMatch": "Vault",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Vault associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "StorageReplicationType",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Storage replication type associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "AzureResource",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Azure Resource associated with the backup instance. For Azure VM Backup, SQL in Azure VM backup and SAP database in Azure VM backup, the Azure Resource is the Azure VM. For Azure Files Share backup, the Azure Resource is the Azure Storage account. For on-premises backup instances, this field is blank."
+                    }
+                  },
+                  {
+                    "columnMatch": "DatasourceType",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Datasource Type"
+                    }
+                  }
+                ],
+                "labelSettings": [
+                  {
+                    "columnId": "Id"
+                  },
+                  {
+                    "columnId": "BackupInstance",
+                    "label": "Backup Instance"
+                  },
+                  {
+                    "columnId": "Container"
+                  },
+                  {
+                    "columnId": "ResourceGroup",
+                    "label": "Resource Group"
+                  },
+                  {
+                    "columnId": "Policy"
+                  },
+                  {
+                    "columnId": "CloudStorage",
+                    "label": "Cloud Storage (GB)"
+                  },
+                  {
+                    "columnId": "Vault"
+                  },
+                  {
+                    "columnId": "StorageReplicationType",
+                    "label": "Storage Replication Type"
+                  },
+                  {
+                    "columnId": "AzureResource",
+                    "label": "Azure Resource"
+                  },
+                  {
+                    "columnId": "DatasourceType",
+                    "label": "Datasource Type"
+                  }
+                ]
+              },
+              "sortBy": []
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "BackupItems"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "showPin": true,
+            "name": "BackupItems-Grid1",
+            "styleSettings": {
+              "margin": "-30px 0% 0% 0%",
+              "showBorder": true
+            }
+          }
+        ]
+      },
+      "name": "group - 0"
+    }
+  ],
+  "fallbackResourceIds": [
+    "Azure Monitor"
+  ],
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
