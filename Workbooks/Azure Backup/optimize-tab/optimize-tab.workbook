@@ -1,0 +1,3486 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 11,
+            "content": {
+              "version": "LinkItem/1.0",
+              "style": "tabs",
+              "links": [
+                {
+                  "id": "40ea16d3-b2f0-4322-8ee7-adf160fdad90",
+                  "cellValue": "OptimizeDimension",
+                  "linkTarget": "parameter",
+                  "linkLabel": "Inactive Resources",
+                  "subTarget": "Inactive Resources",
+                  "style": "link"
+                },
+                {
+                  "id": "7cee679a-1b25-4826-9785-c39212eaf48b",
+                  "cellValue": "OptimizeDimension",
+                  "linkTarget": "parameter",
+                  "linkLabel": "Policy Optimizations",
+                  "subTarget": "Policy Optimizations",
+                  "style": "link"
+                }
+              ]
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-SubTabs1"
+          },
+          {
+            "type": 11,
+            "content": {
+              "version": "LinkItem/1.0",
+              "style": "tabs",
+              "links": [
+                {
+                  "id": "21c027f6-8f32-4dd5-bf90-9d54d6ed0393",
+                  "cellValue": "OptimizeSubDimension",
+                  "linkTarget": "parameter",
+                  "linkLabel": "Retention Optimizations",
+                  "subTarget": "Retention Optimizations",
+                  "preText": "",
+                  "style": "link"
+                },
+                {
+                  "id": "3d1c10e2-70a8-487b-b983-6570ce733f31",
+                  "cellValue": "OptimizeSubDimension",
+                  "linkTarget": "parameter",
+                  "linkLabel": "Backup Schedule Optimizations",
+                  "subTarget": "Backup Schedule Optimizations",
+                  "style": "link"
+                }
+              ]
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              }
+            ],
+            "name": "links - 109"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<div style=\"text-align:left\"><span style=\"font-size:14px;font-weight:600;\">Backup Instances without a recovery point in selected time range </span> </div>"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Inactive Resources"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-InactiveResourcesGrid1Title"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<p> <span style=\"font-size:12px; font-style:italic\"> Below are the backup instances which do not have a successful recovery point in the selected time range. You can save on costs by unprotecting decommissioned machines. <a href=\"https://aka.ms/AzureBackupReportDeletedResourcesView\" target=\"_blank\">Learn More</a> </span> </p>"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Inactive Resources"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-InactiveResourcesGrid1InstructionText"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<p> <span style=\"font-size:12px; font-style:italic\"> Showing results for Time Range: {TimeRange} </span> </p>"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Inactive Resources"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              }
+            ],
+            "name": "Optimize-InactiveResourcesTimeRangeText"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "77aa6aec-8198-4e29-8196-e56c3fe81292",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_SearchBackupInstanceOrDatasourceSet",
+                  "label": "Search Instance or Container",
+                  "type": 1,
+                  "description": "Use to search for a backup instance by name. <br/> To search for a specific instance in a container, use the syntax [container name];[instance name] <br/> To search for all instances in a container, use the syntax [container name];",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "46f7de5c-dc7f-48ed-bfd0-d5a868aef402",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_RowsPerPage",
+                  "label": "Rows Per Page",
+                  "type": 2,
+                  "description": "Number of rows to display in grid view",
+                  "isRequired": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "jsonData": "[\r\n    { \"value\":10, \"label\":\"10\", \"selected\":true  },\r\n    { \"value\":25, \"label\":\"25\" },\r\n    { \"value\":50, \"label\":\"50\" },\r\n    { \"value\":100, \"label\":\"100\" },\r\n    { \"value\":250, \"label\":\"250\" },\r\n    { \"value\":500, \"label\":\"500\" },\r\n    { \"value\":1000, \"label\":\"1000\" }\r\n]",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "792ec3e5-00b6-4669-9db2-de3e6617b7b7",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_Page",
+                  "label": "Page",
+                  "type": 2,
+                  "description": "Select Page Number",
+                  "isRequired": true,
+                  "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList =  \"*\";\r\nlet Item_search =   \"*;*\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields_1 = false;\r\nlet DisplayAllFields_2 = true;\r\nlet JobOperationList = \"*\";\r\nlet JobStatusList =  \"*\";\r\nlet JobFailureCodeList =  \"*\";\r\nlet ExcludeLog = False;\r\nlet BackupItemWithoutSuccessfulBackup = (){\r\n// calling LA System Function\r\n_AzureBackup_GetJobs(RangeStart, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, JobOperationList, JobStatusList, JobFailureCodeList, DatasourceSetName, BackupInstanceName, ExcludeLog)\r\n| where OperationCategory has \"Backup\"\r\n| where Status in (\"Completed\",\"CompletedWithWarnings\")\r\n| join kind= rightanti (\r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields_1)\r\n) on $left.BackupInstanceUniqueId == $right.UniqueId\r\n| project UniqueId,  BackupInstanceFriendlyName = FriendlyName,  DatasourceType, ProtectionInfo, VaultResourceId\r\n};\r\nlet BackupItemWithoutSuccessfulBackupAndItsRecoveryPointTable = ()\r\n{\r\nBackupItemWithoutSuccessfulBackup | join \r\n(\r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields_2)\r\n) on UniqueId\r\n| where not(LatestRecoveryPoint >= RangeStart and LatestRecoveryPoint <= RangeEnd)\r\n};\r\nBackupItemWithoutSuccessfulBackupAndItsRecoveryPointTable\r\n| summarize c=count()\r\n| project num = (c-1)/{OptimizeTab_RowsPerPage} + 1\r\n| project nums = range(1,num,1), num\r\n| mvexpand nums\r\n| project nums = tostring(nums), num = strcat(tostring(nums),\" of \",tostring(num))",
+                  "crossComponentResources": [
+                    "{Workspaces}"
+                  ],
+                  "value": "1",
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "queryType": 0,
+                  "resourceType": "microsoft.operationalinsights/workspaces"
+                }
+              ],
+              "style": "above",
+              "doNotRunWhenHidden": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Inactive Resources"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-InactiveResourcesGrid1Parameters"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList =  \"*\";\r\nlet Item_search =   @\"{OptimizeTab_SearchBackupInstanceOrDatasourceSet}\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields_1 = false;\r\nlet DisplayAllFields_2 = true;\r\nlet JobOperationList = \"*\";\r\nlet JobStatusList =  \"*\";\r\nlet JobFailureCodeList =  \"*\";\r\nlet ExcludeLog = False;\r\nlet BackupItemWithoutSuccessfulBackup = (){\r\n// calling LA System Function\r\n_AzureBackup_GetJobs(RangeStart, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, JobOperationList, JobStatusList, JobFailureCodeList, DatasourceSetName, BackupInstanceName, ExcludeLog)\r\n| where OperationCategory has \"Backup\"\r\n| where Status in (\"Completed\",\"CompletedWithWarnings\")\r\n| join kind= rightanti (\r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields_1)\r\n) on $left.BackupInstanceUniqueId == $right.UniqueId\r\n| project UniqueId,  BackupInstanceFriendlyName = FriendlyName,  DatasourceType, ProtectionInfo, VaultResourceId\r\n};\r\nlet BackupItemWithoutSuccessfulBackupAndItsRecoveryPointTable = ()\r\n{\r\nBackupItemWithoutSuccessfulBackup | join \r\n(\r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields_2)\r\n) on UniqueId\r\n| where not(LatestRecoveryPoint >= RangeStart and LatestRecoveryPoint <= RangeEnd)\r\n};\r\nBackupItemWithoutSuccessfulBackupAndItsRecoveryPointTable\r\n| sort by UniqueId asc \r\n| extend row_num = row_number()\r\n| extend page_num = tostring(((row_num-1)/{OptimizeTab_RowsPerPage} + 1))\r\n| where page_num has ('{OptimizeTab_Page}') or '*' in ('{OptimizeTab_Page}')\r\n| project BackupInstance=BackupInstanceFriendlyName, Id, Container=DatasourceSetFriendlyName, ResourceGroup=iff(DatasourceType==\"Azure Backup Agent\" or DatasourceType==\"Azure Backup Server\" or DatasourceType==\"DPM\",\"(none)\",split(split(tostring(tolower(DatasourceSetResourceId)), '/resourcegroups/')[1],'/')[0]\r\n), Policy=PolicyName, LatestRecoveryPoint, Vault=VaultResourceId, AzureResource=DatasourceSetResourceId, DatasourceType",
+              "size": 3,
+              "noDataMessage": "No records found for the selected time range and scope",
+              "showExportToExcel": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspaces}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "BackupInstance",
+                    "formatter": 16,
+                    "formatOptions": {
+                      "linkColumn": "Id",
+                      "linkTarget": "Resource",
+                      "showIcon": true
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Name of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Id",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Container",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Protected container associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "ResourceGroup",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Resource group of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Policy",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Policy associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "LatestRecoveryPoint",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Latest recovery point associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Vault",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Vault associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "AzureResource",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Azure Resource associated with the backup instance. For Azure VM Backup, SQL in Azure VM backup and SAP database in Azure VM backup, the Azure Resource is the Azure VM. For Azure Files Share backup, the Azure Resource is the Azure Storage account. For on-premises backup instances, this field is blank."
+                    }
+                  },
+                  {
+                    "columnMatch": "DatasourceType",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Datasource Type"
+                    }
+                  }
+                ],
+                "labelSettings": [
+                  {
+                    "columnId": "BackupInstance",
+                    "label": "Backup Instance"
+                  },
+                  {
+                    "columnId": "Id"
+                  },
+                  {
+                    "columnId": "ResourceGroup",
+                    "label": "Resource Group"
+                  },
+                  {
+                    "columnId": "LatestRecoveryPoint",
+                    "label": "Latest Recovery Point"
+                  },
+                  {
+                    "columnId": "AzureResource",
+                    "label": "Azure Resource"
+                  },
+                  {
+                    "columnId": "DatasourceType",
+                    "label": "Datasource Type"
+                  }
+                ]
+              }
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Inactive Resources"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "showPin": true,
+            "name": "Optimize-InactiveResourcesGrid1",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<div style=\"text-align:left\"><span style=\"font-size:14px;font-weight:600;\">Backup Instances with a large retention duration"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Retention Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-PolicyOptimizationsGrid1Title"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<p> <span style=\"font-size:12px; font-style:italic\"> Explore cost-saving opportunities by identifying items with backup retained for longer duration by your organization. <a href=\"https://aka.ms/AzureBackupReportLargeRetentionView\" target=\"_blank\">Learn More</a> </span> </p>"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Retention Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-PolicyOptimizationsGrid1InstructionText1"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<p> <span style=\"font-size:12px; font-style:italic\"> Use the below filters to identify backup items with retentions larger than the specified values. For the database workloads, retention duration of the full backups is considered. <a href=\"https://aka.ms/AzureBackupReportLargeRetentionView2\" target=\"_blank\">Learn More</a> </span> </p>"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Retention Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-PolicyOptimizationsGrid1InstructionText2"
+          },
+          {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "bac04291-b7fd-4da5-8580-1815d0d2af4d",
+            "version": "KqlParameterItem/1.0",
+            "name": "OptimizeTab_DailyRPRetention",
+            "label": "Daily RP Retention (days)",
+            "type": 1,
+            "description": "Use to specify minimum retention duration of daily retention points",
+            "value": "-1",
+            "criteriaData": [
+              {
+                "criteriaContext": {
+                  "operator": "Default",
+                  "rightValType": "param",
+                  "resultValType": "static",
+                  "resultVal": "-1"
+                }
+              }
+            ],
+            "timeContext": {
+              "durationMs": 86400000
+            }
+          },
+          {
+            "id": "9310f11f-c461-4212-807b-582ad181079b",
+            "version": "KqlParameterItem/1.0",
+            "name": "OptimizeTab_WeeklyRPRetention",
+            "label": "Weekly RP Retention (days)",
+            "type": 1,
+            "description": "Use to specify minimum retention duration of weekly retention points",
+            "value": "-1",
+            "criteriaData": [
+              {
+                "criteriaContext": {
+                  "operator": "Default",
+                  "rightValType": "param",
+                  "resultValType": "static",
+                  "resultVal": "-1"
+                }
+              }
+            ],
+            "timeContext": {
+              "durationMs": 86400000
+            }
+          },
+          {
+            "id": "4b5098ff-555d-4398-b611-48c9eea83994",
+            "version": "KqlParameterItem/1.0",
+            "name": "OptimizeTab_MonthlyRPRetention",
+            "label": "Monthly RP Retention (days)",
+            "type": 1,
+            "description": "Use to specify monthly retention duration of daily retention points",
+            "value": "-1",
+            "criteriaData": [
+              {
+                "criteriaContext": {
+                  "operator": "Default",
+                  "rightValType": "param",
+                  "resultValType": "static",
+                  "resultVal": "-1"
+                }
+              }
+            ],
+            "timeContext": {
+              "durationMs": 86400000
+            }
+          },
+          {
+            "id": "056d71c8-9333-473a-b1c6-d9be75665fff",
+            "version": "KqlParameterItem/1.0",
+            "name": "OptimizeTab_YearlyRPRetention",
+            "label": "Yearly RP Retention (days)",
+            "type": 1,
+            "description": "Use to specify minimum retention duration of yearly retention points",
+            "value": "-1",
+            "criteriaData": [
+              {
+                "criteriaContext": {
+                  "operator": "Default",
+                  "rightValType": "param",
+                  "resultValType": "static",
+                  "resultVal": "-1"
+                }
+              }
+            ],
+            "timeContext": {
+              "durationMs": 86400000
+            }
+          }
+        ],
+        "style": "above",
+        "doNotRunWhenHidden": true,
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "conditionalVisibilities": [
+        {
+          "parameterName": "TabName",
+          "comparison": "isEqualTo",
+          "value": "Optimize"
+        },
+        {
+          "parameterName": "OptimizeDimension",
+          "comparison": "isEqualTo",
+          "value": "Policy Optimizations"
+        },
+        {
+          "parameterName": "OptimizeSubDimension",
+          "comparison": "isEqualTo",
+          "value": "Retention Optimizations"
+        },
+        {
+          "parameterName": "Workspaces",
+          "comparison": "isNotEqualTo"
+        },
+        {
+          "parameterName": "ErrorHandle",
+          "comparison": "isNotEqualTo"
+        },
+        {
+          "parameterName": "DatasourceType",
+          "comparison": "isNotEqualTo"
+        }
+      ],
+      "name": "Optimize-PolicyOptimizationGrid1Parameters1"
+    },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "77aa6aec-8198-4e29-8196-e56c3fe81292",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_SearchBackupInstanceOrDatasourceSet_2",
+                  "label": "Search Instance or Container",
+                  "type": 1,
+                  "description": "Use to search for a backup instance by name. <br/> To search for a specific instance in a container, use the syntax [container name];[instance name] <br/> To search for all instances in a container, use the syntax [container name];",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "b8a26e03-124c-41bb-bd2c-3376aa80547b",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_SortBy_2",
+                  "label": "Sort By",
+                  "type": 2,
+                  "description": "Use to sort by a certain column",
+                  "isRequired": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "jsonData": "[{ \"value\": \"YearlyRPRetentionDuration\", \"label\": \"Yearly Retention Duration\" },\r\n{ \"value\": \"MonthlyRPRetentionDuration\", \"label\": \"Monthly Retention Duration\" }, \r\n{ \"value\": \"WeeklyRPRetentionDuration\", \"label\": \"Weekly Retention Duration\" },\r\n{ \"value\": \"DailyRPRetentionDuration\", \"label\": \"Daily Retention Duration\", \"selected\": \"true\" }]"
+                },
+                {
+                  "id": "b4864988-e9db-434a-b79e-61d3f9d901c1",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_Order_2",
+                  "label": "Order",
+                  "type": 2,
+                  "description": "Use to specify sort order: Ascending/Descending",
+                  "isRequired": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "jsonData": "[\r\n    { \"value\":\"Ascending\", \"selected\":true},\r\n    { \"value\":\"Descending\"}\r\n]",
+                  "value": "Descending"
+                },
+                {
+                  "id": "46f7de5c-dc7f-48ed-bfd0-d5a868aef402",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_RowsPerPage_2",
+                  "label": "Rows Per Page",
+                  "type": 2,
+                  "description": "Number of rows to display in grid view",
+                  "isRequired": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "jsonData": "[\r\n    { \"value\":10, \"label\":\"10\", \"selected\":true  },\r\n    { \"value\":25, \"label\":\"25\" },\r\n    { \"value\":50, \"label\":\"50\" },\r\n    { \"value\":100, \"label\":\"100\" },\r\n    { \"value\":250, \"label\":\"250\" },\r\n    { \"value\":500, \"label\":\"500\" },\r\n    { \"value\":1000, \"label\":\"1000\" }\r\n]",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "792ec3e5-00b6-4669-9db2-de3e6617b7b7",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_Page_2",
+                  "label": "Page",
+                  "type": 2,
+                  "description": "Select Page Number",
+                  "isRequired": true,
+                  "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList =  \"*\";\r\nlet Item_search =  @\"{OptimizeTab_SearchBackupInstanceOrDatasourceSet_2}\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields = false;\r\n// local Params\r\nlet DailyRetentionParam =  iff( isempty(@\"{OptimizeTab_DailyRPRetention}\"), todouble(-1), todouble(@\"{OptimizeTab_DailyRPRetention}\"));\r\nlet WeeklyRetentionParam =  iff( isempty(@\"{OptimizeTab_WeeklyRPRetention}\"), todouble(-1), todouble(@\"{OptimizeTab_WeeklyRPRetention}\"));  \r\nlet MonthlyRetentionParam =   iff( isempty(@\"{OptimizeTab_MonthlyRPRetention}\"), todouble(-1), todouble(@\"{OptimizeTab_MonthlyRPRetention}\")); \r\nlet YearlyRetentionParam =   iff( isempty(@\"{OptimizeTab_YearlyRPRetention}\"), todouble(-1), todouble(@\"{OptimizeTab_YearlyRPRetention}\")); \r\nlet OutputTable = () {union isfuzzy = true \r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields)\r\n| join kind = leftouter (\r\n// calling LA System Function\r\n_AzureBackup_GetPolicies(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList)\r\n| extend ExtendedPropertiesJson = parse_json(ExtendedProperties)\r\n) on $left.PolicyUniqueId == $right.UniqueId, $left.VaultResourceId == $right.VaultResourceId\r\n};\r\nOutputTable\r\n// query to transform function output\r\n| where  (ExtendedPropertiesJson.DailyRetentionDuration > DailyRetentionParam) and (ExtendedPropertiesJson.WeeklyRetentionDuration > WeeklyRetentionParam) and (ExtendedPropertiesJson.MonthlyRetentionDuration > MonthlyRetentionParam) and (ExtendedPropertiesJson.YearlyRetentionDuration > YearlyRetentionParam)\r\n| summarize c=count()\r\n| project num = (c-1)/{OptimizeTab_RowsPerPage_2} + 1\r\n| project nums = range(1,num,1), num\r\n| mvexpand nums\r\n| project nums = tostring(nums), num = strcat(tostring(nums),\" of \",tostring(num))",
+                  "crossComponentResources": [
+                    "{Workspaces}"
+                  ],
+                  "value": "1",
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "queryType": 0,
+                  "resourceType": "microsoft.operationalinsights/workspaces"
+                }
+              ],
+              "style": "above",
+              "doNotRunWhenHidden": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Retention Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-PolicyOptimizationsGrid1Parameters2"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList =  \"*\";\r\nlet Item_search =  @\"{OptimizeTab_SearchBackupInstanceOrDatasourceSet_2}\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields = false;\r\n// local Params\r\nlet DailyRetentionParam =  iff( isempty(@\"{OptimizeTab_DailyRPRetention}\"), todouble(-1), todouble(@\"{OptimizeTab_DailyRPRetention}\"));\r\nlet WeeklyRetentionParam =  iff( isempty(@\"{OptimizeTab_WeeklyRPRetention}\"), todouble(-1), todouble(@\"{OptimizeTab_WeeklyRPRetention}\"));  \r\nlet MonthlyRetentionParam =   iff( isempty(@\"{OptimizeTab_MonthlyRPRetention}\"), todouble(-1), todouble(@\"{OptimizeTab_MonthlyRPRetention}\")); \r\nlet YearlyRetentionParam =   iff( isempty(@\"{OptimizeTab_YearlyRPRetention}\"), todouble(-1), todouble(@\"{OptimizeTab_YearlyRPRetention}\")); \r\nlet OutputTable = () {union isfuzzy = true \r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields)\r\n| join kind = leftouter (\r\n// calling LA System Function\r\n_AzureBackup_GetPolicies(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList)\r\n| extend ExtendedPropertiesJson = parse_json(ExtendedProperties)\r\n) on $left.PolicyUniqueId == $right.UniqueId, $left.VaultResourceId == $right.VaultResourceId\r\n};\r\nOutputTable\r\n// query to transform function output\r\n| extend DailyRPRetentionDuration = ExtendedPropertiesJson.DailyRetentionDuration, WeeklyRPRetentionDuration = ExtendedPropertiesJson.WeeklyRetentionDuration, MonthlyRPRetentionDuration = ExtendedPropertiesJson.MonthlyRetentionDuration, YearlyRPRetentionDuration = ExtendedPropertiesJson.YearlyRetentionDuration\r\n| where  (DailyRPRetentionDuration > DailyRetentionParam) and (WeeklyRPRetentionDuration > WeeklyRetentionParam) and (MonthlyRPRetentionDuration > MonthlyRetentionParam) and (YearlyRPRetentionDuration > YearlyRetentionParam)\r\n| extend TempColumn = column_ifexists(tostring('{OptimizeTab_SortBy_2}'), \"DailyRPRetentionDuration\")\r\n| extend ColumnToBeSorted = iff(tostring('{OptimizeTab_Order_2}') == \"Ascending\", todouble(TempColumn) - 90000000, 90000000 - todouble(TempColumn))\r\n| sort by ColumnToBeSorted asc nulls last, UniqueId asc  \r\n| extend row_num = row_number()\r\n| extend page_num = tostring(((row_num-1)/{OptimizeTab_RowsPerPage_2} + 1))\r\n| where page_num has ('{OptimizeTab_Page_2}') or '*' in ('{OptimizeTab_Page_2}')\r\n| project Id, BackupInstance=FriendlyName, Container=DatasourceSetFriendlyName, ResourceGroup=iff(DatasourceType==\"Azure Backup Agent\" or DatasourceType==\"Azure Backup Server\" or DatasourceType==\"DPM\",\"(none)\",split(split(tostring(tolower(DatasourceSetResourceId)), '/resourcegroups/')[1],'/')[0]\r\n), Policy=Name, DailyRPRetentionDuration, WeeklyRPRetentionDuration, MonthlyRPRetentionDuration, YearlyRPRetentionDuration, Vault=VaultResourceId, AzureResource=DatasourceSetResourceId, DatasourceType",
+              "size": 3,
+              "noDataMessage": "No records found for the selected time range and scope",
+              "showExportToExcel": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspaces}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Id",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "BackupInstance",
+                    "formatter": 16,
+                    "formatOptions": {
+                      "linkColumn": "Id",
+                      "linkTarget": "Resource",
+                      "showIcon": true
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Name of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Container",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Protected container associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "ResourceGroup",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Resource group of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Policy",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Policy associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "DailyRPRetentionDuration",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "min": 0,
+                      "palette": "blue"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Retention duration of the daily retention points of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "WeeklyRPRetentionDuration",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "min": 0,
+                      "palette": "blue"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Retention duration of the weekly retention points of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "MonthlyRPRetentionDuration",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "min": 0,
+                      "palette": "blue"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Retention duration of the monthly retention points of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "YearlyRPRetentionDuration",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "min": 0,
+                      "palette": "blue"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Retention duration of the yearly retention points of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Vault",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Vault associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "AzureResource",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Azure Resource associated with the backup instance. For Azure VM Backup, SQL in Azure VM backup and SAP database in Azure VM backup, the Azure Resource is the Azure VM. For Azure Files Share backup, the Azure Resource is the Azure Storage account. For on-premises backup instances, this field is blank."
+                    }
+                  },
+                  {
+                    "columnMatch": "DatasourceType",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Datasource Type"
+                    }
+                  }
+                ],
+                "labelSettings": [
+                  {
+                    "columnId": "Id"
+                  },
+                  {
+                    "columnId": "BackupInstance",
+                    "label": "Backup Instance"
+                  },
+                  {
+                    "columnId": "ResourceGroup",
+                    "label": "Resource Group"
+                  },
+                  {
+                    "columnId": "Policy"
+                  },
+                  {
+                    "columnId": "DailyRPRetentionDuration",
+                    "label": "Daily RP Retention Duration (days)"
+                  },
+                  {
+                    "columnId": "WeeklyRPRetentionDuration",
+                    "label": "Weekly RP Retention Duration (weeks)"
+                  },
+                  {
+                    "columnId": "MonthlyRPRetentionDuration",
+                    "label": "Monthly RP Retention Duration (months)"
+                  },
+                  {
+                    "columnId": "YearlyRPRetentionDuration",
+                    "label": "Yearly RP Retention Duration (years)"
+                  },
+                  {
+                    "columnId": "Vault"
+                  },
+                  {
+                    "columnId": "AzureResource",
+                    "label": "Azure Resource"
+                  },
+                  {
+                    "columnId": "DatasourceType",
+                    "label": "Datasource Type"
+                  }
+                ]
+              }
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Retention Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "showPin": true,
+            "name": "Optimize-PolicyOptimizationsGrid1",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<div style=\"text-align:left\"><span style=\"font-size:14px;font-weight:600;\">Databases configured for daily full backup </span> </div>"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Backup Schedule Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-PolicyOptimizationsGrid2Title"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "<p> <span style=\"font-size:12px; font-style:italic\"> Using daily differential backups with weekly full backups is often more cost-effective than using daily full backups. <a href=\"https://aka.ms/AzureBackupReportDailyFullBackupView\" target=\"_blank\">Learn More</a> </span> </p>"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Backup Schedule Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-PolicyOptimizationsGrid2InstructionText"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "77aa6aec-8198-4e29-8196-e56c3fe81292",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_SearchBackupInstanceOrDatasourceSet_3",
+                  "label": "Search Instance or Container",
+                  "type": 1,
+                  "description": "Use to search for a backup instance by name. <br/> To search for a specific instance in a container, use the syntax [container name];[instance name] <br/> To search for all instances in a container, use the syntax [container name];",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "46f7de5c-dc7f-48ed-bfd0-d5a868aef402",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_RowsPerPage_3",
+                  "label": "Rows Per Page",
+                  "type": 2,
+                  "description": "Number of rows to display in grid view",
+                  "isRequired": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "jsonData": "[\r\n    { \"value\":10, \"label\":\"10\", \"selected\":true  },\r\n    { \"value\":25, \"label\":\"25\" },\r\n    { \"value\":50, \"label\":\"50\" },\r\n    { \"value\":100, \"label\":\"100\" },\r\n    { \"value\":250, \"label\":\"250\" },\r\n    { \"value\":500, \"label\":\"500\" },\r\n    { \"value\":1000, \"label\":\"1000\" }\r\n]",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "792ec3e5-00b6-4669-9db2-de3e6617b7b7",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "OptimizeTab_Page_3",
+                  "label": "Page",
+                  "type": 2,
+                  "description": "Select Page Number",
+                  "isRequired": true,
+                  "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList =  \"*\";\r\nlet Item_search =  @\"{OptimizeTab_SearchBackupInstanceOrDatasourceSet_3}\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields = false;\r\nlet LatestAzureWorkloadBackupItemDimensionTable = () {union isfuzzy = true \r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields)\r\n| where DatasourceType in~ (\"SQL in Azure VM\",\"SAP HANA in Azure VM\") \r\n| join kind = leftouter (\r\n// calling LA System Function\r\n_AzureBackup_GetPolicies(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList)\r\n) on $left.PolicyUniqueId == $right.UniqueId, $left.VaultResourceId == $right.VaultResourceId\r\n| where parse_json(ExtendedProperties).BackupFrequency == \"Daily\"\r\n};\r\nLatestAzureWorkloadBackupItemDimensionTable\r\n| summarize c=count()\r\n| project num = (c-1)/{OptimizeTab_RowsPerPage_3} + 1\r\n| project nums = range(1,num,1), num\r\n| mvexpand nums\r\n| project nums = tostring(nums), num = strcat(tostring(nums),\" of \",tostring(num))",
+                  "crossComponentResources": [
+                    "{Workspaces}"
+                  ],
+                  "value": "1",
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "queryType": 0,
+                  "resourceType": "microsoft.operationalinsights/workspaces"
+                }
+              ],
+              "style": "above",
+              "doNotRunWhenHidden": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Backup Schedule Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Optimize-PolicyOptimizationsGrid2Parameters"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList =  \"*\";\r\nlet Item_search =  @\"{OptimizeTab_SearchBackupInstanceOrDatasourceSet_3}\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields = false;\r\nlet LatestAzureWorkloadBackupItemDimensionTable = () {union isfuzzy = true \r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields)\r\n| where BackupSolution in~ (\"SQL in Azure VM Backup\",\"SAP HANA in Azure VM Backup\") \r\n| join kind = leftouter (\r\n// calling LA System Function\r\n_AzureBackup_GetPolicies(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList)\r\n) on $left.PolicyUniqueId == $right.UniqueId, $left.VaultResourceId == $right.VaultResourceId\r\n| where parse_json(ExtendedProperties).BackupFrequency == \"Daily\"\r\n};\r\nLatestAzureWorkloadBackupItemDimensionTable\r\n| sort by UniqueId asc \r\n| extend row_num = row_number()\r\n| extend page_num = tostring(((row_num-1)/{OptimizeTab_RowsPerPage_3} + 1))\r\n| where page_num has ('{OptimizeTab_Page_3}') or '*' in ('{OptimizeTab_Page_3}')\r\n| project Id, BackupInstance=FriendlyName, Container=DatasourceSetFriendlyName, ResourceGroup=iff(BackupSolution==\"Azure Backup Agent\" or BackupSolution==\"Azure Backup Server\" or BackupSolution==\"DPM\",\"(none)\",split(split(tostring(tolower(DatasourceSetResourceId)), '/resourcegroups/')[1],'/')[0]\r\n), Policy=Name, Vault=VaultResourceId, AzureResource=DatasourceSetResourceId, DatasourceType",
+              "size": 3,
+              "noDataMessage": "No records found for the selected time range and scope",
+              "showExportToExcel": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspaces}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Id",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "BackupInstance",
+                    "formatter": 16,
+                    "formatOptions": {
+                      "linkColumn": "Id",
+                      "linkTarget": "Resource",
+                      "showIcon": true,
+                      "customColumnWidthSetting": "14%"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Name of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Container",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "14%"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Protected container associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "ResourceGroup",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "14%"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Resource group of the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Policy",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "14%"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Policy associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "Vault",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Vault associated with the backup instance"
+                    }
+                  },
+                  {
+                    "columnMatch": "AzureResource",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "14%"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Azure Resource associated with the backup instance. For Azure VM Backup, SQL in Azure VM backup and SAP database in Azure VM backup, the Azure Resource is the Azure VM. For Azure Files Share backup, the Azure Resource is the Azure Storage account. For on-premises backup instances, this field is blank."
+                    }
+                  },
+                  {
+                    "columnMatch": "DatasourceType",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "14%"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Azure Resource associated with the backup instance. For Azure VM Backup, SQL in Azure VM backup and SAP database in Azure VM backup, the Azure Resource is the Azure VM. For Azure Files Share backup, the Azure Resource is the Azure Storage account. For on-premises backup instances, this field is blank."
+                    }
+                  }
+                ],
+                "labelSettings": [
+                  {
+                    "columnId": "Id"
+                  },
+                  {
+                    "columnId": "BackupInstance",
+                    "label": "Backup Instance"
+                  },
+                  {
+                    "columnId": "ResourceGroup",
+                    "label": "Resource Group"
+                  },
+                  {
+                    "columnId": "AzureResource",
+                    "label": "Azure Resource"
+                  },
+                  {
+                    "columnId": "DatasourceType",
+                    "label": "Datasource Type"
+                  }
+                ]
+              },
+              "sortBy": []
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "OptimizeDimension",
+                "comparison": "isEqualTo",
+                "value": "Policy Optimizations"
+              },
+              {
+                "parameterName": "OptimizeSubDimension",
+                "comparison": "isEqualTo",
+                "value": "Backup Schedule Optimizations"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "showPin": true,
+            "name": "Optimize-PolicyOptimizationGrid2",
+            "styleSettings": {
+              "showBorder": true
+            }
+          }
+        ],
+        "exportParameters": true
+      },
+      "name": "group - 0"
+    },
+	{
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "## Create a new task"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-Header1"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "Schedule automated emails of Backup Reports data by filling out the below details. [Learn more](https://aka.ms/BackupReportsEmailLink1)"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-InstructionText1"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "_____________"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-DividingLine1"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "### Task details "
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-TaskDetails-Header1"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "When you create a new task, a Logic App is created in the subscription, resource group and location selected below.\r\n\r\nThe Logic App generates periodic emails based on the Log Analytics workspace(s) and report filters selected in the Backup Reports Overview tab. [Learn more](https://aka.ms/BackupReportsEmailLink2)"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-TaskDetails-InstructionText2"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "c79f7e10-fd45-434c-a5be-f098cfc26c75",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "TaskName",
+                  "label": "Task Name",
+                  "type": 1,
+                  "description": "Name of the task/logic app to be created",
+                  "isRequired": true,
+                  "timeContext": {
+                    "durationMs": 86400000
+                  },
+                  "value": ""
+                },
+                {
+                  "id": "ed65c790-f606-470d-9d88-89416821d3c8",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "LogicAppSubscription",
+                  "label": "Subscription",
+                  "type": 6,
+                  "description": "Subscription in which the logic app should be created",
+                  "isRequired": true,
+                  "value": null,
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "includeAll": false,
+                    "showDefault": false
+                  },
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                }
+              ],
+              "style": "above",
+              "queryType": 0,
+              "resourceType": "microsoft.resourcegraph/resources"
+            },
+            "customWidth": "40",
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-TaskDetails-ParameterBlock1"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "d7a0b942-cbe9-471e-ad84-928a23d11125",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "LogicAppResourceGroup",
+                  "label": "Resource Group",
+                  "type": 2,
+                  "description": "Resource Group in which the logic app should be created",
+                  "isRequired": true,
+                  "query": "resourcecontainers \r\n| where type =~ \"microsoft.resources/subscriptions/resourcegroups\" \r\n| where tolower(subscriptionId)==tolower(\"{LogicAppSubscription:subscriptionId}\")\r\n| project name",
+                  "crossComponentResources": [
+                    "{LogicAppSubscription}"
+                  ],
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "timeContext": {
+                    "durationMs": 86400000
+                  },
+                  "queryType": 1,
+                  "resourceType": "microsoft.resourcegraph/resources"
+                },
+                {
+                  "id": "acd9205d-549d-4771-adbf-1ebe085c9021",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "LogicAppLocation",
+                  "label": "Location",
+                  "type": 8,
+                  "description": "Location in which the logic app should be created",
+                  "isRequired": true,
+                  "value": null,
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "includeAll": true,
+                    "showDefault": false
+                  },
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "18ad4cd2-2452-4453-b09f-7d032e8ca3af",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "LogicAppResourceGroupId",
+                  "type": 1,
+                  "query": "print LogicAppResourceGroupId=strcat(\"{LogicAppSubscription}\",\"/resourceGroups/\",\"{LogicAppResourceGroup}\")\r\n\r\n",
+                  "crossComponentResources": [
+                    "{Workspaces}"
+                  ],
+                  "isHiddenWhenLocked": true,
+                  "queryType": 0,
+                  "resourceType": "microsoft.operationalinsights/workspaces"
+                },
+                {
+                  "id": "1d8fd4a2-e7aa-47c8-9130-679e90c8f9ad",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "ExistingTaskCount",
+                  "type": 1,
+                  "query": "resources \r\n| where type =~ \"microsoft.logic/workflows\" \r\n| project id, name, tags_parsed=parse_json(tags), properties_parsed=parse_json(properties)\r\n| where tags_parsed.UsedByBackupReports==\"true\" \r\n| extend frequency=properties_parsed.definition.triggers.Recurrence.recurrence.frequency\r\n| project id, name, frequency=iff(frequency==\"Day\",\"Daily\",iff(frequency==\"Week\",\"Weekly\",iff(frequency==\"Month\",\"Monthly\",\"N/A\")))\r\n| count\r\n",
+                  "crossComponentResources": [
+                    "value::selected"
+                  ],
+                  "isHiddenWhenLocked": true,
+                  "timeContext": {
+                    "durationMs": 86400000
+                  },
+                  "queryType": 1,
+                  "resourceType": "microsoft.resourcegraph/resources"
+                }
+              ],
+              "style": "above",
+              "queryType": 0,
+              "resourceType": "microsoft.resourcegraph/resources"
+            },
+            "customWidth": "60",
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "LogicAppSubscription",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-TaskDetails-ParameterBlock2"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "Below are the tasks that have already been configured. All Logic Apps which contain the tag 'UsedByBackupReports:true' are displayed in the below list. [Learn more](https://aka.ms/BackupReportsEmailLink3)",
+              "style": "info"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "ExistingTaskCount",
+                "comparison": "isNotEqualTo",
+                "value": "0"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-TaskDetails-ExistingTasks-InstructionText1"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "resources \r\n| where type =~ \"microsoft.logic/workflows\" \r\n| project id, name, tags_parsed=parse_json(tags), properties_parsed=parse_json(properties)\r\n| where tags_parsed.UsedByBackupReports==\"true\" \r\n| extend frequency=properties_parsed.definition.triggers.Recurrence.recurrence.frequency\r\n| project id, name, frequency=iff(frequency==\"Day\",\"Daily\",iff(frequency==\"Week\",\"Weekly\",iff(frequency==\"Month\",\"Monthly\",\"N/A\")))\r\n",
+              "size": 4,
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources",
+              "crossComponentResources": [
+                "{Subscriptions}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "id",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "name",
+                    "formatter": 16,
+                    "formatOptions": {
+                      "linkColumn": "id",
+                      "linkTarget": "Resource",
+                      "showIcon": true,
+                      "customColumnWidthSetting": "50%"
+                    }
+                  },
+                  {
+                    "columnMatch": "frequency",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "50%"
+                    }
+                  }
+                ],
+                "labelSettings": [
+                  {
+                    "columnId": "id"
+                  },
+                  {
+                    "columnId": "name",
+                    "label": "Task Name"
+                  },
+                  {
+                    "columnId": "frequency",
+                    "label": "Task Frequency"
+                  }
+                ]
+              }
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ExistingTaskCount",
+                "comparison": "isNotEqualTo",
+                "value": "0"
+              }
+            ],
+            "name": "Email-TaskDetails-ExistingTasks-Grid1",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "_______________________________________"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-TaskDetails-ExistingTasks-DividingLine1"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "### Task execution parameters"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-TaskExecutionParameters-Header1"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "#### Scope of task execution"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-ScopeOfTaskExecution-Header1"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "Specify the scope for which data will be queried and exported by the task. [Learn more](https://aka.ms/BackupReportsEmailLink4)"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-ScopeOfTaskExecution-InstructionText1"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "b1770ec1-1df5-4519-8a32-df99de039870",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "DataToExport",
+                  "label": "Data To Export",
+                  "type": 2,
+                  "description": "Use to select the tab to export via email. To configure email for all tabs at once, select 'All Tabs'",
+                  "isRequired": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "jsonData": "[{\"label\":\"All Tabs\", \"value\":\"AllTabs\", \"selected\":\"true\"},{\"label\":\"Summary\", \"value\":\"Summary\", \"selected\":\"false\"},{\"label\":\"Backup Instances\", \"value\":\"BackupInstances\", \"selected\":\"false\"},{\"label\":\"Usage\", \"value\":\"Usage\", \"selected\":\"false\"},{\"label\":\"Jobs\", \"value\":\"Jobs\", \"selected\":\"false\"},{\"label\":\"Policies\", \"value\":\"Policies\", \"selected\":\"false\"}, {\"label\":\"Optimize\", \"value\":\"Optimize\", \"selected\":\"false\"},{\"label\":\"Policy Adherence\", \"value\":\"PolicyAdherence\", \"selected\":\"false\"}]",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  },
+                  "value": "Summary"
+                }
+              ],
+              "style": "above",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-ScopeOfTaskExecution-ParameterBlock1"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "#### Email options"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-EmailOptions-Header1"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "Summarized charts and detailed CSV files of data are sent by email at the specified frequency to the specified email address. [Learn more](https://aka.ms/backupcenter)"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-EmailOptions-InstructionText2"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "95d1802e-ae2e-4f28-8789-47dfbe11bcee",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "Frequency",
+                  "label": "Email Frequency",
+                  "type": 2,
+                  "description": "Frequency at whch emails should be received by the recipient(s)",
+                  "isRequired": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "jsonData": "[{ \"value\": \"Month\", \"label\": \"Monthly\", \"selected\":true },{ \"value\": \"Week\",           \"label\": \"Weekly\" }, { \"value\": \"Day\", \"label\": \"Daily\" }]",
+                  "timeContext": {
+                    "durationMs": 86400000
+                  },
+                  "value": "Day"
+                },
+                {
+                  "id": "40b294bb-a030-40a5-a3d6-fe69c9bcc6b1",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "EmailId",
+                  "label": "Email id",
+                  "type": 1,
+                  "description": "Email id of the recipient(s). To specify multiple email ids, use a semicolon-separated list",
+                  "isRequired": true,
+                  "value": ""
+                },
+                {
+                  "id": "8eb39edf-083f-4db7-ab27-62f4f2881cfe",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "EmailSubject",
+                  "label": "Email Subject",
+                  "type": 1,
+                  "description": "Subject of the email received by the recipient(s)",
+                  "isRequired": true,
+                  "value": ""
+                }
+              ],
+              "style": "above",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-EmailOptions-ParameterBlock1"
+          },
+          {
+            "type": 11,
+            "content": {
+              "version": "LinkItem/1.0",
+              "style": "paragraph",
+              "links": [
+                {
+                  "id": "b28035af-751c-4fdb-88f8-b3004cfdf36c",
+                  "linkTarget": "ArmTemplate",
+                  "linkLabel": "Submit",
+                  "style": "primary",
+                  "linkIsContextBlade": true,
+                  "templateRunContext": {
+                    "componentIdSource": "parameter",
+                    "componentId": "LogicAppResourceGroupId",
+                    "templateUriSource": "static",
+                    "templateUri": "https://raw.githubusercontent.com/VinothJeyaraman55/azure-quickstart-templates/master/BackupReport/FullReport.json",
+                    "templateParameters": [
+                      {
+                        "name": "logicAppName",
+                        "source": "parameter",
+                        "value": "TaskName",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "logicAppWorkspace",
+                        "source": "parameter",
+                        "value": "WorkspaceName",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "workspacesToQuery",
+                        "source": "parameter",
+                        "value": "Workspaces",
+                        "kind": "arrayValue"
+                      },
+                      {
+                        "name": "emailFrequency",
+                        "source": "parameter",
+                        "value": "Frequency",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "recipientEmailId",
+                        "source": "parameter",
+                        "value": "EmailId",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "startDate",
+                        "source": "parameter",
+                        "value": "LogicApp_RangeStart",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "endDate",
+                        "source": "parameter",
+                        "value": "LogicApp_RangeEnd",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultSubscriptionListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultSubscriptionList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultLocationListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultLocationList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "backupSolutionListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_DatasourceTypeList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "excludeLegacyEvent",
+                        "source": "parameter",
+                        "value": "LogicApp_ExcludeLegacyEvent",
+                        "kind": "boolValue"
+                      },
+                      {
+                        "name": "dailyRPRetentionFilter",
+                        "source": "parameter",
+                        "value": "OptimizeTab_DailyRPRetention",
+                        "kind": "intValue"
+                      },
+                      {
+                        "name": "weeklyRPRetentionFilter",
+                        "source": "parameter",
+                        "value": "OptimizeTab_WeeklyRPRetention",
+                        "kind": "intValue"
+                      },
+                      {
+                        "name": "monthlyRPRetentionFilter",
+                        "source": "parameter",
+                        "value": "OptimizeTab_MonthlyRPRetention",
+                        "kind": "intValue"
+                      },
+                      {
+                        "name": "yearlyRPRetentionFilter",
+                        "source": "parameter",
+                        "value": "OptimizeTab_YearlyRPRetention",
+                        "kind": "intValue"
+                      },
+                      {
+                        "name": "aggregationType",
+                        "source": "parameter",
+                        "value": "LogicApp_AggregationType",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "location",
+                        "source": "parameter",
+                        "value": "LogicAppLocation",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "emailSubject",
+                        "source": "parameter",
+                        "value": "EmailSubject",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "workspaceResourceGroup",
+                        "source": "parameter",
+                        "value": "WorkspaceResourceGroup",
+                        "kind": "stringValue"
+                      },
+					  {
+                        "name": "workspaceSubscriptionId",
+                        "source": "parameter",
+                        "value": "WorkspaceSubscriptionId",
+                        "kind": "stringValue"
+                      }
+                    ],
+                    "titleSource": "static",
+                    "title": "Deploy Logic App template",
+                    "descriptionSource": "static",
+                    "description": "Clicking the 'Confirm' button below creates a Logic App that sends periodic emails to the specified email address. The Report filters that are currently selected in the report will be applied to the data that is sent over email as well.\r\n\r\nNote that after the Logic App is deployed, you will need to perform an additional authorization step for the configuration to work.\r\n\r\n[Learn more about emailing Backup Reports](https://aka.ms/BackupCenter)\r\n\r\n[Learn more about Logic Apps and their pricing](https://aka.ms/BackupCenter)",
+                    "runLabelSource": "static",
+                    "runLabel": "Confirm"
+                  }
+                }
+              ]
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DataToExport",
+                "comparison": "isEqualTo",
+                "value": "AllTabs"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-Button1"
+          },
+          {
+            "type": 11,
+            "content": {
+              "version": "LinkItem/1.0",
+              "style": "paragraph",
+              "links": [
+                {
+                  "id": "0e50e7c6-c24b-4e80-b2f9-b3f4c69964ed",
+                  "linkTarget": "ArmTemplate",
+                  "linkLabel": "Submit",
+                  "style": "primary",
+                  "linkIsContextBlade": true,
+                  "templateRunContext": {
+                    "componentIdSource": "parameter",
+                    "componentId": "LogicAppResourceGroupId",
+                    "templateUriSource": "static",
+                    "templateUri": "https://raw.githubusercontent.com/VinothJeyaraman55/azure-quickstart-templates/master/BackupReport/Optimize.json",
+                    "templateParameters": [
+                      {
+                        "name": "logicAppName",
+                        "source": "parameter",
+                        "value": "TaskName",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "logicAppWorkspace",
+                        "source": "parameter",
+                        "value": "WorkspaceName",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "workspacesToQuery",
+                        "source": "parameter",
+                        "value": "Workspaces",
+                        "kind": "arrayValue"
+                      },
+                      {
+                        "name": "emailFrequency",
+                        "source": "parameter",
+                        "value": "Frequency",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "recipientEmailId",
+                        "source": "parameter",
+                        "value": "EmailId",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "startDate",
+                        "source": "parameter",
+                        "value": "LogicApp_RangeStart",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "endDate",
+                        "source": "parameter",
+                        "value": "LogicApp_RangeEnd",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultSubscriptionListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultSubscriptionList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultLocationListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultLocationList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "backupSolutionListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_DatasourceTypeList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "excludeLegacyEvent",
+                        "source": "parameter",
+                        "value": "LogicApp_ExcludeLegacyEvent",
+                        "kind": "boolValue"
+                      },
+                      {
+                        "name": "dailyRPRetentionFilter",
+                        "source": "parameter",
+                        "value": "OptimizeTab_DailyRPRetention",
+                        "kind": "intValue"
+                      },
+                      {
+                        "name": "weeklyRPRetentionFilter",
+                        "source": "parameter",
+                        "value": "OptimizeTab_WeeklyRPRetention",
+                        "kind": "intValue"
+                      },
+                      {
+                        "name": "monthlyRPRetentionFilter",
+                        "source": "parameter",
+                        "value": "OptimizeTab_MonthlyRPRetention",
+                        "kind": "intValue"
+                      },
+                      {
+                        "name": "yearlyRPRetentionFilter",
+                        "source": "parameter",
+                        "value": "OptimizeTab_YearlyRPRetention",
+                        "kind": "intValue"
+                      },
+                      {
+                        "name": "aggregationType",
+                        "source": "parameter",
+                        "value": "LogicApp_AggregationType",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "location",
+                        "source": "parameter",
+                        "value": "LogicAppLocation",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "emailSubject",
+                        "source": "parameter",
+                        "value": "EmailSubject",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "workspaceResourceGroup",
+                        "source": "parameter",
+                        "value": "WorkspaceResourceGroup",
+                        "kind": "stringValue"
+                      },
+					  {
+                        "name": "workspaceSubscriptionId",
+                        "source": "parameter",
+                        "value": "WorkspaceSubscriptionId",
+                        "kind": "stringValue"
+                      }
+                    ],
+                    "titleSource": "static",
+                    "title": "Deploy Logic App template",
+                    "descriptionSource": "static",
+                    "description": "Clicking the 'Confirm' button below creates a Logic App that sends periodic emails to the specified email address. The Report filters that are currently selected in the report will be applied to the data that is sent over email as well.\r\n\r\nNote that after the Logic App is deployed, you will need to perform an additional authorization step for the configuration to work.\r\n\r\n[Learn more about emailing Backup Reports](https://aka.ms/BackupCenter)\r\n\r\n[Learn more about Logic Apps and their pricing](https://aka.ms/BackupCenter)",
+                    "runLabelSource": "static",
+                    "runLabel": "Confirm"
+                  }
+                }
+              ]
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DataToExport",
+                "comparison": "isEqualTo",
+                "value": "Optimize"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-Button2"
+          },
+          {
+            "type": 11,
+            "content": {
+              "version": "LinkItem/1.0",
+              "style": "paragraph",
+              "links": [
+                {
+                  "id": "fe11abfd-27de-4a1f-b5b2-9c5cde20794c",
+                  "linkTarget": "ArmTemplate",
+                  "linkLabel": "Submit",
+                  "style": "primary",
+                  "linkIsContextBlade": true,
+                  "templateRunContext": {
+                    "componentIdSource": "parameter",
+                    "componentId": "LogicAppResourceGroupId",
+                    "templateUriSource": "static",
+                    "templateUri": "https://raw.githubusercontent.com/VinothJeyaraman55/azure-quickstart-templates/master/BackupReport/Policies.json",
+                    "templateParameters": [
+                      {
+                        "name": "logicAppName",
+                        "source": "parameter",
+                        "value": "TaskName",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "logicAppWorkspace",
+                        "source": "parameter",
+                        "value": "WorkspaceName",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "workspacesToQuery",
+                        "source": "parameter",
+                        "value": "Workspaces",
+                        "kind": "arrayValue"
+                      },
+                      {
+                        "name": "emailFrequency",
+                        "source": "parameter",
+                        "value": "Frequency",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "recipientEmailId",
+                        "source": "parameter",
+                        "value": "EmailId",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "startDate",
+                        "source": "parameter",
+                        "value": "LogicApp_RangeStart",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "endDate",
+                        "source": "parameter",
+                        "value": "LogicApp_RangeEnd",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultSubscriptionListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultSubscriptionList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultLocationListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultLocationList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "backupSolutionListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_DatasourceTypeList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "excludeLegacyEvent",
+                        "source": "parameter",
+                        "value": "LogicApp_ExcludeLegacyEvent",
+                        "kind": "boolValue"
+                      },
+                      {
+                        "name": "aggregationType",
+                        "source": "parameter",
+                        "value": "LogicApp_AggregationType",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "location",
+                        "source": "parameter",
+                        "value": "LogicAppLocation",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "emailSubject",
+                        "source": "parameter",
+                        "value": "EmailSubject",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "workspaceResourceGroup",
+                        "source": "parameter",
+                        "value": "WorkspaceResourceGroup",
+                        "kind": "stringValue"
+                      },
+					  {
+                        "name": "workspaceSubscriptionId",
+                        "source": "parameter",
+                        "value": "WorkspaceSubscriptionId",
+                        "kind": "stringValue"
+                      }
+                    ],
+                    "titleSource": "static",
+                    "title": "Deploy Logic App template",
+                    "descriptionSource": "static",
+                    "description": "Clicking the 'Confirm' button below creates a Logic App that sends periodic emails to the specified email address. The Report filters that are currently selected in the report will be applied to the data that is sent over email as well.\r\n\r\nNote that after the Logic App is deployed, you will need to perform an additional authorization step for the configuration to work.\r\n\r\n[Learn more about emailing Backup Reports](https://aka.ms/BackupCenter)\r\n\r\n[Learn more about Logic Apps and their pricing](https://aka.ms/BackupCenter)",
+                    "runLabelSource": "static",
+                    "runLabel": "Confirm"
+                  }
+                }
+              ]
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DataToExport",
+                "comparison": "isEqualTo",
+                "value": "Policies"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-Button3"
+          },
+          {
+            "type": 11,
+            "content": {
+              "version": "LinkItem/1.0",
+              "style": "paragraph",
+              "links": [
+                {
+                  "id": "8bf1bbaf-1121-4019-b829-cfdfbc9acdc3",
+                  "linkTarget": "ArmTemplate",
+                  "linkLabel": "Submit",
+                  "style": "primary",
+                  "linkIsContextBlade": true,
+                  "templateRunContext": {
+                    "componentIdSource": "parameter",
+                    "componentId": "LogicAppResourceGroupId",
+                    "templateUriSource": "static",
+                    "templateUri": "https://raw.githubusercontent.com/VinothJeyaraman55/azure-quickstart-templates/master/BackupReport/BackupInstance.json",
+                    "templateParameters": [
+                      {
+                        "name": "logicAppName",
+                        "source": "parameter",
+                        "value": "TaskName",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "logicAppWorkspace",
+                        "source": "parameter",
+                        "value": "WorkspaceName",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "workspacesToQuery",
+                        "source": "parameter",
+                        "value": "Workspaces",
+                        "kind": "arrayValue"
+                      },
+                      {
+                        "name": "emailFrequency",
+                        "source": "parameter",
+                        "value": "Frequency",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "recipientEmailId",
+                        "source": "parameter",
+                        "value": "EmailId",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "startDate",
+                        "source": "parameter",
+                        "value": "LogicApp_RangeStart",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "endDate",
+                        "source": "parameter",
+                        "value": "LogicApp_RangeEnd",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultSubscriptionListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultSubscriptionList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultLocationListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultLocationList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "backupSolutionListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_DatasourceTypeList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "excludeLegacyEvent",
+                        "source": "parameter",
+                        "value": "LogicApp_ExcludeLegacyEvent",
+                        "kind": "boolValue"
+                      },
+                      {
+                        "name": "aggregationType",
+                        "source": "parameter",
+                        "value": "LogicApp_AggregationType",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "location",
+                        "source": "parameter",
+                        "value": "LogicAppLocation",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "emailSubject",
+                        "source": "parameter",
+                        "value": "EmailSubject",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "workspaceResourceGroup",
+                        "source": "parameter",
+                        "value": "WorkspaceResourceGroup",
+                        "kind": "stringValue"
+                      },
+					  {
+                        "name": "workspaceSubscriptionId",
+                        "source": "parameter",
+                        "value": "WorkspaceSubscriptionId",
+                        "kind": "stringValue"
+                      }
+                    ],
+                    "titleSource": "static",
+                    "title": "Deploy Logic App template",
+                    "descriptionSource": "static",
+                    "description": "Clicking the 'Confirm' button below creates a Logic App that sends periodic emails to the specified email address. The Report filters that are currently selected in the report will be applied to the data that is sent over email as well.\r\n\r\nNote that after the Logic App is deployed, you will need to perform an additional authorization step for the configuration to work.\r\n\r\n[Learn more about emailing Backup Reports](https://aka.ms/BackupCenter)\r\n\r\n[Learn more about Logic Apps and their pricing](https://aka.ms/BackupCenter)",
+                    "runLabelSource": "static",
+                    "runLabel": "Confirm"
+                  }
+                }
+              ]
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DataToExport",
+                "comparison": "isEqualTo",
+                "value": "BackupInstances"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-Button4"
+          },
+          {
+            "type": 11,
+            "content": {
+              "version": "LinkItem/1.0",
+              "style": "paragraph",
+              "links": [
+                {
+                  "id": "2c4738cc-da89-48d6-b64a-cb2d9fac90b8",
+                  "linkTarget": "ArmTemplate",
+                  "linkLabel": "Submit",
+                  "style": "primary",
+                  "linkIsContextBlade": true,
+                  "templateRunContext": {
+                    "componentIdSource": "parameter",
+                    "componentId": "LogicAppResourceGroupId",
+                    "templateUriSource": "static",
+                    "templateUri": "https://raw.githubusercontent.com/VinothJeyaraman55/azure-quickstart-templates/master/BackupReport/Jobs.json",
+                    "templateParameters": [
+                      {
+                        "name": "logicAppName",
+                        "source": "parameter",
+                        "value": "TaskName",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "logicAppWorkspace",
+                        "source": "parameter",
+                        "value": "WorkspaceName",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "workspacesToQuery",
+                        "source": "parameter",
+                        "value": "Workspaces",
+                        "kind": "arrayValue"
+                      },
+                      {
+                        "name": "emailFrequency",
+                        "source": "parameter",
+                        "value": "Frequency",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "recipientEmailId",
+                        "source": "parameter",
+                        "value": "EmailId",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "startDate",
+                        "source": "parameter",
+                        "value": "LogicApp_RangeStart",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "endDate",
+                        "source": "parameter",
+                        "value": "LogicApp_RangeEnd",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultSubscriptionListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultSubscriptionList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultLocationListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultLocationList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "backupSolutionListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_DatasourceTypeList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "excludeLegacyEvent",
+                        "source": "parameter",
+                        "value": "LogicApp_ExcludeLegacyEvent",
+                        "kind": "boolValue"
+                      },
+                      {
+                        "name": "aggregationType",
+                        "source": "parameter",
+                        "value": "LogicApp_AggregationType",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "location",
+                        "source": "parameter",
+                        "value": "LogicAppLocation",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "emailSubject",
+                        "source": "parameter",
+                        "value": "EmailSubject",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "workspaceResourceGroup",
+                        "source": "parameter",
+                        "value": "WorkspaceResourceGroup",
+                        "kind": "stringValue"
+                      },
+					  {
+                        "name": "workspaceSubscriptionId",
+                        "source": "parameter",
+                        "value": "WorkspaceSubscriptionId",
+                        "kind": "stringValue"
+                      }
+                    ],
+                    "titleSource": "static",
+                    "title": "Deploy Logic App template",
+                    "descriptionSource": "static",
+                    "description": "Clicking the 'Confirm' button below creates a Logic App that sends periodic emails to the specified email address. The Report filters that are currently selected in the report will be applied to the data that is sent over email as well.\r\n\r\nNote that after the Logic App is deployed, you will need to perform an additional authorization step for the configuration to work.\r\n\r\n[Learn more about emailing Backup Reports](https://aka.ms/BackupReportsEmailFeature)\r\n\r\n[Learn more about Logic Apps and their pricing](https://aka.ms/AzureBackupLogicAppsPricing)",
+                    "runLabelSource": "static",
+                    "runLabel": "Confirm"
+                  }
+                }
+              ]
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DataToExport",
+                "comparison": "isEqualTo",
+                "value": "Jobs"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-Button5"
+          },
+          {
+            "type": 11,
+            "content": {
+              "version": "LinkItem/1.0",
+              "style": "paragraph",
+              "links": [
+                {
+                  "id": "d90bd63c-fa30-4285-b06a-09639956b6a9",
+                  "linkTarget": "ArmTemplate",
+                  "linkLabel": "Submit",
+                  "style": "primary",
+                  "linkIsContextBlade": true,
+                  "templateRunContext": {
+                    "componentIdSource": "parameter",
+                    "componentId": "LogicAppResourceGroupId",
+                    "templateUriSource": "static",
+                    "templateUri": "https://raw.githubusercontent.com/VinothJeyaraman55/azure-quickstart-templates/master/BackupReport/Usage.json",
+                    "templateParameters": [
+                      {
+                        "name": "logicAppName",
+                        "source": "parameter",
+                        "value": "TaskName",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "logicAppWorkspace",
+                        "source": "parameter",
+                        "value": "WorkspaceName",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "workspacesToQuery",
+                        "source": "parameter",
+                        "value": "Workspaces",
+                        "kind": "arrayValue"
+                      },
+                      {
+                        "name": "emailFrequency",
+                        "source": "parameter",
+                        "value": "Frequency",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "recipientEmailId",
+                        "source": "parameter",
+                        "value": "EmailId",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "startDate",
+                        "source": "parameter",
+                        "value": "LogicApp_RangeStart",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "endDate",
+                        "source": "parameter",
+                        "value": "LogicApp_RangeEnd",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultSubscriptionListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultSubscriptionList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultLocationListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultLocationList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "backupSolutionListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_DatasourceTypeList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "excludeLegacyEvent",
+                        "source": "parameter",
+                        "value": "LogicApp_ExcludeLegacyEvent",
+                        "kind": "boolValue"
+                      },
+                      {
+                        "name": "aggregationType",
+                        "source": "parameter",
+                        "value": "LogicApp_AggregationType",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "location",
+                        "source": "parameter",
+                        "value": "LogicAppLocation",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "emailSubject",
+                        "source": "parameter",
+                        "value": "EmailSubject",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "workspaceResourceGroup",
+                        "source": "parameter",
+                        "value": "WorkspaceResourceGroup",
+                        "kind": "stringValue"
+                      },
+					  {
+                        "name": "workspaceSubscriptionId",
+                        "source": "parameter",
+                        "value": "WorkspaceSubscriptionId",
+                        "kind": "stringValue"
+                      }
+                    ],
+                    "titleSource": "static",
+                    "title": "Deploy Logic App template",
+                    "descriptionSource": "static",
+                    "description": "Clicking the 'Confirm' button below creates a Logic App that sends periodic emails to the specified email address. The Report filters that are currently selected in the report will be applied to the data that is sent over email as well.\r\n\r\nNote that after the Logic App is deployed, you will need to perform an additional authorization step for the configuration to work.\r\n\r\n[Learn more about emailing Backup Reports](https://aka.ms/BackupCenter)\r\n\r\n[Learn more about Logic Apps and their pricing](https://aka.ms/BackupCenter)",
+                    "runLabelSource": "static",
+                    "runLabel": "Confirm"
+                  }
+                }
+              ]
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DataToExport",
+                "comparison": "isEqualTo",
+                "value": "Usage"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-Button6"
+          },
+          {
+            "type": 11,
+            "content": {
+              "version": "LinkItem/1.0",
+              "style": "paragraph",
+              "links": [
+                {
+                  "id": "43caff71-8f23-463b-8c0a-cbd62c1f1204",
+                  "linkTarget": "ArmTemplate",
+                  "linkLabel": "Submit",
+                  "style": "primary",
+                  "linkIsContextBlade": true,
+                  "templateRunContext": {
+                    "componentIdSource": "parameter",
+                    "componentId": "LogicAppResourceGroupId",
+                    "templateUriSource": "static",
+                    "templateUri": "https://raw.githubusercontent.com/VinothJeyaraman55/azure-quickstart-templates/master/BackupReport/Summary.json",
+                    "templateParameters": [
+                      {
+                        "name": "logicAppName",
+                        "source": "parameter",
+                        "value": "TaskName",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "logicAppWorkspace",
+                        "source": "parameter",
+                        "value": "WorkspaceName",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "workspacesToQuery",
+                        "source": "parameter",
+                        "value": "Workspaces",
+                        "kind": "arrayValue"
+                      },
+                      {
+                        "name": "emailFrequency",
+                        "source": "parameter",
+                        "value": "Frequency",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "recipientEmailId",
+                        "source": "parameter",
+                        "value": "EmailId",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "startDate",
+                        "source": "parameter",
+                        "value": "LogicApp_RangeStart",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "endDate",
+                        "source": "parameter",
+                        "value": "LogicApp_RangeEnd",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultSubscriptionListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultSubscriptionList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultLocationListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultLocationList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "backupSolutionListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_DatasourceTypeList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "excludeLegacyEvent",
+                        "source": "parameter",
+                        "value": "LogicApp_ExcludeLegacyEvent",
+                        "kind": "boolValue"
+                      },
+                      {
+                        "name": "aggregationType",
+                        "source": "parameter",
+                        "value": "LogicApp_AggregationType",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "location",
+                        "source": "parameter",
+                        "value": "LogicAppLocation",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "emailSubject",
+                        "source": "parameter",
+                        "value": "EmailSubject",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "workspaceResourceGroup",
+                        "source": "parameter",
+                        "value": "WorkspaceResourceGroup",
+                        "kind": "stringValue"
+                      },
+					  {
+                        "name": "workspaceSubscriptionId",
+                        "source": "parameter",
+                        "value": "WorkspaceSubscriptionId",
+                        "kind": "stringValue"
+                      }
+                    ],
+                    "titleSource": "static",
+                    "title": "Deploy Logic App template",
+                    "descriptionSource": "static",
+                    "description": "Clicking the 'Confirm' button below creates a Logic App that sends periodic emails to the specified email address. The Report filters that are currently selected in the report will be applied to the data that is sent over email as well.\r\n\r\nNote that after the Logic App is deployed, you will need to perform an additional authorization step for the configuration to work.\r\n\r\n[Learn more about emailing Backup Reports](https://aka.ms/BackupCenter)\r\n\r\n[Learn more about Logic Apps and their pricing](https://aka.ms/BackupCenter)",
+                    "runLabelSource": "static",
+                    "runLabel": "Confirm"
+                  }
+                }
+              ]
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DataToExport",
+                "comparison": "isEqualTo",
+                "value": "Summary"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-Button7"
+          },
+          {
+            "type": 11,
+            "content": {
+              "version": "LinkItem/1.0",
+              "style": "paragraph",
+              "links": [
+                {
+                  "id": "7bcc423d-e65e-49ff-918f-bb9f795d2612",
+                  "linkTarget": "ArmTemplate",
+                  "linkLabel": "Submit",
+                  "style": "primary",
+                  "linkIsContextBlade": true,
+                  "templateRunContext": {
+                    "componentIdSource": "parameter",
+                    "componentId": "LogicAppResourceGroupId",
+                    "templateUriSource": "static",
+                    "templateUri": "https://raw.githubusercontent.com/VinothJeyaraman55/azure-quickstart-templates/master/BackupReport/PolicyAdherence.json",
+                    "templateParameters": [
+                      {
+                        "name": "logicAppName",
+                        "source": "parameter",
+                        "value": "TaskName",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "logicAppWorkspace",
+                        "source": "parameter",
+                        "value": "WorkspaceName",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "workspacesToQuery",
+                        "source": "parameter",
+                        "value": "Workspaces",
+                        "kind": "arrayValue"
+                      },
+                      {
+                        "name": "emailFrequency",
+                        "source": "parameter",
+                        "value": "Frequency",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "recipientEmailId",
+                        "source": "parameter",
+                        "value": "EmailId",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "startDate",
+                        "source": "parameter",
+                        "value": "LogicApp_RangeStart",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "endDate",
+                        "source": "parameter",
+                        "value": "LogicApp_RangeEnd",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultSubscriptionListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultSubscriptionList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultLocationListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultLocationList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "vaultListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_VaultList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "backupSolutionListFilter",
+                        "source": "parameter",
+                        "value": "LogicApp_DatasourceTypeList",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "excludeLegacyEvent",
+                        "source": "parameter",
+                        "value": "LogicApp_ExcludeLegacyEvent",
+                        "kind": "boolValue"
+                      },
+                      {
+                        "name": "aggregationType",
+                        "source": "parameter",
+                        "value": "LogicApp_AggregationType",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "location",
+                        "source": "parameter",
+                        "value": "LogicAppLocation",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "emailSubject",
+                        "source": "parameter",
+                        "value": "EmailSubject",
+                        "kind": "stringValue"
+                      },
+                      {
+                        "name": "workspaceResourceGroup",
+                        "source": "parameter",
+                        "value": "WorkspaceResourceGroup",
+                        "kind": "stringValue"
+                      },
+					  {
+                        "name": "workspaceSubscriptionId",
+                        "source": "parameter",
+                        "value": "WorkspaceSubscriptionId",
+                        "kind": "stringValue"
+                      }
+                    ],
+                    "titleSource": "static",
+                    "title": "Deploy Logic App template",
+                    "descriptionSource": "static",
+                    "description": "Clicking the 'Confirm' button below creates a Logic App that sends periodic emails to the specified email address. The Report filters that are currently selected in the report will be applied to the data that is sent over email as well.\r\n\r\nNote that after the Logic App is deployed, you will need to perform an additional authorization step for the configuration to work.\r\n\r\n[Learn more about emailing Backup Reports](https://aka.ms/BackupCenter)\r\n\r\n[Learn more about Logic Apps and their pricing](https://aka.ms/BackupCenter)",
+                    "runLabelSource": "static",
+                    "runLabel": "Confirm"
+                  }
+                }
+              ]
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DataToExport",
+                "comparison": "isEqualTo",
+                "value": "PolicyAdherence"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-Button7 - Copy"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "_______________________________"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-DividingLine2"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "### Authorize Connections"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-Authorize-Header1"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "Once email configuration is complete, you need to authorize API connections to Azure Monitor Logs and Office 365.\r\n\r\nThe below grid shows the list of all API connections which contain the tag 'UsedByBackupReports:true'. For all API connections that do not show 'Connected' status, click on the connection name and perform the authorization in the next screen that appears. [Learn more](https://aka.ms/BackupReportsEmailLink5)",
+              "style": "info"
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-Authorize-InstructionText1"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "resources  \r\n| where type==\"microsoft.web/connections\"\r\n| project id, name, tags_parsed=parse_json(tags), properties_parsed=parse_json(properties), subscriptionId, resourceGroup, location\r\n//| where tags_parsed.UsedByBackupReports==\"true\" \r\n| extend status=properties_parsed.statuses[0].status\r\n//| project id, name, frequency=iff(frequency==\"Day\",\"Daily\",iff(frequency==\"Week\",\"Weekly\",iff(frequency==\"Month\",\"Monthly\",\"N/A\")))\r\n",
+              "size": 4,
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources",
+              "crossComponentResources": [
+                "value::selected"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "id",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "name",
+                    "formatter": 16,
+                    "formatOptions": {
+                      "linkColumn": "id",
+                      "linkTarget": "Resource",
+                      "subTarget": "edit",
+                      "showIcon": true,
+                      "customColumnWidthSetting": "20%"
+                    }
+                  },
+                  {
+                    "columnMatch": "tags_parsed",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "properties_parsed",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "subscriptionId",
+                    "formatter": 15,
+                    "formatOptions": {
+                      "linkTarget": null,
+                      "showIcon": true,
+                      "customColumnWidthSetting": "20%"
+                    }
+                  },
+                  {
+                    "columnMatch": "resourceGroup",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "20%"
+                    }
+                  },
+                  {
+                    "columnMatch": "location",
+                    "formatter": 17,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "20%"
+                    }
+                  },
+                  {
+                    "columnMatch": "status",
+                    "formatter": 1,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "20%"
+                    }
+                  }
+                ],
+                "labelSettings": [
+                  {
+                    "columnId": "id"
+                  },
+                  {
+                    "columnId": "name",
+                    "label": "Connection name"
+                  },
+                  {
+                    "columnId": "tags_parsed"
+                  },
+                  {
+                    "columnId": "properties_parsed"
+                  },
+                  {
+                    "columnId": "subscriptionId",
+                    "label": "Subscription"
+                  },
+                  {
+                    "columnId": "resourceGroup",
+                    "label": "Resource Group"
+                  },
+                  {
+                    "columnId": "location",
+                    "label": "Location"
+                  },
+                  {
+                    "columnId": "status",
+                    "label": "Status"
+                  }
+                ]
+              }
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Email"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Email-Authorize-Grid1",
+            "styleSettings": {
+              "showBorder": true
+            }
+          }
+        ]
+      },
+      "name": "group - 0"
+    }
+  ],
+  "fallbackResourceIds": [
+    "Azure Monitor"
+  ],
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
