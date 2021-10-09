@@ -1,0 +1,515 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "{Subscriptions}"
+        ],
+        "parameters": [
+          {
+            "id": "d1f42f81-eb8f-4653-a0ff-38564d7487b4",
+            "version": "KqlParameterItem/1.0",
+            "name": "Subscriptions",
+            "type": 6,
+            "description": "Subscriptions to filter the list of workspaces",
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "includeAll": false,
+              "selectAllValue": ""
+            }
+          },
+          {
+            "id": "2373a24f-ad32-4909-a7f6-59b373dcde6c",
+            "version": "KqlParameterItem/1.0",
+            "name": "Workspaces",
+            "type": 5,
+            "description": "LA Workspaces configured in vault diagnostic settings",
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "where type =~ 'microsoft.operationalinsights/workspaces' | project id",
+            "crossComponentResources": [
+              "{Subscriptions}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": []
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "8c4ae44c-fa9a-4498-aedc-736a56e64b43",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "label": "Time Range",
+            "type": 4,
+            "description": "Time Range",
+            "value": {
+              "durationMs": 604800000
+            },
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                },
+                {
+                  "durationMs": 1209600000
+                },
+                {
+                  "durationMs": 2419200000
+                },
+                {
+                  "durationMs": 2592000000
+                },
+                {
+                  "durationMs": 5184000000
+                },
+                {
+                  "durationMs": 7776000000
+                }
+              ],
+              "allowCustom": true
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange"
+          },
+          {
+            "id": "bb7c8d78-cf0c-4b47-af95-1c07ac0f6829",
+            "version": "KqlParameterItem/1.0",
+            "name": "ErrorHandle",
+            "label": "Error Handle",
+            "type": 1,
+            "query": "// Time variable used\r\nlet Today = startofday(now());\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = startofday({TimeRange:end}) + 1d;\r\n// BMSTypeWithBackupItemType MappingTable\r\nlet BMSTypeWithBackupItemTypeMappingTable = datatable (BMSTypeWithBackupItemType:string, CustomBMSTypeWithBackupItemType:string)\r\n    [ \"AzureWorkload/SAPHanaDatabase\", \"SAP HANA in Azure VM/SAP HANA in Azure VM\",\r\n      \"AzureWorkload/SQLDataBase\", \"SQL in Azure VM/SQL Database\",\r\n      \"IaaSVM/VM\", \"Azure Virtual Machine/Azure VM\",\r\n\t  \"AzureStorage/AzureFileShare\", \"Azure Storage (Azure Files)/Azure File Share\",\r\n\t  \"AzureWorkload/SAPAseDatabase\", \"SAP ASE in Azure VM/SAP ASE in Azure VM\",\r\n\t  \"MAB/FileFolder\", \"Azure Backup Agent/Files and Folder\",\r\n\t  \"DPM/SQLDB\", \"DPM/SQL Database\",\r\n\t  \"DPM/VMwareVM\", \"DPM/VMWare VM\",\r\n\t  \"DPM/HyperVVM\", \"DPM/Hyper-V VM\",\r\n\t  \"DPM/FileFolder\", \"DPM/Files and Folder\",\r\n\t  \"DPM/Client\", \"DPM/Files & Folder\",\r\n\t  \"DPM/SystemState\", \"DPM/System State\",\r\n\t  \"DPM/Sharepoint\", \"DPM/Sharepoint Database\",\r\n\t  \"DPM/Exchange\", \"DPM/Exchange Mailbox Database\"];\r\nlet CustomBMSTypeParam = \"'Azure Backup Agent','Azure Storage (Azure Files)','Azure Virtual Machine','DPM','SAP ASE in Azure VM','SAP HANA in Azure VM','SQL in Azure VM'\";\r\n// Fetch data from AzureDiagnostics\r\nlet BackupItemUnderAzureDiagnostics = ( ) \r\n{\r\nAzureDiagnostics\r\n// Take records until previous day\r\n| where TimeGenerated >= RangeStart and TimeGenerated <= RangeEnd and TimeGenerated < Today\r\n| where Category == \"AzureBackupReport\" and OperationName == \"BackupItem\" and SchemaVersion_s == \"V2\" and State_s != \"Deleted\"\r\n| project  BackupManagementType = columnifexists(\"BackupManagementType_s\", \"\"), BackupItemType = columnifexists(\"BackupItemType_s\", \"\") \r\n};\r\n// Fetch data from ResourceSpecific\r\nlet BackupItemUnderResourceSpecific = ( ) \r\n{\r\nCoreAzureBackup\r\n// Take records until previous day\r\n| where TimeGenerated >= RangeStart and TimeGenerated <= RangeEnd and TimeGenerated < Today\r\n| where OperationName == \"BackupItem\" and State != \"Deleted\"\r\n| project BackupManagementType, BackupItemType \r\n};\r\nlet OutputTable = () {CombinedTable | union isfuzzy = true \r\n(BackupItemUnderAzureDiagnostics()),\r\n(BackupItemUnderResourceSpecific())\r\n| distinct BackupManagementType, BackupItemType\r\n| distinct strcat(BackupManagementType, \"/\", BackupItemType)\r\n| project BMSTypeWithBackupItemType = Column1};\r\nlet CustomOutputTable = () {BMSTypeWithBackupItemTypeMappingTable\r\n| join kind= rightouter (OutputTable) \r\non BMSTypeWithBackupItemType == BMSTypeWithBackupItemType\r\n| project BMSTypeWithBackupItemType1, CustomBMSTypeWithBackupItemType = iff(CustomBMSTypeWithBackupItemType == \"\",BMSTypeWithBackupItemType1,CustomBMSTypeWithBackupItemType )};\r\nCustomOutputTable\r\n// convert to a list of internal names\r\n| project  s2 =  strcat(\"'\", CustomBMSTypeWithBackupItemType, \"'\"), s1 = CustomBMSTypeParam, s3 =  strcat(\"'\", BMSTypeWithBackupItemType1, \"'\") \r\n| mv-apply s2 = split(s2, \",\") to typeof(string) on (\r\n\twhere indexof(s1, substring(s2, 1, indexof(s2, \"/\") - 1)) >= 1)\r\n| summarize result = array_strcat(make_list(s3), \",\")\r\n| project result ",
+            "crossComponentResources": [
+              "{Workspaces}"
+            ],
+            "isHiddenWhenLocked": true,
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          },
+          {
+            "id": "ab02c6b3-a9c9-4a3b-86fe-0694974335b0",
+            "version": "KqlParameterItem/1.0",
+            "name": "CustomBMSTypeParam",
+            "label": "Backup Management Type",
+            "type": 2,
+            "description": "Backup Management Type",
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "value": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "selectAllValue": "'Azure Backup Agent','Azure Storage (Azure Files)','Azure Virtual Machine','DPM','SAP ASE in Azure VM','SAP HANA in Azure VM','SQL in Azure VM'"
+            },
+            "jsonData": "[    \r\n\t\"Azure Backup Agent\",\r\n    \"Azure Storage (Azure Files)\",\r\n    \"Azure Virtual Machine\",\r\n    \"DPM\",\r\n    \"SAP ASE in Azure VM\",\r\n    \"SAP HANA in Azure VM\",\r\n    \"SQL in Azure VM\"\r\n]",
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange"
+          },
+          {
+            "id": "f61266ea-f32a-4b60-8eeb-f3b428ac4951",
+            "version": "KqlParameterItem/1.0",
+            "name": "BMSTypeWithBackupItemTypeParam",
+            "type": 1,
+            "query": "// Time variable used\r\nlet Today = startofday(now());\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = startofday({TimeRange:end}) + 1d;\r\n// BMSTypeWithBackupItemType MappingTable\r\nlet BMSTypeWithBackupItemTypeMappingTable = datatable (BMSTypeWithBackupItemType:string, CustomBMSTypeWithBackupItemType:string)\r\n    [ \"AzureWorkload/SAPHanaDatabase\", \"SAP HANA in Azure VM/SAP HANA in Azure VM\",\r\n      \"AzureWorkload/SQLDataBase\", \"SQL in Azure VM/SQL Database\",\r\n      \"IaaSVM/VM\", \"Azure Virtual Machine/Azure VM\",\r\n\t  \"AzureStorage/AzureFileShare\", \"Azure Storage (Azure Files)/Azure File Share\",\r\n\t  \"AzureWorkload/SAPAseDatabase\", \"SAP ASE in Azure VM/SAP ASE in Azure VM\",\r\n\t  \"MAB/FileFolder\", \"Azure Backup Agent/Files and Folder\",\r\n\t  \"DPM/SQLDB\", \"DPM/SQL Database\",\r\n\t  \"DPM/VMwareVM\", \"DPM/VMWare VM\",\r\n\t  \"DPM/HyperVVM\", \"DPM/Hyper-V VM\",\r\n\t  \"DPM/FileFolder\", \"DPM/Files and Folder\",\r\n\t  \"DPM/Client\", \"DPM/Files & Folder\",\r\n\t  \"DPM/SystemState\", \"DPM/System State\",\r\n\t  \"DPM/Sharepoint\", \"DPM/Sharepoint Database\",\r\n\t  \"DPM/Exchange\", \"DPM/Exchange Mailbox Database\"];\r\n//let CustomBMSTypeParam = \"'SQL in Azure VM','Azure Virtual Machine','Azure Storage (Azure Files)','Azure Backup Agent','DPM'\";\r\nlet CustomBMSTypeParam = @\"{CustomBMSTypeParam}\";\r\n// Fetch data from AzureDiagnostics\r\nlet BackupItemUnderAzureDiagnostics = ( ) \r\n{\r\nAzureDiagnostics\r\n// Take records until previous day\r\n| where TimeGenerated >= RangeStart and TimeGenerated <= RangeEnd and TimeGenerated < Today\r\n| where Category == \"AzureBackupReport\" and OperationName == \"BackupItem\" and SchemaVersion_s == \"V2\" and State_s != \"Deleted\"\r\n| project  BackupManagementType = columnifexists(\"BackupManagementType_s\", \"\"), BackupItemType = columnifexists(\"BackupItemType_s\", \"\") \r\n};\r\n// Fetch data from ResourceSpecific\r\nlet BackupItemUnderResourceSpecific = ( ) \r\n{\r\nCoreAzureBackup\r\n// Take records until previous day\r\n| where TimeGenerated >= RangeStart and TimeGenerated <= RangeEnd and TimeGenerated < Today\r\n| where OperationName == \"BackupItem\" and State != \"Deleted\"\r\n| project BackupManagementType, BackupItemType \r\n};\r\nlet OutputTable = () {CombinedTable | union isfuzzy = true \r\n(BackupItemUnderAzureDiagnostics()),\r\n(BackupItemUnderResourceSpecific())\r\n| distinct BackupManagementType, BackupItemType\r\n| distinct strcat(BackupManagementType, \"/\", BackupItemType)\r\n| project BMSTypeWithBackupItemType = Column1};\r\nlet CustomOutputTable = () {BMSTypeWithBackupItemTypeMappingTable\r\n| join kind= rightouter (OutputTable) \r\non BMSTypeWithBackupItemType == BMSTypeWithBackupItemType\r\n| project BMSTypeWithBackupItemType1, CustomBMSTypeWithBackupItemType = iff(CustomBMSTypeWithBackupItemType == \"\",BMSTypeWithBackupItemType1,CustomBMSTypeWithBackupItemType )};\r\nCustomOutputTable\r\n// convert to a list of internal names\r\n| project  s2 =  strcat(\"'\", CustomBMSTypeWithBackupItemType, \"'\"), s1 = CustomBMSTypeParam, s3 =  strcat(\"'\", BMSTypeWithBackupItemType1, \"'\") \r\n| mv-apply s2 = split(s2, \",\") to typeof(string) on (\r\n\twhere indexof(s1, substring(s2, 1, indexof(s2, \"/\") - 1)) >= 1)\r\n| summarize result = array_strcat(make_list(s3), \",\")\r\n| project result ",
+            "crossComponentResources": [
+              "{Workspaces}"
+            ],
+            "isHiddenWhenLocked": true,
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          }
+        ],
+        "style": "above",
+        "queryType": 0,
+        "resourceType": "microsoft.resources/subscriptions"
+      },
+      "name": "Overview-WorkspaceParameterBlock"
+    },
+    {
+      "type": 11,
+      "content": {
+        "version": "LinkItem/1.0",
+        "style": "tabs",
+        "links": [
+          {
+            "cellValue": "TabName",
+            "linkTarget": "parameter",
+            "linkLabel": "Overview",
+            "subTarget": "Overview",
+            "style": "link"
+          },
+          {
+            "cellValue": "TabName",
+            "linkTarget": "parameter",
+            "linkLabel": "Summary",
+            "subTarget": "Summary",
+            "style": "primary",
+            "workbookContext": {
+              "componentIdSource": "workbook",
+              "resourceIdsSource": "workbook",
+              "templateIdSource": "static",
+              "templateId": "13bf0ff5-c132-4c85-910e-9de00bb3d26e",
+              "typeSource": "workbook",
+              "gallerySource": "workbook"
+            }
+          },
+          {
+            "cellValue": "TabName",
+            "linkTarget": "parameter",
+            "linkLabel": "Backup Items",
+            "subTarget": "BackupItems",
+            "style": "secondary",
+            "workbookContext": {
+              "componentIdSource": "workbook",
+              "resourceIdsSource": "workbook",
+              "templateIdSource": "static",
+              "templateId": "Community-Workbooks/Azure Backup/Storage",
+              "typeSource": "default",
+              "gallerySource": "static",
+              "gallery": "Azure Monitor"
+            }
+          },
+          {
+            "cellValue": "TabName",
+            "linkTarget": "parameter",
+            "linkLabel": "Usage",
+            "subTarget": "Usage",
+            "style": "secondary",
+            "workbookContext": {
+              "componentIdSource": "workbook",
+              "resourceIdsSource": "workbook",
+              "templateIdSource": "static",
+              "templateId": "Community-Workbooks/Azure Backup/Protected Instances",
+              "typeSource": "default",
+              "gallerySource": "static",
+              "gallery": "Azure Monitor"
+            }
+          },
+          {
+            "cellValue": "TabName",
+            "linkTarget": "parameter",
+            "linkLabel": "Jobs",
+            "subTarget": "JobDistribution",
+            "style": "secondary",
+            "workbookContext": {
+              "componentIdSource": "workbook",
+              "resourceIdsSource": "workbook",
+              "templateIdSource": "static",
+              "templateId": "Community-Workbooks/Azure Backup/Job Distribution",
+              "typeSource": "default",
+              "gallerySource": "static",
+              "gallery": "Azure Monitor"
+            }
+          },
+          {
+            "cellValue": "TabName",
+            "linkTarget": "parameter",
+            "linkLabel": "Policies",
+            "subTarget": "PolicyDetails",
+            "style": "link"
+          }
+        ]
+      },
+      "name": "Tabs"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "### How to use this report\r\n\r\n1. [configure vault diagnostic settings for backup reports ](https://aka.ms/AzureBackupDiagnosticsDocs)\r\n2. Configure the settings for Subscription, Log Analytics Workspace, and time range above.  those settngs will apply to each section of the report.  Sections of the report may provide additional filters.\r\n3. Filters are applied left to right and top to bottom on each section. [Learn more](https://aka.ms/AzureBackupReportFilters)\r\n\r\nNeed more help? See the [Azure Backup Report documentation](https://aka.ms/AzureBackupReportDocs)\r\n\r\n<div style=\"text-align:right; float:right\"> <span style=\"font-size:12px;\"> <a href=\"https://aka.ms/AzureBackupReportOld\" target=\"_blank\"> What happened to the Power BI reports? </a> </span> </div>\r\n"
+      },
+      "conditionalVisibility": {
+        "parameterName": "TabName",
+        "comparison": "isEqualTo",
+        "value": "Overview"
+      },
+      "name": "Overview-InstructionText"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "{Workspaces}"
+        ],
+        "parameters": [
+          {
+            "id": "678680e5-76b5-4db8-bbef-5f73942caf2e",
+            "version": "KqlParameterItem/1.0",
+            "name": "VaultSubscription",
+            "label": "Subscription Name",
+            "type": 6,
+            "description": "Subscription(s) under which the vault(s) exist",
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "// Time variable used\r\nlet Today = startofday(now());\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = startofday({TimeRange:end}) + 1d;\r\n// Fetch data from AzureDiagnostics\r\nlet BackupItemUnderAzureDiagnostics = ( ) \r\n{\r\nAzureDiagnostics\r\n// Take records until previous day\r\n| where TimeGenerated >= RangeStart and TimeGenerated <= RangeEnd and TimeGenerated < Today\r\n| where Category == \"AzureBackupReport\" and OperationName == \"BackupItem\" and SchemaVersion_s == \"V2\" and State_s != \"Deleted\"\r\n| project BackupManagementType = columnifexists(\"BackupManagementType_s\", \"\"), BackupItemType = columnifexists(\"BackupItemType_s\", \"\"), ResourceId \r\n| parse ResourceId with * \"SUBSCRIPTIONS/\" SubscriptionId:string \"/RESOURCEGROUPS\" * \r\n};\r\n// Fetch data from ResourceSpecific\r\nlet BackupItemUnderResourceSpecific = ( ) \r\n{\r\nCoreAzureBackup\r\n// Take records until previous day\r\n| where TimeGenerated >= RangeStart and TimeGenerated <= RangeEnd and TimeGenerated < Today\r\n| where OperationName == \"BackupItem\" and State != \"Deleted\"\r\n| project BackupManagementType, BackupItemType,  ResourceId \r\n| parse ResourceId with * \"SUBSCRIPTIONS/\" SubscriptionId:string \"/RESOURCEGROUPS\" *\r\n};\r\nCombinedTable | union isfuzzy = true \r\n(BackupItemUnderAzureDiagnostics()),\r\n(BackupItemUnderResourceSpecific())\r\n| project BMSTypeWithBackupItemType = strcat(BackupManagementType, \"/\", BackupItemType), SubscriptionId \r\n| where BMSTypeWithBackupItemType in ({BMSTypeWithBackupItemTypeParam}) or '*' in ({BMSTypeWithBackupItemTypeParam})\r\n| distinct SubscriptionId",
+            "crossComponentResources": [
+              "{Workspaces}"
+            ],
+            "value": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "selectAllValue": "*",
+              "showDefault": false
+            },
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          },
+          {
+            "id": "2a83acc5-2123-476f-8a4c-da2fddf231a1",
+            "version": "KqlParameterItem/1.0",
+            "name": "Location",
+            "label": "Vault Location",
+            "type": 2,
+            "description": "Location(s) in which the vault(s) were created",
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "// Parameter Used -  BMSTypeWithBackupItemType\r\n// Time variable used\r\nlet Today = startofday(now());\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = startofday({TimeRange:end}) + 1d;\r\n// High-level Functions\r\nlet VaultUnderAzureDiagnostics = ()\r\n{\r\nAzureDiagnostics\r\n// Take records until previous day\r\n| where TimeGenerated >= RangeStart and TimeGenerated <= RangeEnd and TimeGenerated < Today\r\n| where Category == \"AzureBackupReport\" and OperationName == \"Vault\" and SchemaVersion_s == \"V2\"\r\n| project VaultName = columnifexists(\"VaultName_s\", \"\"), AzureDataCenter =  columnifexists(\"AzureDataCenter_s\", \"\"), ResourceId\r\n| distinct ResourceId, AzureDataCenter, VaultName\r\n};\r\nlet VaultUnderResourceSpecific = ()\r\n{\r\nCoreAzureBackup\r\n// Take records until previous day\r\n| where TimeGenerated >= RangeStart and TimeGenerated <= RangeEnd and TimeGenerated < Today\r\n| where OperationName == \"Vault\" \r\n| distinct ResourceId, AzureDataCenter, VaultName;\r\n};\r\nlet BackupItemUnderAzureDiagnostics = ()\r\n{\r\nlet BackupItemTable = AzureDiagnostics\r\n// Take records until previous day\r\n| where TimeGenerated >= RangeStart and TimeGenerated <= RangeEnd and TimeGenerated < Today\r\n| where Category == \"AzureBackupReport\" and OperationName == \"BackupItem\" and SchemaVersion_s == \"V2\" and State_s != \"Deleted\"\r\n| project BackupItemUniqueId = columnifexists(\"BackupItemUniqueId_s\", \"\"), BackupManagementType = columnifexists(\"BackupManagementType_s\", \"\"), BackupItemType = columnifexists(\"BackupItemType_s\", \"\"), ResourceId\r\n| extend BMSTypeWithBackupItemType = strcat(BackupManagementType, \"/\", BackupItemType)\r\n// Filter by Parameter\r\n| where BMSTypeWithBackupItemType in ({BMSTypeWithBackupItemTypeParam}) or '*' in ({BMSTypeWithBackupItemTypeParam})\r\n| parse ResourceId with * \"SUBSCRIPTIONS/\" SubscriptionId:string \"/RESOURCEGROUPS\" * \r\n| where SubscriptionId in ({VaultSubscription:value}) or '*' in ({VaultSubscription:value})\r\n;\r\nVaultUnderAzureDiagnostics | join kind= inner (\r\n   BackupItemTable \r\n) on ResourceId == ResourceId;\r\n};\r\nlet BackupItemUnderResourceSpecific = ()\r\n{\r\nlet BackupItemTable = CoreAzureBackup\r\n// Take records until previous day\r\n| where TimeGenerated >= RangeStart and TimeGenerated <= RangeEnd and TimeGenerated < Today\r\n| where OperationName == \"BackupItem\" and State != \"Deleted\"\r\n| project BackupManagementType, BackupItemType, BMSTypeWithBackupItemType = strcat(BackupManagementType, \"/\", BackupItemType), ResourceId\r\n// Filter by Parameter\r\n| where BMSTypeWithBackupItemType in ({BMSTypeWithBackupItemTypeParam}) or '*' in ({BMSTypeWithBackupItemTypeParam})\r\n| parse ResourceId with * \"SUBSCRIPTIONS/\" SubscriptionId:string \"/RESOURCEGROUPS\" *\r\n| where SubscriptionId in ({VaultSubscription:value}) or '*' in ({VaultSubscription:value})\r\n;\r\nVaultUnderResourceSpecific | join kind= inner (\r\n   BackupItemTable \r\n) on ResourceId == ResourceId;\r\n};\r\nlet LatestBackupItemTable = ()\r\n{CombinedTable | union isfuzzy = true \r\n(BackupItemUnderAzureDiagnostics() | project AzureDataCenter),\r\n(BackupItemUnderResourceSpecific() | project AzureDataCenter)\r\n| distinct AzureDataCenter};\r\nLatestBackupItemTable",
+            "crossComponentResources": [
+              "{Workspaces}"
+            ],
+            "value": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "selectAllValue": "*"
+            },
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          },
+          {
+            "id": "fefd31fa-2774-43ca-8cc3-44d477c969f0",
+            "version": "KqlParameterItem/1.0",
+            "name": "Vault",
+            "label": "Vault Name",
+            "type": 2,
+            "description": "Name(s) of the vault(s)",
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "// Parameter Used -  BMSTypeWithBackupItemType\r\n// Time variable used\r\nlet Today = startofday(now());\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = startofday({TimeRange:end}) + 1d;\r\n// High-level Functions\r\nlet VaultUnderAzureDiagnostics = ()\r\n{\r\nAzureDiagnostics\r\n// Take records until previous day\r\n| where TimeGenerated >= RangeStart and TimeGenerated <= RangeEnd and TimeGenerated < Today\r\n| where Category == \"AzureBackupReport\" and OperationName == \"Vault\" and SchemaVersion_s == \"V2\"\r\n| project VaultName = columnifexists(\"VaultName_s\", \"\"), AzureDataCenter =  columnifexists(\"AzureDataCenter_s\", \"\"), ResourceId\r\n| where AzureDataCenter in ({Location}) or '*' in ({Location})\r\n| distinct ResourceId, AzureDataCenter, VaultName\r\n};\r\nlet VaultUnderResourceSpecific = ()\r\n{\r\nCoreAzureBackup\r\n// Take records until previous day\r\n| where TimeGenerated >= RangeStart and TimeGenerated <= RangeEnd and TimeGenerated < Today\r\n| where OperationName == \"Vault\" \r\n| where AzureDataCenter in ({Location}) or '*' in ({Location})\r\n| distinct ResourceId, AzureDataCenter, VaultName;\r\n};\r\nlet BackupItemUnderAzureDiagnostics = ()\r\n{\r\nlet BackupItemTable = AzureDiagnostics\r\n// Take records until previous day\r\n| where TimeGenerated >= RangeStart and TimeGenerated <= RangeEnd and TimeGenerated < Today\r\n| where Category == \"AzureBackupReport\" and OperationName == \"BackupItem\" and SchemaVersion_s == \"V2\" and State_s != \"Deleted\"\r\n| project BackupItemUniqueId = columnifexists(\"BackupItemUniqueId_s\", \"\"), BackupManagementType = columnifexists(\"BackupManagementType_s\", \"\"), BackupItemType = columnifexists(\"BackupItemType_s\", \"\"), ResourceId\r\n| extend BMSTypeWithBackupItemType = strcat(BackupManagementType, \"/\", BackupItemType)\r\n// Filter by Parameter\r\n| where BMSTypeWithBackupItemType in ({BMSTypeWithBackupItemTypeParam}) or '*' in ({BMSTypeWithBackupItemTypeParam})\r\n| parse ResourceId with * \"SUBSCRIPTIONS/\" SubscriptionId:string \"/RESOURCEGROUPS\" *\r\n| where SubscriptionId in ({VaultSubscription:value}) or '*' in ({VaultSubscription:value})\r\n;\r\nVaultUnderAzureDiagnostics | join kind= inner (\r\n   BackupItemTable \r\n) on ResourceId == ResourceId;\r\n};\r\nlet BackupItemUnderResourceSpecific = ()\r\n{\r\nlet BackupItemTable = CoreAzureBackup\r\n// Take records until previous day\r\n| where TimeGenerated >= RangeStart and TimeGenerated <= RangeEnd and TimeGenerated < Today\r\n| where OperationName == \"BackupItem\" and State != \"Deleted\"\r\n| project BackupManagementType, BackupItemType, BMSTypeWithBackupItemType = strcat(BackupManagementType, \"/\", BackupItemType), ResourceId\r\n// Filter by Parameter\r\n| where BMSTypeWithBackupItemType in ({BMSTypeWithBackupItemTypeParam}) or '*' in ({BMSTypeWithBackupItemTypeParam})\r\n| parse ResourceId with * \"SUBSCRIPTIONS/\" SubscriptionId:string \"/RESOURCEGROUPS\" *\r\n| where SubscriptionId in ({VaultSubscription:value}) or '*' in ({VaultSubscription:value})\r\n;\r\nVaultUnderResourceSpecific | join kind= inner (\r\n   BackupItemTable \r\n) on ResourceId == ResourceId;\r\n};\r\nlet LatestBackupItemTable = ()\r\n{CombinedTable | union isfuzzy = true \r\n(BackupItemUnderAzureDiagnostics() | project VaultName),\r\n(BackupItemUnderResourceSpecific() | project VaultName)\r\n| distinct VaultName};\r\nLatestBackupItemTable",
+            "crossComponentResources": [
+              "{Workspaces}"
+            ],
+            "value": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "selectAllValue": "*"
+            },
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          },
+          {
+            "id": "5c06db8f-9c05-4cb1-8f90-3023a39ab9ee",
+            "version": "KqlParameterItem/1.0",
+            "name": "BackupItemProtectionState",
+            "type": 1,
+            "query": "print(\"*\")",
+            "crossComponentResources": [
+              "{Workspaces}"
+            ],
+            "isHiddenWhenLocked": true,
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          }
+        ],
+        "style": "above",
+        "doNotRunWhenHidden": true,
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "conditionalVisibilities": [
+        {
+          "parameterName": "Workspaces",
+          "comparison": "isNotEqualTo"
+        },
+        {
+          "parameterName": "ErrorHandle",
+          "comparison": "isNotEqualTo",
+          "value": ""
+        },
+        {
+          "parameterName": "CustomBMSTypeParam",
+          "comparison": "isNotEqualTo"
+        },
+        {
+          "parameterName": "BMSTypeWithBackupItemTypeParam",
+          "comparison": "isNotEqualTo"
+        },
+        {
+          "parameterName": "TabName",
+          "comparison": "isNotEqualTo",
+          "value": "Overview"
+        }
+      ],
+      "conditionalVisibility": {
+        "parameterName": "Workspaces",
+        "comparison": "isNotEqualTo"
+      },
+      "customWidth": "0",
+      "name": "Overview-ReportParameterBlock"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "{\"version\":\"1.0.0\",\"content\":\"[\\r\\n{\\\"feature\\\": \\\"Trend Analysis\\\"},\\r\\n{\\\"feature\\\": \\\"Auditing of Backups\\\"},\\r\\n{\\\"feature\\\": \\\"Usage Allocation\\\"},\\r\\n{\\\"feature\\\": \\\"Multi-Region Support\\\"},\\r\\n{\\\"feature\\\": \\\"Multi-Tenant Support\\\"}\\r\\n]\"}",
+        "size": 0,
+        "queryType": 8,
+        "visualization": "graph",
+        "graphSettings": {
+          "type": 2,
+          "topContent": {
+            "formatOptions": {
+              "showIcon": true
+            }
+          },
+          "centerContent": {
+            "columnMatch": "feature",
+            "formatter": 1,
+            "formatOptions": {
+              "showIcon": true
+            }
+          },
+          "nodeIdField": "feature",
+          "nodeSize": null,
+          "staticNodeSize": 100,
+          "colorSettings": {
+            "nodeColorField": "feature",
+            "type": 1,
+            "colorPalette": "pastel"
+          },
+          "hivesMargin": 5
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "TabName",
+        "comparison": "isEqualTo",
+        "value": "Overview"
+      },
+      "name": "Overview-Image"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "template",
+        "loadFromTemplateId": "community-Workbooks/Azure Backup/Backup Report/summary-tab",
+        "items": []
+      },
+      "conditionalVisibility": {
+        "parameterName": "TabName",
+        "comparison": "isEqualTo",
+        "value": "Summary"
+      },
+      "name": "summary group"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "template",
+        "loadFromTemplateId": "community-Workbooks/Azure Backup/Backup Report/backupitems-tab",
+        "items": []
+      },
+      "conditionalVisibility": {
+        "parameterName": "TabName",
+        "comparison": "isEqualTo",
+        "value": "BackupItems"
+      },
+      "name": "Backup Items Group"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "template",
+        "loadFromTemplateId": "community-Workbooks/Azure Backup/Backup Report/usage-tab",
+        "items": []
+      },
+      "conditionalVisibility": {
+        "parameterName": "TabName",
+        "comparison": "isEqualTo",
+        "value": "Usage"
+      },
+      "name": "usage group"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "template",
+        "loadFromTemplateId": "community-Workbooks/Azure Backup/Backup Report/jobdistribution-tab",
+        "items": []
+      },
+      "conditionalVisibility": {
+        "parameterName": "TabName",
+        "comparison": "isEqualTo",
+        "value": "JobDistribution"
+      },
+      "name": "jobs group"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "template",
+        "loadFromTemplateId": "community-Workbooks/Azure Backup/Backup Report/policydetails-tab",
+        "items": []
+      },
+      "conditionalVisibility": {
+        "parameterName": "TabName",
+        "comparison": "isEqualTo",
+        "value": "PolicyDetails"
+      },
+      "name": "PolicyDetails group"
+    }
+  ],
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
