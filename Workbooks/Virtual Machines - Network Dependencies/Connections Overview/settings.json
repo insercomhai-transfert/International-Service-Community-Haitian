@@ -1,0 +1,9 @@
+{
+    "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/settings.json",
+    "name":"Connections Overview",
+    "author": "Microsoft",
+    "galleries": [
+        { "type": "workbook", "resourceType": "microsoft.operationalinsights/workspaces", "order": 100 },
+        { "type": "vm-insights", "resourceType": "microsoft.operationalinsights/workspaces", "order": 100 }
+    ]
+}
