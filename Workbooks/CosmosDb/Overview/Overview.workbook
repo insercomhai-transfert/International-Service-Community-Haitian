@@ -1,0 +1,448 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "query": "",
+        "crossComponentResources": [
+          "value::selected"
+        ],
+        "parameters": [
+          {
+            "id": "1f74ed9a-e3ed-498d-bd5b-f68f3836a117",
+            "version": "KqlParameterItem/1.0",
+            "name": "Subscription",
+            "label": "Subscriptions",
+            "type": 6,
+            "description": "All subscriptions with cosmosDB accounts",
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "where type =~ 'Microsoft.DocumentDB/databaseAccounts'\r\n| summarize by subscriptionId\r\n| order by subscriptionId\r\n| summarize SelectedSub = makelist(subscriptionId, 1), Sub = makelist(subscriptionId, 100000)\r\n| mvexpand Sub limit 100000\r\n| mvexpand SelectedSub\r\n| project value = strcat(\"/subscriptions/\", Sub), label = Sub, selected = iff(tostring(Sub) == tostring(SelectedSub), true, false)\r\n",
+            "crossComponentResources": [
+              "value::selected"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": []
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "138881c1-d041-4acd-acc9-e7a7af02d2ef",
+            "version": "KqlParameterItem/1.0",
+            "name": "CosmosDB",
+            "label": "Cosmos DB",
+            "type": 5,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "where type =~ 'Microsoft.DocumentDB/databaseAccounts'\r\n| order by name asc\n| summarize Selected = makelist(id, 10), All = makelist(id, 1000)\n| mvexpand All limit 10000\n| project value = tostring(All), label = tostring(All), selected = iff(Selected contains All, true, false)\n",
+            "crossComponentResources": [
+              "{Subscription}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ]
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "c4b69c01-2263-4ada-8d9c-43433b739ff3",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "type": 4,
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 300000,
+                  "createdTime": "2018-08-06T23:52:38.870Z",
+                  "isInitialTime": false,
+                  "grain": 1,
+                  "useDashboardTimeRange": false
+                },
+                {
+                  "durationMs": 900000,
+                  "createdTime": "2018-08-06T23:52:38.871Z",
+                  "isInitialTime": false,
+                  "grain": 1,
+                  "useDashboardTimeRange": false
+                },
+                {
+                  "durationMs": 1800000,
+                  "createdTime": "2018-08-06T23:52:38.871Z",
+                  "isInitialTime": false,
+                  "grain": 1,
+                  "useDashboardTimeRange": false
+                },
+                {
+                  "durationMs": 3600000,
+                  "createdTime": "2018-08-06T23:52:38.871Z",
+                  "isInitialTime": false,
+                  "grain": 1,
+                  "useDashboardTimeRange": false
+                },
+                {
+                  "durationMs": 14400000,
+                  "createdTime": "2018-08-06T23:52:38.871Z",
+                  "isInitialTime": false,
+                  "grain": 1,
+                  "useDashboardTimeRange": false
+                },
+                {
+                  "durationMs": 43200000,
+                  "createdTime": "2018-08-06T23:52:38.871Z",
+                  "isInitialTime": false,
+                  "grain": 1,
+                  "useDashboardTimeRange": false
+                },
+                {
+                  "durationMs": 86400000,
+                  "createdTime": "2018-08-06T23:52:38.871Z",
+                  "isInitialTime": false,
+                  "grain": 1,
+                  "useDashboardTimeRange": false
+                },
+                {
+                  "durationMs": 172800000,
+                  "createdTime": "2018-08-06T23:52:38.871Z",
+                  "isInitialTime": false,
+                  "grain": 1,
+                  "useDashboardTimeRange": false
+                },
+                {
+                  "durationMs": 259200000,
+                  "createdTime": "2018-08-06T23:52:38.871Z",
+                  "isInitialTime": false,
+                  "grain": 1,
+                  "useDashboardTimeRange": false
+                },
+                {
+                  "durationMs": 604800000,
+                  "createdTime": "2018-08-06T23:52:38.871Z",
+                  "isInitialTime": false,
+                  "grain": 1,
+                  "useDashboardTimeRange": false
+                }
+              ],
+              "allowCustom": null
+            },
+            "value": {
+              "durationMs": 14400000
+            },
+            "label": "Time Range"
+          },
+          {
+            "id": "9b48988f-dcd2-48cc-b233-5999ed32149f",
+            "version": "KqlParameterItem/1.0",
+            "name": "Message",
+            "type": 1,
+            "query": "where type  =~ 'Microsoft.DocumentDB/databaseAccounts'\n| summarize Selected = countif(id in ({CosmosDB:value})), Total = count()\n| extend Selected = iff(Selected > 200, 200, Selected)\n| project Message = strcat('# ', Selected, ' / ', Total)",
+            "crossComponentResources": [
+              "{Subscription}"
+            ],
+            "isHiddenWhenLocked": true,
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          }
+        ],
+        "style": "above",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "name": "parameters - 1"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "{Message}\r\n_Cosmos DB accounts_\r\n<br />\r\n<br />"
+      },
+      "name": "text - 3"
+    },
+    {
+      "type": 10,
+      "content": {
+        "chartId": "workbookdb19a8d8-91af-44ea-951d-5ffa133b2ebe",
+        "version": "MetricsItem/2.0",
+        "size": 2,
+        "chartType": 0,
+        "resourceIds": [
+          "{CosmosDB}"
+        ],
+        "timeContext": {
+          "durationMs": 0
+        },
+        "timeContextFromParameter": "TimeRange",
+        "resourceType": "microsoft.documentdb/databaseaccounts",
+        "resourceParameter": "CosmosDB",
+        "metrics": [
+          {
+            "namespace": "microsoft.documentdb/databaseaccounts",
+            "metric": "microsoft.documentdb/databaseaccounts-Requests-ProvisionedThroughput",
+            "aggregation": 3,
+            "splitBy": null,
+            "splitBySortOrder": -1,
+            "splitByLimit": 5
+          },
+          {
+            "namespace": "microsoft.documentdb/databaseaccounts",
+            "metric": "microsoft.documentdb/databaseaccounts-Requests-TotalRequestUnits",
+            "aggregation": 1,
+            "splitBy": null,
+            "splitBySortOrder": -1,
+            "splitByLimit": 5
+          },
+          {
+            "namespace": "microsoft.documentdb/databaseaccounts",
+            "metric": "microsoft.documentdb/databaseaccounts-Requests-TotalRequests",
+            "aggregation": 7,
+            "splitBy": null,
+            "splitBySortOrder": -1,
+            "splitByLimit": 5
+          },
+          {
+            "namespace": "microsoft.documentdb/databaseaccounts",
+            "metric": "microsoft.documentdb/databaseaccounts-Requests-MetadataRequests",
+            "aggregation": 7,
+            "splitBy": null,
+            "splitBySortOrder": -1,
+            "splitByLimit": 5
+          },
+          {
+            "namespace": "microsoft.documentdb/databaseaccounts",
+            "metric": "microsoft.documentdb/databaseaccounts-Requests-DataUsage",
+            "aggregation": 1,
+            "splitBy": null,
+            "splitBySortOrder": -1,
+            "splitByLimit": 5
+          },
+          {
+            "namespace": "microsoft.documentdb/databaseaccounts",
+            "metric": "microsoft.documentdb/databaseaccounts-Requests-DocumentCount",
+            "aggregation": 1,
+            "splitBy": null,
+            "splitBySortOrder": -1,
+            "splitByLimit": 5
+          },
+          {
+            "namespace": "microsoft.documentdb/databaseaccounts",
+            "metric": "microsoft.documentdb/databaseaccounts-Requests-TotalRequests",
+            "aggregation": 7,
+            "splitBy": "StatusCode",
+            "splitBySortOrder": -1,
+            "splitByLimit": 10
+          }
+        ],
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "$gen_group",
+              "formatter": 13,
+              "formatOptions": {
+                "linkTarget": "Resource",
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "Subscription",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "Name",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "microsoft.documentdb/databaseaccounts-Requests-ProvisionedThroughput",
+              "formatter": 4,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "microsoft.documentdb/databaseaccounts-Requests-ProvisionedThroughput Timeline",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "microsoft.documentdb/databaseaccounts-Requests-TotalRequestUnits",
+              "formatter": 8,
+              "formatOptions": {
+                "palette": "blue",
+                "showIcon": true
+              },
+              "numberFormat": {
+                "unit": 17,
+                "options": {
+                  "style": "decimal",
+                  "maximumFractionDigits": 1
+                }
+              }
+            },
+            {
+              "columnMatch": "microsoft.documentdb/databaseaccounts-Requests-TotalRequestUnits Timeline",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "microsoft.documentdb/databaseaccounts-Requests-TotalRequests",
+              "formatter": 8,
+              "formatOptions": {
+                "palette": "yellow",
+                "showIcon": true
+              },
+              "numberFormat": {
+                "unit": 17,
+                "options": {
+                  "style": "decimal",
+                  "maximumFractionDigits": 1
+                }
+              }
+            },
+            {
+              "columnMatch": "microsoft.documentdb/databaseaccounts-Requests-TotalRequests Timeline",
+              "formatter": 9,
+              "formatOptions": {
+                "palette": "yellow",
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "microsoft.documentdb/databaseaccounts-Requests-MetadataRequests",
+              "formatter": 8,
+              "formatOptions": {
+                "palette": "orange",
+                "showIcon": true
+              },
+              "numberFormat": {
+                "unit": 17,
+                "options": {
+                  "style": "decimal",
+                  "maximumFractionDigits": 0
+                }
+              }
+            },
+            {
+              "columnMatch": "microsoft.documentdb/databaseaccounts-Requests-MetadataRequests Timeline",
+              "formatter": 9,
+              "formatOptions": {
+                "palette": "orange",
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "microsoft.documentdb/databaseaccounts-Requests-DataUsage",
+              "formatter": 8,
+              "formatOptions": {
+                "palette": "grayBlue",
+                "showIcon": true
+              },
+              "numberFormat": {
+                "unit": 2,
+                "options": {
+                  "style": "decimal",
+                  "maximumFractionDigits": 0
+                }
+              }
+            },
+            {
+              "columnMatch": "microsoft.documentdb/databaseaccounts-Requests-DataUsage Timeline",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "microsoft.documentdb/databaseaccounts-Requests-DocumentCount",
+              "formatter": 8,
+              "formatOptions": {
+                "palette": "gray",
+                "showIcon": true
+              },
+              "numberFormat": {
+                "unit": 17,
+                "options": {
+                  "style": "decimal",
+                  "maximumFractionDigits": 0
+                }
+              }
+            },
+            {
+              "columnMatch": "microsoft.documentdb/databaseaccounts-Requests-DocumentCount Timeline",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": ".*\\/Total Requests$",
+              "formatter": 5,
+              "formatOptions": {
+                "showIcon": true
+              }
+            },
+            {
+              "columnMatch": "429/Total Requests",
+              "formatter": 18,
+              "formatOptions": {
+                "showIcon": true,
+                "thresholdsOptions": "icons",
+                "thresholdsGrid": [
+                  {
+                    "operator": "Default",
+                    "thresholdValue": null,
+                    "representation": "3",
+                    "text": "{0}{1}"
+                  }
+                ]
+              }
+            }
+          ],
+          "rowLimit": 10000,
+          "filter": true,
+          "hierarchySettings": {
+            "treeType": 1,
+            "groupBy": [
+              "Subscription"
+            ],
+            "expandTopLevel": true,
+            "finalBy": "Name"
+          },
+          "sortBy": [
+            {
+              "itemKey": "$gen_heatmap_microsoft.documentdb/databaseaccounts-Requests-TotalRequestUnits_5",
+              "sortOrder": 2
+            }
+          ],
+          "labelSettings": []
+        },
+        "sortBy": [
+          {
+            "itemKey": "$gen_heatmap_microsoft.documentdb/databaseaccounts-Requests-TotalRequestUnits_5",
+            "sortOrder": 2
+          }
+        ],
+        "filters": []
+      },
+      "showPin": true,
+      "name": "cosmosDB account metrics"
+    }
+  ],
+  "styleSettings": {},
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
