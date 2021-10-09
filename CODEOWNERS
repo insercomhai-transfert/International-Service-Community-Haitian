@@ -1,0 +1,61 @@
+# Lines starting with '#' are comments.
+# Each line is a file pattern followed by one or more owners.
+# see https://help.github.com/en/articles/about-code-owners
+
+# Order is important. The last matching pattern has the most precedence.
+
+# everything at the root, or inside docs, schema, scripts, cohorts requires workbooks team review
+* @microsoft/applicationinsights-devtools
+/Documentation/** @microsoft/applicationinsights-devtools
+/_assets/** @microsoft/applicationinsights-devtools
+/schema/** @microsoft/applicationinsights-devtools
+/scripts/** @microsoft/applicationinsights-devtools
+/test/** @microsoft/applicationinsights-devtools
+/.pipelines/** @microsoft/applicationinsights-devtools
+/Cohorts/** @microsoft/applicationinsights-devtools
+/Workbooks/** @microsoft/applicationinsights-devtools
+
+# teams that want to lock down their templates would insert rows here with the path to their template and the users/teams they want to own the items
+# anything not specified will default to requiring review by the workbooks team
+# it also appears that spaces in directory names are not well handled or are handled differently on different platforms. so here * is used instead of spaces.
+
+/Workbooks/Azure*Security*Center/** @microsoft/azure-security-center-workbooks
+
+/Workbooks/ADXCluster/** @microsoft/kusto-workbooks
+/Workbooks/AKS/** @microsoft/container-insights-workbook-contributors @microsoft/applicationinsights-devtools
+
+/Workbooks/Azure*Active*Directory*/** @microsoft/azure-ad-workbooks 
+
+/Workbooks/Azure*Backup/** @VinothJeyaraman @pikumarmsft 
+
+/Workbooks/Azure*Blockchain/** @keikumata @microsoft/applicationinsights-devtools
+
+/Workbooks/HDInsight/** @microsoft/hdinsight-workbooks-team @microsoft/applicationinsights-devtools
+
+/Workbooks/Intune*Audit/** @microsoft/intune-insights-and-analysis @microsoft/applicationinsights-devtools
+/Workbooks/Intune*Compliance/** @microsoft/intune-insights-and-analysis @microsoft/applicationinsights-devtools
+/Workbooks/Intune*Devices/** @microsoft/intune-insights-and-analysis @microsoft/applicationinsights-devtools
+/Workbooks/Intune*Enrollment/** @microsoft/intune-insights-and-analysis @microsoft/applicationinsights-devtools
+/Workbooks/Intune*Reports/** @microsoft/intune-reportingv2-trends
+
+/Workbooks/MultiCluster/** @microsoft/container-insights-workbook-contributors @microsoft/applicationinsights-devtools
+
+/Workbooks/Network*Insights/** @microsoft/network-insights @microsoft/applicationinsights-devtools
+ 
+/Workbooks/SapMonitor/** @microsoft/azuremonitorforsapsolutions @microsoft/applicationinsights-devtools
+
+/Workbooks/Virtual*Machine*/** @andrewki-msft @nasundar @rakshith210 @microsoft/applicationinsights-devtools
+
+/Workbooks/Availability/** @microsoft/ApplicationInsights-PortalExperiences @microsoft/applicationinsights-devtools
+/Workbooks/Usage/** @microsoft/ApplicationInsights-PortalExperiences @microsoft/applicationinsights-devtools
+/Workbooks/UsageMetrics/** @microsoft/ApplicationInsights-PortalExperiences @microsoft/applicationinsights-devtools
+
+/Workbooks/IoTHub/** @microsoft/iotedge-workbooks
+
+/Workbooks/Windows*Virtual*Desktop/** @microsoft/windows-virtual-desktop
+
+/Workbooks/Azure*Sentinel/** @microsoft/azure-sentinel-monitoring-workbooks
+
+# leave this at the bottom!
+# EVERYTHING ending with resjson* is for loc, and is owned by the workbooks team and the loc team
+*.resjson* @microsoft/applicationinsights-devtools @microsoft/csigs

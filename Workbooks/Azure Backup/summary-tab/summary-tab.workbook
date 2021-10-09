@@ -1,0 +1,240 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "<div style=\"text-align:left\"><span style=\"font-size:14px;font-weight:600;\">Key Parameters by Backup Solution </span> </div>"
+            },
+            "customWidth": "100",
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Summary"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Summary-GridTitle1",
+            "styleSettings": {
+              "margin": "0% 0% 0% 0%"
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList =  \"*\";\r\nlet Item_search =   \"*;*\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields = false;\r\nlet JobOperationList = \"*\";\r\nlet JobStatusList =  \"*\";\r\nlet JobFailureCodeList =  \"*\";\r\nlet ExcludeLog = True;\r\nlet BillingGroupName = \"*\";\r\n(\r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields)\r\n| count | extend Dummy = 1\r\n) \r\n| join (\r\n// calling LA System Function\r\n_AzureBackup_GetBillingGroups(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, BillingGroupName) \r\n| summarize Sum_VaultStore_StorageConsumption_InGBs = sum(VaultStore_StorageConsumptionInMBs)/1024, sum_ProtectedInstanceCount = sum(todouble(parse_json(ExtendedProperties).ProtectedInstanceCount)) | extend Dummy = 1\r\n) on Dummy \r\n| join (\r\n// calling LA System Function\r\n_AzureBackup_GetJobs(RangeStart, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, JobOperationList, JobStatusList, JobFailureCodeList, DatasourceSetName, BackupInstanceName, ExcludeLog) \r\n| summarize dcount(UniqueId,4) | extend Dummy = 1\r\n) on Dummy \r\n| extend  Key = pack_array( \"Backup Instances\", \"Protected Instances\",  \"Cloud Storage (GB)\", \"Jobs Created\"), Value = pack_array( Count, sum_ProtectedInstanceCount, Sum_VaultStore_StorageConsumption_InGBs, dcount_UniqueId), \r\nSubTitle = pack_array( \"\", \"\", \"\", \"\")\r\n| project Key, Value, SubTitle \r\n| mvexpand Key, Value, SubTitle",
+              "size": 4,
+              "noDataMessage": "No records found for the selected time range and scope",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspaces}"
+              ],
+              "visualization": "tiles",
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "Key",
+                  "formatter": 1,
+                  "formatOptions": {
+                    "showIcon": true
+                  }
+                },
+                "subtitleContent": {
+                  "columnMatch": "SubTitle",
+                  "formatter": 1,
+                  "formatOptions": {
+                    "showIcon": true
+                  }
+                },
+                "leftContent": {
+                  "columnMatch": "Value",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "showIcon": true
+                  },
+                  "numberFormat": {
+                    "unit": 0,
+                    "options": {
+                      "style": "decimal",
+                      "minimumFractionDigits": 0,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                },
+                "showBorder": true
+              }
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Summary"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo",
+                "value": ""
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "name": "Summary-Tiles",
+            "styleSettings": {
+              "margin": "0% 0% 0% -15px"
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// function Params - Report Filters\r\nlet RangeStart = startofday({TimeRange:start});\r\nlet RangeEnd = iff(startofday({TimeRange:end}) == startofday(now()) ,startofday({TimeRange:end}) - 1d , startofday({TimeRange:end}));\r\nlet VaultSubscriptionList = todynamic( replace(\"/subscriptions/\", \"\", @\"{VaultSubscription}\"));\r\nlet VaultLocationList = todynamic( @\"{VaultLocation}\"); \r\nlet VaultTypeList = \"*\";\r\nlet VaultList = todynamic( @\"{VaultName}\");\r\nlet ExcludeLegacyEvent = @\"{ExcludeLegacyEvent}\";\r\nlet BackupSolutionList = @\"{DatasourceType}\";\r\n// function Params - other Filters\r\nlet ProtectionInfoList =  \"*\";\r\nlet Item_search =   \"*;*\";\r\nlet ItemArray = split(Item_search, \";\");\r\nlet ItemArray_length = array_length(ItemArray);\r\nlet BackupInstanceName = iff(ItemArray_length == 2, ItemArray[1], ItemArray[0] );\r\nlet DatasourceSetName = iff(ItemArray_length == 2, ItemArray[0], \"\");\r\nlet DisplayAllFields = true;\r\nlet JobOperationList = \"*\";\r\nlet JobStatusList =  \"*\";\r\nlet JobFailureCodeList =  \"*\";\r\nlet ExcludeLog = True;\r\nlet BackupInstanceDetails = (){\r\n// calling LA System Function\r\n_AzureBackup_GetBackupInstances(RangeEnd, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, ProtectionInfoList, DatasourceSetName, BackupInstanceName, DisplayAllFields)\r\n// query to transform function output\r\n| summarize BackupInstances=count(UniqueId), CloudStorage=sum(VaultStore_StorageConsumptionInMBs)/(1024) by BackupSolution\r\n};\r\nlet JobSuccessPercentageTable = (){\r\n// calling LA System Function\r\n_AzureBackup_GetJobs(RangeStart, RangeEnd, VaultSubscriptionList, VaultLocationList, VaultList, VaultTypeList, ExcludeLegacyEvent, BackupSolutionList, JobOperationList, JobStatusList, JobFailureCodeList, DatasourceSetName, BackupInstanceName, ExcludeLog)\r\n// query to transform function output\r\n| extend success=iff((Status == \"Completed\" or Status == \"CompletedWithWarnings\") , 1 , 0)\r\n| extend record = iff(UniqueId != \"\", 1, 0)  // to be used for total row count\r\n| summarize SuccessfulCount =sum(success), TotalCount=sum(record) by BackupSolution\r\n| extend JobSuccessPercentage = (SuccessfulCount*100)/todouble(TotalCount)\r\n| project-away SuccessfulCount, TotalCount\r\n};\r\nBackupInstanceDetails | join kind = leftouter (JobSuccessPercentageTable) on BackupSolution  | project-away BackupSolution1 | project BackupSolution, BackupInstances, JobSuccessPercentage=iff( (isnan( JobSuccessPercentage) or isinf( JobSuccessPercentage) or isempty( JobSuccessPercentage)), \"-\", strcat(tostring(round( JobSuccessPercentage,2)), \" %\")), CloudStorage",
+              "size": 3,
+              "noDataMessage": "No records found for the selected time range and scope",
+              "showExportToExcel": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspaces}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "BackupSolution",
+                    "formatter": 0,
+                    "tooltipFormat": {
+                      "tooltip": "Backup Solution"
+                    }
+                  },
+                  {
+                    "columnMatch": "BackupInstances",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "min": 0,
+                      "palette": "blue",
+                      "customColumnWidthSetting": "25%"
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Number of backup instances backed up using the given backup solution, as of the end of the selected time range"
+                    }
+                  },
+                  {
+                    "columnMatch": "JobSuccessPercentage",
+                    "formatter": 1,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "25%"
+                    },
+                    "numberFormat": {
+                      "unit": 1,
+                      "options": {
+                        "style": "decimal",
+                        "useGrouping": false,
+                        "maximumFractionDigits": 2
+                      }
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "% of Jobs (that were triggered in the selected time range) that were successful for backup instances backed up using the given backup solution"
+                    }
+                  },
+                  {
+                    "columnMatch": "CloudStorage",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "min": 0,
+                      "palette": "blue",
+                      "customColumnWidthSetting": "25%"
+                    },
+                    "numberFormat": {
+                      "unit": 0,
+                      "options": {
+                        "style": "decimal",
+                        "minimumFractionDigits": 2,
+                        "maximumFractionDigits": 2
+                      }
+                    },
+                    "tooltipFormat": {
+                      "tooltip": "Total cloud storage consumed by backup instances backed up by the given backup solution, as of the end of the selected time range"
+                    }
+                  }
+                ],
+                "labelSettings": [
+                  {
+                    "columnId": "BackupSolution",
+                    "label": "Backup Solution"
+                  },
+                  {
+                    "columnId": "BackupInstances",
+                    "label": "Backup Instances"
+                  },
+                  {
+                    "columnId": "JobSuccessPercentage",
+                    "label": "Job Success %"
+                  },
+                  {
+                    "columnId": "CloudStorage",
+                    "label": "Cloud Storage (GB)"
+                  }
+                ]
+              },
+              "sortBy": []
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "TabName",
+                "comparison": "isEqualTo",
+                "value": "Summary"
+              },
+              {
+                "parameterName": "Workspaces",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "ErrorHandle",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "DatasourceType",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "showPin": true,
+            "name": "Summary-Grid",
+            "styleSettings": {
+              "margin": "-23px 0% 0% 0%",
+              "showBorder": true
+            }
+          }
+        ]
+      },
+      "name": "group - 0"
+    }
+  ],
+  "fallbackResourceIds": [
+    "Azure Monitor"
+  ],
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
