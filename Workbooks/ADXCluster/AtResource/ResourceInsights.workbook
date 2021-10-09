@@ -1,0 +1,1261 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "f3c4e9cb-8f5c-45ef-9ff9-9517d2a4aa19",
+            "version": "KqlParameterItem/1.0",
+            "name": "Resource",
+            "label": "ADX-Cluster",
+            "type": 5,
+            "isRequired": true,
+            "value": "value::1",
+            "isHiddenWhenLocked": true,
+            "typeSettings": {
+              "resourceTypeFilter": {
+                "microsoft.kusto/clusters": true
+              },
+              "additionalResourceOptions": [
+                "value::1"
+              ]
+            }
+          },
+          {
+            "id": "182d6324-854c-4cc0-802a-de4f3bee9f76",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "label": "Time range",
+            "type": 4,
+            "isRequired": true,
+            "value": {
+              "durationMs": 604800000
+            },
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 300000
+                },
+                {
+                  "durationMs": 900000
+                },
+                {
+                  "durationMs": 1800000
+                },
+                {
+                  "durationMs": 3600000
+                },
+                {
+                  "durationMs": 14400000
+                },
+                {
+                  "durationMs": 43200000
+                },
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 172800000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                }
+              ],
+              "allowCustom": true
+            }
+          }
+        ],
+        "style": "pills",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "name": "parameters - 0",
+      "styleSettings": {
+        "margin": "15px 0 0 0"
+      }
+    },
+    {
+      "type": 11,
+      "content": {
+        "version": "LinkItem/1.0",
+        "style": "tabs",
+        "links": [
+          {
+            "cellValue": "tab",
+            "linkTarget": "parameter",
+            "linkLabel": "Overview",
+            "subTarget": "Overview",
+            "style": "link"
+          },
+          {
+            "cellValue": "tab",
+            "linkTarget": "parameter",
+            "linkLabel": "Cluster",
+            "subTarget": "Cluster",
+            "style": "link"
+          }
+        ]
+      },
+      "name": "Tabs",
+      "styleSettings": {
+        "margin": "-15px 0px -15px 0px"
+      }
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 10,
+            "content": {
+              "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+              "version": "MetricsItem/2.0",
+              "size": 3,
+              "chartType": -1,
+              "metricScope": 0,
+              "resourceIds": [
+                "{Resource}"
+              ],
+              "timeContext": {
+                "durationMs": 0
+              },
+              "timeContextFromParameter": "TimeRange",
+              "resourceType": "microsoft.kusto/clusters",
+              "resourceParameter": "Resource",
+              "metrics": [
+                {
+                  "namespace": "microsoft.kusto/clusters",
+                  "metric": "microsoft.kusto/clusters-Cluster health-KeepAlive",
+                  "aggregation": 4,
+                  "columnName": "Keep Alive (Avg)"
+                }
+              ],
+              "gridFormatType": 1,
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "Metric",
+                  "formatter": 1,
+                  "tooltipFormat": {
+                    "tooltip": "An average Keep Alive below 0.995 (over a long period) may indicate a health issue.  (Pay attention to your time range. This rule is important over a long period)"
+                  }
+                },
+                "subtitleContent": {
+                  "columnMatch": "Value",
+                  "formatter": 18,
+                  "formatOptions": {
+                    "thresholdsOptions": "icons",
+                    "thresholdsGrid": [
+                      {
+                        "operator": "<=",
+                        "thresholdValue": "0.995",
+                        "representation": "2",
+                        "text": ""
+                      },
+                      {
+                        "operator": "Default",
+                        "thresholdValue": null,
+                        "representation": "success",
+                        "text": ""
+                      }
+                    ]
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "An average Keep Alive below 0.995 (over a long period) may indicate a health issue.  (Pay attention to your time range. This rule is important over a long period)"
+                  }
+                },
+                "leftContent": {
+                  "columnMatch": "Value",
+                  "formatter": 1,
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "style": "decimal",
+                      "useGrouping": false,
+                      "maximumFractionDigits": 2,
+                      "maximumSignificantDigits": 4
+                    }
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "An average Keep Alive below 0.995 (over a long period) may indicate a health issue.  (Pay attention to your time range. This rule is important over a long period)"
+                  }
+                },
+                "secondaryContent": {
+                  "columnMatch": "Timeline",
+                  "formatter": 9,
+                  "formatOptions": {
+                    "min": 0,
+                    "max": 1,
+                    "palette": "blue"
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "An average Keep Alive below 0.995 (over a long period) may indicate a health issue.  (Pay attention to your time range. This rule is important over a long period)"
+                  }
+                },
+                "showBorder": false,
+                "size": "full"
+              },
+              "sortBy": []
+            },
+            "customWidth": "0",
+            "showPin": false,
+            "name": "summary tiles"
+          },
+          {
+            "type": 10,
+            "content": {
+              "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+              "version": "MetricsItem/2.0",
+              "size": 3,
+              "chartType": -1,
+              "metricScope": 0,
+              "resourceIds": [
+                "{Resource}"
+              ],
+              "timeContext": {
+                "durationMs": 0
+              },
+              "timeContextFromParameter": "TimeRange",
+              "resourceType": "microsoft.kusto/clusters",
+              "resourceParameter": "Resource",
+              "metrics": [
+                {
+                  "namespace": "microsoft.kusto/clusters",
+                  "metric": "microsoft.kusto/clusters-Cluster health-CPU",
+                  "aggregation": 4,
+                  "columnName": "CPU (Avg)"
+                }
+              ],
+              "gridFormatType": 1,
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "Metric",
+                  "formatter": 1,
+                  "tooltipFormat": {
+                    "tooltip": "An average CPU of 80% or less (over a long period) is sustainable for a cluster"
+                  }
+                },
+                "subtitleContent": {
+                  "columnMatch": "Aggregation",
+                  "formatter": 18,
+                  "formatOptions": {
+                    "thresholdsOptions": "icons",
+                    "thresholdsGrid": [
+                      {
+                        "operator": ">=",
+                        "thresholdValue": "80",
+                        "representation": "2",
+                        "text": ""
+                      },
+                      {
+                        "operator": "Default",
+                        "thresholdValue": null,
+                        "representation": "success",
+                        "text": ""
+                      }
+                    ]
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "An average CPU of 80% or less (over a long period) is sustainable for a cluster"
+                  }
+                },
+                "leftContent": {
+                  "columnMatch": "Value",
+                  "formatter": 1,
+                  "numberFormat": {
+                    "unit": 1,
+                    "options": {
+                      "style": "decimal",
+                      "useGrouping": false,
+                      "maximumFractionDigits": 2
+                    }
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "An average CPU of 80% or less (over a long period) is sustainable for a cluster"
+                  }
+                },
+                "secondaryContent": {
+                  "columnMatch": "Timeline",
+                  "formatter": 9,
+                  "formatOptions": {
+                    "min": 0,
+                    "max": 100,
+                    "palette": "blue"
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "An average CPU of 80% or less is sustainable for a cluster (over a long time period)"
+                  }
+                },
+                "showBorder": false,
+                "size": "full"
+              },
+              "sortBy": []
+            },
+            "customWidth": "0",
+            "showPin": false,
+            "name": "summary tiles",
+            "styleSettings": {
+              "margin": "0px"
+            }
+          },
+          {
+            "type": 10,
+            "content": {
+              "chartId": "workbookc80219c7-4cf9-4a69-be8f-b72305af2789",
+              "version": "MetricsItem/2.0",
+              "size": 3,
+              "chartType": -1,
+              "metricScope": 0,
+              "resourceIds": [
+                "{Resource}"
+              ],
+              "timeContext": {
+                "durationMs": 0
+              },
+              "timeContextFromParameter": "TimeRange",
+              "resourceType": "microsoft.kusto/clusters",
+              "resourceParameter": "Resource",
+              "metrics": [
+                {
+                  "namespace": "microsoft.kusto/clusters",
+                  "metric": "microsoft.kusto/clusters-Cluster health-IngestionUtilization",
+                  "aggregation": 4,
+                  "columnName": "Ingestion Utilization (Avg)"
+                }
+              ],
+              "gridFormatType": 1,
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "Metric",
+                  "formatter": 13,
+                  "formatOptions": {
+                    "linkTarget": null,
+                    "showIcon": false
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "Percentage of actual resources used to ingest data from the total resources allocated, in the capacity policy, to perform ingestion.  An average ingestion utilization of 80% or less (over a long period) is a sustainable state for a cluster."
+                  }
+                },
+                "subtitleContent": {
+                  "columnMatch": "Value",
+                  "formatter": 18,
+                  "formatOptions": {
+                    "thresholdsOptions": "icons",
+                    "thresholdsGrid": [
+                      {
+                        "operator": ">=",
+                        "thresholdValue": "80",
+                        "representation": "2",
+                        "text": ""
+                      },
+                      {
+                        "operator": "Default",
+                        "thresholdValue": null,
+                        "representation": "success",
+                        "text": ""
+                      }
+                    ]
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "Percentage of actual resources used to ingest data from the total resources allocated, in the capacity policy, to perform ingestion.  An average ingestion utilization of 80% or less (over a long period) is a sustainable state for a cluster."
+                  }
+                },
+                "leftContent": {
+                  "columnMatch": "Value",
+                  "formatter": 12,
+                  "numberFormat": {
+                    "unit": 1,
+                    "options": {
+                      "style": "decimal",
+                      "useGrouping": false,
+                      "maximumFractionDigits": 2
+                    }
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "Percentage of actual resources used to ingest data from the total resources allocated, in the capacity policy, to perform ingestion.  An average ingestion utilization of 80% or less (over a long period) is a sustainable state for a cluster."
+                  }
+                },
+                "secondaryContent": {
+                  "columnMatch": "Timeline",
+                  "formatter": 9,
+                  "formatOptions": {
+                    "min": 0,
+                    "max": 100,
+                    "palette": "blue"
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "Percentage of actual resources used to ingest data from the total resources allocated, in the capacity policy, to perform ingestion.  An average ingestion utilization of 80% or less (over a long period) is a sustainable state for a cluster."
+                  }
+                },
+                "showBorder": false,
+                "size": "full"
+              }
+            },
+            "customWidth": "0",
+            "showPin": false,
+            "name": "metric"
+          },
+          {
+            "type": 10,
+            "content": {
+              "chartId": "workbookc80219c7-4cf9-4a69-be8f-b72305af2789",
+              "version": "MetricsItem/2.0",
+              "size": 3,
+              "chartType": -1,
+              "metricScope": 0,
+              "resourceIds": [
+                "{Resource}"
+              ],
+              "timeContext": {
+                "durationMs": 0
+              },
+              "timeContextFromParameter": "TimeRange",
+              "resourceType": "microsoft.kusto/clusters",
+              "resourceParameter": "Resource",
+              "metrics": [
+                {
+                  "namespace": "microsoft.kusto/clusters",
+                  "metric": "microsoft.kusto/clusters-Ingestion health and performance-IngestionLatencyInSeconds",
+                  "aggregation": 4,
+                  "columnName": "Ingestion Latency (Avg)"
+                }
+              ],
+              "gridFormatType": 1,
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "Metric",
+                  "formatter": 13,
+                  "formatOptions": {
+                    "linkTarget": null,
+                    "showIcon": false
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "The ingestion latency period depends on the ingestion scenario. As a \"rule of thumb\", an average Ingestion Latency above 15 minutes  (over a long period) may indicate a problem"
+                  }
+                },
+                "subtitleContent": {
+                  "columnMatch": "Value",
+                  "formatter": 18,
+                  "formatOptions": {
+                    "thresholdsOptions": "icons",
+                    "thresholdsGrid": [
+                      {
+                        "operator": ">=",
+                        "thresholdValue": "900",
+                        "representation": "2",
+                        "text": ""
+                      },
+                      {
+                        "operator": "Default",
+                        "thresholdValue": null,
+                        "representation": "success",
+                        "text": ""
+                      }
+                    ]
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "The ingestion latency period depends on the ingestion scenario. As a \"rule of thumb\", an average Ingestion Latency above 15 minutes  (over a long period) may indicate a problem"
+                  }
+                },
+                "leftContent": {
+                  "columnMatch": "Value",
+                  "formatter": 12,
+                  "numberFormat": {
+                    "unit": 24,
+                    "options": {
+                      "style": "decimal",
+                      "useGrouping": false,
+                      "maximumFractionDigits": 2
+                    }
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "The ingestion latency period depends on the ingestion scenario. As a \"rule of thumb\", an average Ingestion Latency above 15 minutes  (over a long period) may indicate a problem"
+                  }
+                },
+                "secondaryContent": {
+                  "columnMatch": "Timeline",
+                  "formatter": 9,
+                  "formatOptions": {
+                    "palette": "blue"
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "The ingestion latency period depends on the ingestion scenario. As a \"rule of thumb\", an average Ingestion Latency above 15 minutes  (over a long period) may indicate a problem"
+                  }
+                },
+                "showBorder": false,
+                "size": "full"
+              }
+            },
+            "customWidth": "0",
+            "showPin": false,
+            "name": "metric - 13"
+          },
+          {
+            "type": 10,
+            "content": {
+              "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+              "version": "MetricsItem/2.0",
+              "size": 3,
+              "chartType": -1,
+              "metricScope": 0,
+              "resourceIds": [
+                "{Resource}"
+              ],
+              "timeContext": {
+                "durationMs": 0
+              },
+              "timeContextFromParameter": "TimeRange",
+              "resourceType": "microsoft.kusto/clusters",
+              "resourceParameter": "Resource",
+              "metrics": [
+                {
+                  "namespace": "microsoft.kusto/clusters",
+                  "metric": "microsoft.kusto/clusters-Cluster health-CacheUtilization",
+                  "aggregation": 4,
+                  "columnName": "Cache Utilization (Avg)"
+                }
+              ],
+              "gridFormatType": 1,
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "Metric",
+                  "formatter": 1,
+                  "tooltipFormat": {
+                    "tooltip": "An average cache utilization of 80% or less (over a long period) is a sustainable state for a cluster. If the average cache utilization is above 80% (over a long period), the cluster should be scaled up to a storage optimized pricing tier or scaled out to more instances. Alternatively, adapt the cache policy (fewer days in cache)."
+                  }
+                },
+                "subtitleContent": {
+                  "columnMatch": "Value",
+                  "formatter": 18,
+                  "formatOptions": {
+                    "thresholdsOptions": "icons",
+                    "thresholdsGrid": [
+                      {
+                        "operator": ">=",
+                        "thresholdValue": "80",
+                        "representation": "2",
+                        "text": ""
+                      },
+                      {
+                        "operator": "Default",
+                        "thresholdValue": null,
+                        "representation": "success",
+                        "text": ""
+                      }
+                    ]
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "An average cache utilization of 80% or less (over a long period) is a sustainable state for a cluster. If the average cache utilization is above 80% (over a long period), the cluster should be scaled up to a storage optimized pricing tier or scaled out to more instances. Alternatively, adapt the cache policy (fewer days in cache)."
+                  }
+                },
+                "leftContent": {
+                  "columnMatch": "Value",
+                  "formatter": 1,
+                  "numberFormat": {
+                    "unit": 1,
+                    "options": {
+                      "style": "decimal",
+                      "useGrouping": false,
+                      "maximumFractionDigits": 2
+                    }
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "An average cache utilization of 80% or less (over a long period) is a sustainable state for a cluster. If the average cache utilization is above 80% (over a long period), the cluster should be scaled up to a storage optimized pricing tier or scaled out to more instances. Alternatively, adapt the cache policy (fewer days in cache)."
+                  }
+                },
+                "secondaryContent": {
+                  "columnMatch": "Timeline",
+                  "formatter": 9,
+                  "formatOptions": {
+                    "min": 0,
+                    "max": 100,
+                    "palette": "blue"
+                  },
+                  "tooltipFormat": {
+                    "tooltip": "An average cache utilization of 80% or less (over a long period) is a sustainable state for a cluster. If the average cache utilization is above 80% (over a long period), the cluster should be scaled up to a storage optimized pricing tier or scaled out to more instances. Alternatively, adapt the cache policy (fewer days in cache)."
+                  }
+                },
+                "showBorder": false,
+                "size": "full"
+              },
+              "sortBy": []
+            },
+            "customWidth": "0",
+            "showPin": false,
+            "name": "Cache Utilization"
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "items": [
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "",
+                    "size": 0,
+                    "title": "Heaviest Resource Consumers (Preview - Coming Soon)",
+                    "queryType": 0,
+                    "resourceType": "microsoft.operationalinsights/workspaces"
+                  },
+                  "customWidth": "50",
+                  "name": "query - 1"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "",
+                    "size": 0,
+                    "title": "Top Tables By Hot Cache (Preview - Coming Soon)",
+                    "queryType": 0,
+                    "resourceType": "microsoft.operationalinsights/workspaces",
+                    "visualization": "table",
+                    "sortBy": [
+                      {
+                        "itemKey": "Column6",
+                        "sortOrder": 1
+                      }
+                    ]
+                  },
+                  "customWidth": "50",
+                  "name": "Heaviest Resource Consumers"
+                }
+              ]
+            },
+            "name": "expander",
+            "styleSettings": {
+              "padding": "10px"
+            }
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "tab",
+        "comparison": "isEqualTo",
+        "value": "Overview"
+      },
+      "name": "Overview"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "title": "Cluster",
+        "items": [
+          {
+            "type": 10,
+            "content": {
+              "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+              "version": "MetricsItem/2.0",
+              "size": 1,
+              "chartType": 2,
+              "metricScope": 0,
+              "resourceIds": [
+                "{Resource}"
+              ],
+              "timeContext": {
+                "durationMs": 0
+              },
+              "timeContextFromParameter": "TimeRange",
+              "resourceType": "microsoft.kusto/clusters",
+              "resourceParameter": "Resource",
+              "metrics": [
+                {
+                  "namespace": "microsoft.kusto/clusters",
+                  "metric": "microsoft.kusto/clusters-Cluster health-KeepAlive",
+                  "aggregation": 4,
+                  "splitBy": null
+                }
+              ],
+              "title": "Keep Alive",
+              "showOpenInMe": true,
+              "sortBy": [],
+              "showExportToExcel": true
+            },
+            "customWidth": "25",
+            "showPin": true,
+            "name": "keep alive"
+          },
+          {
+            "type": 10,
+            "content": {
+              "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+              "version": "MetricsItem/2.0",
+              "size": 1,
+              "chartType": 2,
+              "metricScope": 0,
+              "resourceIds": [
+                "{Resource}"
+              ],
+              "timeContext": {
+                "durationMs": 0
+              },
+              "timeContextFromParameter": "TimeRange",
+              "resourceType": "microsoft.kusto/clusters",
+              "resourceParameter": "Resource",
+              "metrics": [
+                {
+                  "namespace": "microsoft.kusto/clusters",
+                  "metric": "microsoft.kusto/clusters-Cluster health-CPU",
+                  "aggregation": 4,
+                  "splitBy": null
+                }
+              ],
+              "title": "CPU",
+              "showOpenInMe": true,
+              "sortBy": [],
+              "showExportToExcel": true
+            },
+            "customWidth": "25",
+            "showPin": true,
+            "name": "CPU"
+          },
+          {
+            "type": 10,
+            "content": {
+              "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+              "version": "MetricsItem/2.0",
+              "size": 1,
+              "chartType": 2,
+              "metricScope": 0,
+              "resourceIds": [
+                "{Resource}"
+              ],
+              "timeContext": {
+                "durationMs": 0
+              },
+              "timeContextFromParameter": "TimeRange",
+              "resourceType": "microsoft.kusto/clusters",
+              "resourceParameter": "Resource",
+              "metrics": [
+                {
+                  "namespace": "microsoft.kusto/clusters",
+                  "metric": "microsoft.kusto/clusters-Cluster health-CacheUtilization",
+                  "aggregation": 4,
+                  "splitBy": null
+                }
+              ],
+              "title": "Cache Utilization",
+              "showOpenInMe": true,
+              "sortBy": [],
+              "showExportToExcel": true
+            },
+            "customWidth": "25",
+            "showPin": true,
+            "name": "cache"
+          },
+          {
+            "type": 10,
+            "content": {
+              "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+              "version": "MetricsItem/2.0",
+              "size": 1,
+              "chartType": 2,
+              "metricScope": 0,
+              "resourceIds": [
+                "{Resource}"
+              ],
+              "timeContext": {
+                "durationMs": 0
+              },
+              "timeContextFromParameter": "TimeRange",
+              "resourceType": "microsoft.kusto/clusters",
+              "resourceParameter": "Resource",
+              "metrics": [
+                {
+                  "namespace": "microsoft.kusto/clusters",
+                  "metric": "microsoft.kusto/clusters-Cluster health-InstanceCount",
+                  "aggregation": 4,
+                  "splitBy": null
+                }
+              ],
+              "title": "Instance Count",
+              "showOpenInMe": true,
+              "sortBy": [],
+              "showExportToExcel": true
+            },
+            "customWidth": "25",
+            "showPin": true,
+            "name": "Instance Count"
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "title": "Queries",
+              "expandable": true,
+              "items": [
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+                    "version": "MetricsItem/2.0",
+                    "size": 1,
+                    "chartType": 2,
+                    "metricScope": 0,
+                    "resourceIds": [
+                      "{Resource}"
+                    ],
+                    "timeContext": {
+                      "durationMs": 0
+                    },
+                    "timeContextFromParameter": "TimeRange",
+                    "resourceType": "microsoft.kusto/clusters",
+                    "resourceParameter": "Resource",
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.kusto/clusters",
+                        "metric": "microsoft.kusto/clusters-Query performance-TotalNumberOfConcurrentQueries",
+                        "aggregation": 1,
+                        "splitBy": null
+                      }
+                    ],
+                    "title": "Concurrent Queries ",
+                    "showOpenInMe": true,
+                    "sortBy": [],
+                    "showExportToExcel": true
+                  },
+                  "customWidth": "25",
+                  "showPin": true,
+                  "name": "Concurrent Queries "
+                },
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+                    "version": "MetricsItem/2.0",
+                    "size": 1,
+                    "chartType": 2,
+                    "metricScope": 0,
+                    "resourceIds": [
+                      "{Resource}"
+                    ],
+                    "timeContext": {
+                      "durationMs": 0
+                    },
+                    "timeContextFromParameter": "TimeRange",
+                    "resourceType": "microsoft.kusto/clusters",
+                    "resourceParameter": "Resource",
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.kusto/clusters",
+                        "metric": "microsoft.kusto/clusters-Query performance-QueryDuration",
+                        "aggregation": 4,
+                        "splitBy": "QueryStatus"
+                      }
+                    ],
+                    "title": "Query Duration",
+                    "showOpenInMe": true,
+                    "sortBy": [],
+                    "showExportToExcel": true
+                  },
+                  "customWidth": "25",
+                  "showPin": true,
+                  "name": "keep alive"
+                },
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+                    "version": "MetricsItem/2.0",
+                    "size": 1,
+                    "chartType": 2,
+                    "metricScope": 0,
+                    "resourceIds": [
+                      "{Resource}"
+                    ],
+                    "timeContext": {
+                      "durationMs": 0
+                    },
+                    "timeContextFromParameter": "TimeRange",
+                    "resourceType": "microsoft.kusto/clusters",
+                    "resourceParameter": "Resource",
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.kusto/clusters",
+                        "metric": "microsoft.kusto/clusters-Cluster health-TotalNumberOfThrottledCommands",
+                        "aggregation": 1,
+                        "splitBy": null,
+                        "columnName": "Throttled Commands"
+                      }
+                    ],
+                    "title": "Throttled Commands",
+                    "showOpenInMe": true,
+                    "sortBy": [],
+                    "showExportToExcel": true
+                  },
+                  "customWidth": "25",
+                  "showPin": true,
+                  "name": "Throttled Commands"
+                },
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+                    "version": "MetricsItem/2.0",
+                    "size": 1,
+                    "chartType": 2,
+                    "metricScope": 0,
+                    "resourceIds": [
+                      "{Resource}"
+                    ],
+                    "timeContext": {
+                      "durationMs": 0
+                    },
+                    "timeContextFromParameter": "TimeRange",
+                    "resourceType": "microsoft.kusto/clusters",
+                    "resourceParameter": "Resource",
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.kusto/clusters",
+                        "metric": "microsoft.kusto/clusters-Query performance-TotalNumberOfThrottledQueries",
+                        "aggregation": 1,
+                        "splitBy": null,
+                        "columnName": "Throttled queries"
+                      }
+                    ],
+                    "title": "Throttled Queries",
+                    "showOpenInMe": true,
+                    "sortBy": [],
+                    "showExportToExcel": true
+                  },
+                  "customWidth": "25",
+                  "showPin": true,
+                  "name": "Throttled Queries"
+                }
+              ]
+            },
+            "name": "Queries Internal",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "title": "Ingestion",
+              "expandable": true,
+              "expanded": true,
+              "items": [
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+                    "version": "MetricsItem/2.0",
+                    "size": 1,
+                    "chartType": 2,
+                    "metricScope": 0,
+                    "resourceIds": [
+                      "{Resource}"
+                    ],
+                    "timeContext": {
+                      "durationMs": 0
+                    },
+                    "timeContextFromParameter": "TimeRange",
+                    "resourceType": "microsoft.kusto/clusters",
+                    "resourceParameter": "Resource",
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.kusto/clusters",
+                        "metric": "microsoft.kusto/clusters-Cluster health-IngestionUtilization",
+                        "aggregation": 4,
+                        "splitBy": null
+                      }
+                    ],
+                    "title": "Ingestion Utilization",
+                    "showOpenInMe": true,
+                    "sortBy": [],
+                    "showExportToExcel": true
+                  },
+                  "customWidth": "25",
+                  "showPin": true,
+                  "name": "ingestion"
+                },
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+                    "version": "MetricsItem/2.0",
+                    "size": 1,
+                    "chartType": 2,
+                    "metricScope": 0,
+                    "resourceIds": [
+                      "{Resource}"
+                    ],
+                    "timeContext": {
+                      "durationMs": 0
+                    },
+                    "timeContextFromParameter": "TimeRange",
+                    "resourceType": "microsoft.kusto/clusters",
+                    "resourceParameter": "Resource",
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.kusto/clusters",
+                        "metric": "microsoft.kusto/clusters-Ingestion health and performance-IngestionLatencyInSeconds",
+                        "aggregation": 4,
+                        "splitBy": null
+                      }
+                    ],
+                    "title": "Ingestion Latency",
+                    "showOpenInMe": true,
+                    "sortBy": [],
+                    "showExportToExcel": true
+                  },
+                  "customWidth": "25",
+                  "showPin": true,
+                  "name": "Ingestion Latency"
+                },
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+                    "version": "MetricsItem/2.0",
+                    "size": 1,
+                    "chartType": 2,
+                    "metricScope": 0,
+                    "resourceIds": [
+                      "{Resource}"
+                    ],
+                    "timeContext": {
+                      "durationMs": 0
+                    },
+                    "timeContextFromParameter": "TimeRange",
+                    "resourceType": "microsoft.kusto/clusters",
+                    "resourceParameter": "Resource",
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.kusto/clusters",
+                        "metric": "microsoft.kusto/clusters-Ingestion health and performance-IngestionResult",
+                        "aggregation": 7,
+                        "splitBy": "IngestionResultDetails"
+                      }
+                    ],
+                    "title": "Ingestion Result",
+                    "showOpenInMe": true,
+                    "sortBy": [],
+                    "showExportToExcel": true
+                  },
+                  "customWidth": "25",
+                  "showPin": true,
+                  "name": "Ingestion Result"
+                },
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+                    "version": "MetricsItem/2.0",
+                    "size": 1,
+                    "chartType": 2,
+                    "metricScope": 0,
+                    "resourceIds": [
+                      "{Resource}"
+                    ],
+                    "timeContext": {
+                      "durationMs": 0
+                    },
+                    "timeContextFromParameter": "TimeRange",
+                    "resourceType": "microsoft.kusto/clusters",
+                    "resourceParameter": "Resource",
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.kusto/clusters",
+                        "metric": "microsoft.kusto/clusters-Ingestion health and performance-IngestionVolumeInMB",
+                        "aggregation": 1,
+                        "splitBy": null
+                      }
+                    ],
+                    "title": "Ingestion Volume",
+                    "showOpenInMe": true,
+                    "sortBy": [],
+                    "showExportToExcel": true
+                  },
+                  "customWidth": "25",
+                  "showPin": true,
+                  "name": "Ingestion Volume"
+                }
+              ]
+            },
+            "name": "Ingestion Internal Group",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "title": "Streaming Ingestion",
+              "expandable": true,
+              "expanded": true,
+              "items": [
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+                    "version": "MetricsItem/2.0",
+                    "size": 1,
+                    "chartType": 2,
+                    "metricScope": 0,
+                    "resourceIds": [
+                      "{Resource}"
+                    ],
+                    "timeContext": {
+                      "durationMs": 0
+                    },
+                    "timeContextFromParameter": "TimeRange",
+                    "resourceType": "microsoft.kusto/clusters",
+                    "resourceParameter": "Resource",
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.kusto/clusters",
+                        "metric": "microsoft.kusto/clusters-Streaming Ingest-StreamingIngestDataRate",
+                        "aggregation": 4,
+                        "splitBy": null
+                      }
+                    ],
+                    "title": "Streaming Ingest Data Rate",
+                    "showOpenInMe": true,
+                    "sortBy": [],
+                    "showExportToExcel": true
+                  },
+                  "customWidth": "25",
+                  "showPin": true,
+                  "name": "Streaming Ingest Data Rate"
+                },
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+                    "version": "MetricsItem/2.0",
+                    "size": 1,
+                    "chartType": 2,
+                    "metricScope": 0,
+                    "resourceIds": [
+                      "{Resource}"
+                    ],
+                    "timeContext": {
+                      "durationMs": 0
+                    },
+                    "timeContextFromParameter": "TimeRange",
+                    "resourceType": "microsoft.kusto/clusters",
+                    "resourceParameter": "Resource",
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.kusto/clusters",
+                        "metric": "microsoft.kusto/clusters-Streaming Ingest-StreamingIngestDuration",
+                        "aggregation": 4,
+                        "splitBy": null
+                      }
+                    ],
+                    "title": "Streaming Ingest Duration",
+                    "showOpenInMe": true,
+                    "sortBy": [],
+                    "showExportToExcel": true
+                  },
+                  "customWidth": "25",
+                  "showPin": true,
+                  "name": "Streaming Ingest Duration"
+                },
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+                    "version": "MetricsItem/2.0",
+                    "size": 1,
+                    "chartType": 2,
+                    "metricScope": 0,
+                    "resourceIds": [
+                      "{Resource}"
+                    ],
+                    "timeContext": {
+                      "durationMs": 0
+                    },
+                    "timeContextFromParameter": "TimeRange",
+                    "resourceType": "microsoft.kusto/clusters",
+                    "resourceParameter": "Resource",
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.kusto/clusters",
+                        "metric": "microsoft.kusto/clusters-Streaming Ingest-SteamingIngestRequestRate",
+                        "aggregation": 7,
+                        "splitBy": null,
+                        "columnName": "Streaming Ingest Request Rate (Total number of streaming ingestion requests)"
+                      }
+                    ],
+                    "title": "Streaming Ingest Request Rate",
+                    "showOpenInMe": true,
+                    "sortBy": [],
+                    "showExportToExcel": true
+                  },
+                  "customWidth": "25",
+                  "showPin": true,
+                  "name": "Streaming Ingest Request Rate"
+                },
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook19356bdc-cfd5-47c7-8e70-05bbd3f39558",
+                    "version": "MetricsItem/2.0",
+                    "size": 1,
+                    "chartType": 2,
+                    "metricScope": 0,
+                    "resourceIds": [
+                      "{Resource}"
+                    ],
+                    "timeContext": {
+                      "durationMs": 0
+                    },
+                    "timeContextFromParameter": "TimeRange",
+                    "resourceType": "microsoft.kusto/clusters",
+                    "resourceParameter": "Resource",
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.kusto/clusters",
+                        "metric": "microsoft.kusto/clusters-Streaming Ingest-StreamingIngestResults",
+                        "aggregation": 4,
+                        "splitBy": "Result"
+                      }
+                    ],
+                    "title": "Streaming Ingest Result",
+                    "showOpenInMe": true,
+                    "sortBy": [],
+                    "showExportToExcel": true
+                  },
+                  "customWidth": "25",
+                  "showPin": true,
+                  "name": "Streaming Ingest Result"
+                }
+              ]
+            },
+            "name": "Streaming Ingestion",
+            "styleSettings": {
+              "showBorder": true
+            }
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "tab",
+        "comparison": "isEqualTo",
+        "value": "Cluster"
+      },
+      "name": "Cluster Group"
+    }
+  ],
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
