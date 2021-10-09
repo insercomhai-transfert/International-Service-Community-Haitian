@@ -1,0 +1,921 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "d06013c0-697f-410c-a833-56b02c79bb48",
+            "version": "KqlParameterItem/1.0",
+            "name": "MonitoringProfile",
+            "type": 1,
+            "isHiddenWhenLocked": true,
+            "value": "",
+            "label": "Monitoring profile"
+          },
+          {
+            "id": "5a00b6fa-4065-46a7-867d-6e9e1f0e457f",
+            "version": "KqlParameterItem/1.0",
+            "name": "Workspaces",
+            "type": 5,
+            "query": "Resources\r\n| where id =~ '{MonitoringProfile}'\r\n| project la = properties.destinations.logAnalytics\r\n| mvexpand la limit 400\r\n| project id = tostring (la.workspaceResourceId)\r\n| project value = id, label = id, selected = true",
+            "crossComponentResources": [
+              "value::selected"
+            ],
+            "isHiddenWhenLocked": true,
+            "typeSettings": {
+              "additionalResourceOptions": [],
+              "showDefault": false
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "151ff3cd-81d9-4b20-b82b-202459648564",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "type": 4,
+            "value": {
+              "durationMs": 86400000
+            },
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 900000
+                },
+                {
+                  "durationMs": 1800000
+                },
+                {
+                  "durationMs": 3600000
+                },
+                {
+                  "durationMs": 14400000
+                },
+                {
+                  "durationMs": 43200000
+                },
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 172800000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                },
+                {
+                  "durationMs": 1209600000
+                },
+                {
+                  "durationMs": 2592000000
+                }
+              ]
+            },
+            "label": "Time range"
+          },
+          {
+            "id": "4b342422-23dc-49fd-9268-d9fdbb48d0f8",
+            "version": "KqlParameterItem/1.0",
+            "name": "AlertTemplates",
+            "type": 1,
+            "isHiddenWhenLocked": true,
+            "typeSettings": {
+              "multiLineText": true,
+              "editorLanguage": "json",
+              "preFormatJsonData": true
+            }
+          },
+          {
+            "id": "3973ec2c-de7b-45e4-8cce-0523a299f880",
+            "version": "KqlParameterItem/1.0",
+            "name": "AlertTemp",
+            "type": 1,
+            "query": "{\"version\":\"1.0.0\",\"content\":\"{\\r\\n\\t\\\"AlertTime\\\": \\\"{TimeRange:label}\\\"\\r\\n}\",\"transformers\":null}",
+            "isHiddenWhenLocked": true,
+            "queryType": 8
+          },
+          {
+            "id": "5886ab39-e037-4b20-a3f8-4a245149e23a",
+            "version": "KqlParameterItem/1.0",
+            "name": "AlertTime",
+            "type": 1,
+            "value": "1h",
+            "isHiddenWhenLocked": true,
+            "criteriaData": [
+              {
+                "criteriaContext": {
+                  "leftOperand": "AlertTemp",
+                  "operator": "==",
+                  "rightValType": "static",
+                  "rightVal": "Last 15 minutes",
+                  "resultValType": "static",
+                  "resultVal": "1h"
+                }
+              },
+              {
+                "criteriaContext": {
+                  "leftOperand": "AlertTemp",
+                  "operator": "==",
+                  "rightValType": "static",
+                  "rightVal": "Last 30 minutes",
+                  "resultValType": "static",
+                  "resultVal": "1h"
+                }
+              },
+              {
+                "criteriaContext": {
+                  "leftOperand": "AlertTemp",
+                  "operator": "==",
+                  "rightValType": "static",
+                  "rightVal": "Last hour",
+                  "resultValType": "static",
+                  "resultVal": "1h"
+                }
+              },
+              {
+                "criteriaContext": {
+                  "leftOperand": "AlertTemp",
+                  "operator": "==",
+                  "rightValType": "static",
+                  "rightVal": "Last 4 hours",
+                  "resultValType": "static",
+                  "resultVal": "6h"
+                }
+              },
+              {
+                "criteriaContext": {
+                  "leftOperand": "AlertTemp",
+                  "operator": "==",
+                  "rightValType": "static",
+                  "rightVal": "Last 12 hours",
+                  "resultValType": "static",
+                  "resultVal": "1d"
+                }
+              },
+              {
+                "criteriaContext": {
+                  "leftOperand": "AlertTemp",
+                  "operator": "==",
+                  "rightValType": "static",
+                  "rightVal": "Last 24 hours",
+                  "resultValType": "static",
+                  "resultVal": "1d"
+                }
+              },
+              {
+                "criteriaContext": {
+                  "leftOperand": "AlertTemp",
+                  "operator": "==",
+                  "rightValType": "static",
+                  "rightVal": "Last 48 hours",
+                  "resultValType": "static",
+                  "resultVal": "7d"
+                }
+              },
+              {
+                "criteriaContext": {
+                  "leftOperand": "AlertTemp",
+                  "operator": "==",
+                  "rightValType": "static",
+                  "rightVal": "Last 3 days",
+                  "resultValType": "static",
+                  "resultVal": "7d"
+                }
+              },
+              {
+                "criteriaContext": {
+                  "leftOperand": "AlertTemp",
+                  "operator": "==",
+                  "rightValType": "static",
+                  "rightVal": "Last 7 days",
+                  "resultValType": "static",
+                  "resultVal": "7d"
+                }
+              },
+              {
+                "criteriaContext": {
+                  "leftOperand": "AlertTemp",
+                  "operator": "==",
+                  "rightValType": "static",
+                  "rightVal": "Last 14 days",
+                  "resultValType": "static",
+                  "resultVal": "30d"
+                }
+              },
+              {
+                "criteriaContext": {
+                  "leftOperand": "AlertTemp",
+                  "operator": "==",
+                  "rightValType": "static",
+                  "rightVal": "Last 30 days",
+                  "resultValType": "static",
+                  "resultVal": "30d"
+                }
+              },
+              {
+                "criteriaContext": {
+                  "operator": "Default",
+                  "rightValType": "param",
+                  "resultValType": "static",
+                  "resultVal": "1h"
+                }
+              }
+            ]
+          }
+        ],
+        "style": "above",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "name": "parameters"
+    },
+    {
+      "type": 11,
+      "content": {
+        "version": "LinkItem/1.0",
+        "style": "tabs",
+        "links": [
+          {
+            "id": "f926cf2e-54ed-4d4b-a208-33048dd0abcf",
+            "cellValue": "selectedAlertTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Fired alerts",
+            "subTarget": "FiredAlerts",
+            "style": "link"
+          },
+          {
+            "id": "ea04b15a-3457-4546-85cc-1d06c21d0df6",
+            "cellValue": "selectedAlertTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Alert rules",
+            "subTarget": "AlertRules",
+            "style": "link"
+          },
+          {
+            "id": "7bcb32a2-34e5-4fee-a749-74befb181caa",
+            "cellValue": "selectedAlertTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Alert templates",
+            "subTarget": "AlertTemplates",
+            "style": "link"
+          }
+        ]
+      },
+      "name": "links-tabs"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AlertsManagementResources\r\n| where type =~ 'microsoft.alertsmanagement/alerts'\r\n| where properties.essentials.startDateTime {TimeRange}  \r\n| extend State=tostring(properties.essentials.alertState)\r\n| extend AlertRule=tolower(tostring(properties.essentials.alertRule))\r\n| extend Severity=tostring(properties.essentials.severity)\r\n| extend MonitorCondition=tostring(properties.essentials.monitorCondition)\r\n| join kind=inner (Resources | where type =~ 'microsoft.insights/scheduledQueryRules'\r\n| extend profileId=tolower(tags.['profile-id'])\r\n| where profileId == tolower('{MonitoringProfile}')\r\n| project AlertRule=tolower(id)) on AlertRule\r\n| summarize Count=count(), Fired=countif(MonitorCondition==\"Fired\"), Resolved=countif(MonitorCondition==\"Resolved\"), New=countif(State==\"New\"), Acknowledged=countif(State==\"Acknowledged\"), Closed=countif(State==\"Closed\") by Severity\r\n| order by Severity asc\r\n\r\n",
+              "size": 0,
+              "noDataMessage": "No alerts found in this time range or no alert rules have been configured for this monitoring profile",
+              "exportFieldName": "Severity",
+              "exportParameterName": "Severity",
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources",
+              "crossComponentResources": [
+                "value::selected"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Severity",
+                    "formatter": 11
+                  },
+                  {
+                    "columnMatch": "Count",
+                    "formatter": 3,
+                    "formatOptions": {
+                      "min": 0,
+                      "palette": "blue",
+                      "aggregation": "Sum"
+                    },
+                    "numberFormat": {
+                      "unit": 17,
+                      "options": {
+                        "style": "decimal",
+                        "maximumFractionDigits": 2
+                      }
+                    }
+                  },
+                  {
+                    "columnMatch": "State",
+                    "formatter": 1
+                  }
+                ]
+              }
+            },
+            "conditionalVisibility": {
+              "parameterName": "1",
+              "comparison": "isEqualTo",
+              "value": "2"
+            },
+            "showPin": true,
+            "name": "Alert Summary"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "{\"version\":\"1.0.0\",\"content\":\"[\\r\\n\\t{\\r\\n\\t\\t\\\"severity\\\": \\\"Sev0\\\"\\r\\n\\t},\\r\\n\\t{\\r\\n\\t\\t\\\"severity\\\": \\\"Sev1\\\",\\r\\n\\t\\t\\\"new\\\": 0,\\r\\n\\t\\t\\\"acknowledged\\\": 0,\\r\\n\\t\\t\\\"closed\\\": 0\\r\\n\\t},\\r\\n\\t{\\r\\n\\t\\t\\\"severity\\\": \\\"Sev2\\\"\\r\\n\\t},\\r\\n\\t{\\r\\n\\t\\t\\\"severity\\\": \\\"Sev3\\\"\\r\\n\\t},\\r\\n\\t{\\r\\n\\t\\t\\\"severity\\\": \\\"Sev4\\\"\\r\\n\\t}\\r\\n]\",\"transformers\":[{\"type\":\"jsonpath\",\"settings\":{\"columns\":[{\"path\":\"$.severity\",\"columnid\":\"Severity\"}]}}]}",
+              "size": 0,
+              "exportFieldName": "",
+              "exportParameterName": "SeverityList",
+              "queryType": 8
+            },
+            "conditionalVisibility": {
+              "parameterName": "1",
+              "comparison": "isEqualTo",
+              "value": "2"
+            },
+            "name": "Alert Summary severity list"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "{\"version\":\"Merge/1.0\",\"merges\":[{\"id\":\"4f735089-1bbe-4fec-89e2-eb92da76108f\",\"mergeType\":\"rightouter\",\"leftTable\":\"Alert Summary\",\"rightTable\":\"Alert Summary severity list\",\"leftColumn\":\"Severity\",\"rightColumn\":\"Severity\"}],\"projectRename\":[{\"originalName\":\"[Alert Summary severity list].Severity\",\"mergedName\":\"Severity\",\"fromId\":\"4f735089-1bbe-4fec-89e2-eb92da76108f\"},{\"originalName\":\"[Alert Summary].Count\",\"mergedName\":\"Count\",\"fromId\":\"4f735089-1bbe-4fec-89e2-eb92da76108f\"},{\"originalName\":\"[Alert Summary].Fired\",\"mergedName\":\"Fired\",\"fromId\":\"4f735089-1bbe-4fec-89e2-eb92da76108f\"},{\"originalName\":\"[Alert Summary].Resolved\",\"mergedName\":\"Resolved\",\"fromId\":\"4f735089-1bbe-4fec-89e2-eb92da76108f\"},{\"originalName\":\"[Alert Summary].New\",\"mergedName\":\"New\",\"fromId\":\"4f735089-1bbe-4fec-89e2-eb92da76108f\"},{\"originalName\":\"[Alert Summary].Acknowledged\",\"mergedName\":\"Acknowledged\",\"fromId\":\"4f735089-1bbe-4fec-89e2-eb92da76108f\"},{\"originalName\":\"[Alert Summary].Closed\",\"mergedName\":\"Closed\",\"fromId\":\"4f735089-1bbe-4fec-89e2-eb92da76108f\"},{\"originalName\":\"[Alert Summary].Severity\"}]}",
+              "size": 0,
+              "queryType": 7,
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Severity",
+                    "formatter": 11,
+                    "formatOptions": {
+                      "linkTarget": "OpenBlade",
+                      "bladeOpenContext": {
+                        "bladeName": "AlertsManagementListBlade",
+                        "extensionName": "Microsoft_Azure_Monitoring",
+                        "bladeJsonParameters": "{\r\n\t\"queryInputs\": {\r\n\t\t\"subscriptions\": \"{Workspaces:subscriptionid}\",\r\n\t\t\"resourceGroups\": [\r\n\t\t\t\"/subscriptions/{Workspaces:subscriptionid}/resrouceGroups/{Workspaces:resourcegroup}\"\r\n\t\t],\r\n\t\t\"resourceId\": \"{Workspaces}\",\r\n\t\t\"timeRange\": \"{AlertTime}\",\r\n\t\t\"severity\": \"{Severity_column}\"\r\n\t}\r\n}"
+                      }
+                    }
+                  },
+                  {
+                    "columnMatch": "Count",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "OpenBlade",
+                      "bladeOpenContext": {
+                        "bladeName": "AlertsManagementListBlade",
+                        "extensionName": "Microsoft_Azure_Monitoring",
+                        "bladeJsonParameters": "{\r\n\t\"queryInputs\": {\r\n\t\t\"subscriptions\": \"{Workspaces:subscriptionid}\",\r\n\t\t\"resourceGroups\": [\r\n\t\t\t\"/subscriptions/{Workspaces:subscriptionid}/resrouceGroups/{Workspaces:resourcegroup}\"\r\n\t\t],\r\n\t\t\"resourceId\": \"{Workspaces}\",\r\n\t\t\"timeRange\": \"{AlertTime}\",\r\n\t\t\"severity\": \"{Severity_column}\"\r\n\t}\r\n}"
+                      }
+                    },
+                    "numberFormat": {
+                      "unit": 17,
+                      "options": {
+                        "style": "decimal",
+                        "useGrouping": false
+                      },
+                      "emptyValCustomText": "0"
+                    }
+                  },
+                  {
+                    "columnMatch": "Fired",
+                    "formatter": 5,
+                    "numberFormat": {
+                      "unit": 0,
+                      "options": {
+                        "style": "decimal",
+                        "useGrouping": false
+                      },
+                      "emptyValCustomText": "0"
+                    }
+                  },
+                  {
+                    "columnMatch": "Resolved",
+                    "formatter": 5,
+                    "numberFormat": {
+                      "unit": 0,
+                      "options": {
+                        "style": "decimal"
+                      },
+                      "emptyValCustomText": "0"
+                    }
+                  },
+                  {
+                    "columnMatch": "New",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "OpenBlade",
+                      "bladeOpenContext": {
+                        "bladeName": "AlertsManagementListBlade",
+                        "extensionName": "Microsoft_Azure_Monitoring",
+                        "bladeJsonParameters": "{\r\n\t\"queryInputs\": {\r\n\t\t\"subscriptions\": \"{Workspaces:subscriptionid}\",\r\n\t\t\"resourceGroups\": [\r\n\t\t\t\"/subscriptions/{Workspaces:subscriptionid}/resrouceGroups/{Workspaces:resourcegroup}\"\r\n\t\t],\r\n\t\t\"resourceId\": \"{Workspaces}\",\r\n\t\t\"timeRange\": \"{AlertTime}\",\r\n\t\t\"alertState\": \"New\",\r\n\t\t\"severity\": \"{Severity_column}\"\r\n\t}\r\n}"
+                      }
+                    },
+                    "numberFormat": {
+                      "unit": 0,
+                      "options": {
+                        "style": "decimal"
+                      },
+                      "emptyValCustomText": "0"
+                    }
+                  },
+                  {
+                    "columnMatch": "Acknowledged",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "OpenBlade",
+                      "bladeOpenContext": {
+                        "bladeName": "AlertsManagementListBlade",
+                        "extensionName": "Microsoft_Azure_Monitoring",
+                        "bladeJsonParameters": "{\r\n\t\"queryInputs\": {\r\n\t\t\"subscriptions\": \"{Workspaces:subscriptionid}\",\r\n\t\t\"resourceGroups\": [\r\n\t\t\t\"/subscriptions/{Workspaces:subscriptionid}/resrouceGroups/{Workspaces:resourcegroup}\"\r\n\t\t],\r\n\t\t\"resourceId\": \"{Workspaces}\",\r\n\t\t\"timeRange\": \"{AlertTime}\",\r\n\t\t\"alertState\": \"Acknowledged\",\r\n\t\t\"severity\": \"{Severity_column}\"\r\n\t}\r\n}"
+                      }
+                    },
+                    "numberFormat": {
+                      "unit": 0,
+                      "options": {
+                        "style": "decimal"
+                      },
+                      "emptyValCustomText": "0"
+                    }
+                  },
+                  {
+                    "columnMatch": "Closed",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "OpenBlade",
+                      "bladeOpenContext": {
+                        "bladeName": "AlertsManagementListBlade",
+                        "extensionName": "Microsoft_Azure_Monitoring",
+                        "bladeJsonParameters": "{\r\n\t\"queryInputs\": {\r\n\t\t\"subscriptions\": \"{Workspaces:subscriptionid}\",\r\n\t\t\"resourceGroups\": [\r\n\t\t\t\"/subscriptions/{Workspaces:subscriptionid}/resrouceGroups/{Workspaces:resourcegroup}\"\r\n\t\t],\r\n\t\t\"resourceId\": \"{Workspaces}\",\r\n\t\t\"timeRange\": \"{AlertTime}\",\r\n\t\t\"alertState\": \"Closed\",\r\n\t\t\"severity\": \"{Severity_column}\"\r\n\t}\r\n}"
+                      }
+                    },
+                    "numberFormat": {
+                      "unit": 0,
+                      "options": {
+                        "style": "decimal"
+                      },
+                      "emptyValCustomText": "0"
+                    }
+                  }
+                ],
+                "sortBy": [
+                  {
+                    "itemKey": "$gen_icon_Severity_0",
+                    "sortOrder": 1
+                  }
+                ],
+                "labelSettings": [
+                  {
+                    "columnId": "Severity"
+                  },
+                  {
+                    "columnId": "Count",
+                    "label": "Total alerts"
+                  },
+                  {
+                    "columnId": "Fired"
+                  },
+                  {
+                    "columnId": "Resolved"
+                  },
+                  {
+                    "columnId": "New"
+                  },
+                  {
+                    "columnId": "Acknowledged"
+                  },
+                  {
+                    "columnId": "Closed"
+                  }
+                ]
+              },
+              "sortBy": [
+                {
+                  "itemKey": "$gen_icon_Severity_0",
+                  "sortOrder": 1
+                }
+              ]
+            },
+            "showPin": false,
+            "name": "Alert Summary merge"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedAlertTab",
+        "comparison": "isEqualTo",
+        "value": "FiredAlerts"
+      },
+      "name": "Fired alerts tab"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "Resources \r\n| where type =~ 'microsoft.insights/scheduledQueryRules'\r\n| extend profileId=tolower(tags.['profile-id'])\r\n| where profileId == tolower('{MonitoringProfile}')\r\n| extend Description=tostring(properties.description)\r\n| extend Severity=tostring(properties.action.severity)\r\n| extend AlertRule=id\r\n| join kind=leftouter (AlertsManagementResources\r\n| where type =~ 'microsoft.alertsmanagement/alerts'\r\n| where properties.essentials.startDateTime {TimeRange}  \r\n| extend State=tostring(properties.essentials.alertState)\r\n| extend AlertRule=tostring(properties.essentials.alertRule)\r\n| summarize TotalAlert=count(id) by AlertRule) on AlertRule\r\n| extend Status=iff(TotalAlert>0,\"Fired\",\"Not Fired\")\r\n| project id, name, Description, Status, Severity\r\n| order by Severity asc, Status\r\n",
+              "size": 0,
+              "noDataMessage": "No alerts found",
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources",
+              "crossComponentResources": [
+                "value::selected"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "id",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "name",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "OpenBlade",
+                      "bladeOpenContext": {
+                        "bladeName": "UpdateVNextAlertRuleBlade",
+                        "extensionName": "Microsoft_Azure_Monitoring",
+                        "bladeJsonParameters": "{\r\n\t\"ruleInputs\": {\r\n\t\t\"alertId\": \"{id_column}\"\r\n\t}\r\n}"
+                      }
+                    }
+                  },
+                  {
+                    "columnMatch": "Status",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "icons",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Fired",
+                          "representation": "4",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Not Fired",
+                          "representation": "success",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "success",
+                          "text": "{0}{1}"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "Severity",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "12ch"
+                    }
+                  },
+                  {
+                    "columnMatch": "Rule Name",
+                    "formatter": 16,
+                    "formatOptions": {
+                      "showIcon": true
+                    }
+                  }
+                ],
+                "rowLimit": 1000,
+                "filter": true,
+                "labelSettings": [
+                  {
+                    "columnId": "Description",
+                    "label": "Condition"
+                  }
+                ]
+              }
+            },
+            "showPin": true,
+            "name": "Alert Rules"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedAlertTab",
+        "comparison": "isEqualTo",
+        "value": "AlertRules"
+      },
+      "name": "Alert Rules Tab"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "{\"version\":\"1.0.0\",\"content\":\"{AlertTemplates}\",\"transformers\":[{\"type\":\"jsonpath\",\"settings\":{\"columns\":[{\"path\":\"$.name\",\"columnid\":\"Name\"},{\"path\":\"$.description\",\"columnid\":\"Description\"},{\"path\":\"$.author\",\"columnid\":\"Author\"},{\"path\":\"$.uniqueTag\",\"columnid\":\"UniqueTag\"},{\"path\":\"$.recommendationLevel\",\"columnid\":\"Level\"},{\"path\":\"$.applyTo\",\"columnid\":\"ApplyTo\"},{\"path\":\"$.alertTemplate.type\",\"columnid\":\"Type\"},{\"path\":\"$.alertTemplate.query\",\"columnid\":\"Query\"},{\"path\":\"$.alertTemplate.thresholdOperator\",\"columnid\":\"Operator\"},{\"path\":\"$.alertTemplate.defaultThreshold\",\"columnid\":\"Threshold\"},{\"path\":\"$.name\",\"columnid\":\"Action\"},{\"path\":\"$.alertTemplate.metricMeasurement.thresholdOperator\",\"columnid\":\"MetricOperator\"},{\"path\":\"$.alertTemplate.metricMeasurement.threshold\",\"columnid\":\"MetricThreshold\"},{\"path\":\"$.alertTemplate.metricMeasurement.metricTriggerType\",\"columnid\":\"MetricTriggerType\"},{\"path\":\"$.alertTemplate.metricMeasurement.metricColumn\",\"columnid\":\"MetricColumn\"},{\"path\":\"$.severity\",\"columnid\":\"Severity\"}]}}]}",
+              "size": 0,
+              "noDataMessage": "No alerts found",
+              "queryType": 8,
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Author",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Level",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "ApplyTo",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "uniqueTag",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "applyTo",
+                    "formatter": 5
+                  }
+                ],
+                "rowLimit": 1000,
+                "filter": true
+              }
+            },
+            "conditionalVisibility": {
+              "parameterName": "1",
+              "comparison": "isEqualTo",
+              "value": "2"
+            },
+            "showPin": true,
+            "name": "Alert Templates"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "Resources \r\n| where type =~ 'microsoft.insights/scheduledQueryRules'\r\n| extend profileId=tolower(tags.['profile-id'])\r\n| extend alertTemplateId=tolower(tags.['alert-template-id'])\r\n| where profileId == tolower('{MonitoringProfile}') and isnotempty(alertTemplateId)\r\n| distinct alertTemplateId",
+              "size": 0,
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources",
+              "crossComponentResources": [
+                "value::selected"
+              ]
+            },
+            "conditionalVisibility": {
+              "parameterName": "1",
+              "comparison": "isEqualTo",
+              "value": "2"
+            },
+            "name": "AlertsInProfileId"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "{\"version\":\"Merge/1.0\",\"merges\":[{\"id\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\",\"mergeType\":\"leftouter\",\"leftTable\":\"Alert Templates\",\"rightTable\":\"AlertsInProfileId\",\"leftColumn\":\"UniqueTag\",\"rightColumn\":\"alertTemplateId\"}],\"projectRename\":[{\"originalName\":\"[Alert Templates].Name\",\"mergedName\":\"Name\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"},{\"originalName\":\"[Alert Templates].Description\",\"mergedName\":\"Description\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"},{\"originalName\":\"[Added column]\",\"mergedName\":\"AlertStatus\",\"fromId\":null,\"isNewItem\":true,\"newItemData\":[{\"criteriaContext\":{\"leftOperand\":\"alertTemplateId\",\"operator\":\"isNotNull\",\"rightValType\":\"static\",\"resultValType\":\"static\",\"resultVal\":\"Created\"}},{\"criteriaContext\":{\"operator\":\"Default\",\"rightValType\":\"column\",\"resultValType\":\"static\",\"resultVal\":\"Unconfigured\"}}]},{\"originalName\":\"[Alert Templates].Author\",\"mergedName\":\"Author\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"},{\"originalName\":\"[Alert Templates].UniqueTag\",\"mergedName\":\"UniqueTag\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"},{\"originalName\":\"[Alert Templates].Level\",\"mergedName\":\"Level\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"},{\"originalName\":\"[Alert Templates].ApplyTo\",\"mergedName\":\"ApplyTo\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"},{\"originalName\":\"[Alert Templates].Type\",\"mergedName\":\"Type\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"},{\"originalName\":\"[Alert Templates].Query\",\"mergedName\":\"Query\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"},{\"originalName\":\"[Alert Templates].Operator\",\"mergedName\":\"Operator\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"},{\"originalName\":\"[Alert Templates].Threshold\",\"mergedName\":\"Threshold\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"},{\"originalName\":\"[Alert Templates].Action\",\"mergedName\":\"Action\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"},{\"originalName\":\"[Alert Templates].MetricOperator\",\"mergedName\":\"MetricOperator\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"},{\"originalName\":\"[Alert Templates].MetricThreshold\",\"mergedName\":\"MetricThreshold\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"},{\"originalName\":\"[Alert Templates].MetricTriggerType\",\"mergedName\":\"MetricTriggerType\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"},{\"originalName\":\"[Alert Templates].MetricColumn\",\"mergedName\":\"MetricColumn\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"},{\"originalName\":\"[Alert Templates].Severity\",\"mergedName\":\"Severity\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"},{\"originalName\":\"[AlertsInProfileId].alertTemplateId\",\"mergedName\":\"alertTemplateId\",\"fromId\":\"9801cd2b-843f-4e45-8d69-a42a553d3080\"}]}",
+              "size": 0,
+              "queryType": 7,
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "AlertStatus",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "icons",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Created",
+                          "representation": "success",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Unconfigured",
+                          "representation": "warning",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "question",
+                          "text": "{0}{1}"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "Author",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "UniqueTag",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Level",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "ApplyTo",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Type",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Query",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Operator",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Threshold",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Action",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "WorkbookTemplate",
+                      "linkLabel": "Create rule",
+                      "linkIsContextBlade": true,
+                      "workbookContext": {
+                        "componentIdSource": "parameter",
+                        "componentId": "MonitoringProfile",
+                        "resourceIdsSource": "parameter",
+                        "resourceIds": "MonitoringProfile",
+                        "templateIdSource": "static",
+                        "templateId": "Community-Workbooks/Workloads-AMA/Create log alert",
+                        "typeSource": "static",
+                        "type": "workload-shared",
+                        "gallerySource": "static",
+                        "gallery": "Azure Monitor",
+                        "locationSource": "default",
+                        "passSpecificParams": true,
+                        "templateParameters": [
+                          {
+                            "name": "MonitoringProfile",
+                            "source": "parameter",
+                            "value": "MonitoringProfile"
+                          },
+                          {
+                            "name": "Workspaces",
+                            "source": "parameter",
+                            "value": "Workspaces"
+                          },
+                          {
+                            "name": "TimeRange",
+                            "source": "parameter",
+                            "value": "TimeRange"
+                          },
+                          {
+                            "name": "AlertTemplates",
+                            "source": "parameter",
+                            "value": "AlertTemplates"
+                          },
+                          {
+                            "name": "AlertName",
+                            "source": "column",
+                            "value": "Name"
+                          },
+                          {
+                            "name": "AlertOperator",
+                            "source": "column",
+                            "value": "Operator"
+                          },
+                          {
+                            "name": "AlertMetricOperator",
+                            "source": "column",
+                            "value": "MetricOperator"
+                          },
+                          {
+                            "name": "AlertMetricType",
+                            "source": "column",
+                            "value": "MetricTriggerType"
+                          },
+                          {
+                            "name": "AlertMetricColumn",
+                            "source": "column",
+                            "value": "MetricColumn"
+                          },
+                          {
+                            "name": "AlertThreshold",
+                            "source": "column",
+                            "value": "Threshold"
+                          },
+                          {
+                            "name": "AlertMetricThreshold",
+                            "source": "column",
+                            "value": "MetricThreshold"
+                          },
+                          {
+                            "name": "AlertSeverity",
+                            "source": "column",
+                            "value": "Severity"
+                          },
+                          {
+                            "name": "AlertQuery",
+                            "source": "column",
+                            "value": "Query"
+                          },
+                          {
+                            "name": "AlertDescription",
+                            "source": "column",
+                            "value": "Description"
+                          },
+                          {
+                            "name": "AlertTemplateId",
+                            "source": "column",
+                            "value": "UniqueTag"
+                          },
+                          {
+                            "name": "AlertType",
+                            "source": "column",
+                            "value": "Type"
+                          }
+                        ]
+                      },
+                      "customColumnWidthSetting": "14ch"
+                    }
+                  },
+                  {
+                    "columnMatch": "MetricOperator",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "MetricThreshold",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "MetricColumn",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Severity",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "alertTemplateId",
+                    "formatter": 5
+                  }
+                ],
+                "labelSettings": [
+                  {
+                    "columnId": "Name"
+                  },
+                  {
+                    "columnId": "Description"
+                  },
+                  {
+                    "columnId": "AlertStatus",
+                    "label": "Alert status"
+                  },
+                  {
+                    "columnId": "UniqueTag"
+                  },
+                  {
+                    "columnId": "Type"
+                  },
+                  {
+                    "columnId": "Severity"
+                  },
+                  {
+                    "columnId": "alertTemplateId"
+                  }
+                ]
+              }
+            },
+            "showPin": false,
+            "name": "Alert Merge Templates"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedAlertTab",
+        "comparison": "isEqualTo",
+        "value": "AlertTemplates"
+      },
+      "name": "Alert Templates Tab"
+    }
+  ],
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
